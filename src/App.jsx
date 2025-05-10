@@ -1,4 +1,5 @@
 import './App.css';
+import { Analytics } from "@vercel/analytics/next"
 import { Routes, Route } from 'react-router-dom';
 import Home from './paginas/Home/Home';
 import Carta from './paginas/Carta/Carta';
@@ -10,6 +11,7 @@ import Footer from './componentes/Footer/Footer';
 function App() {
   return (
     <div className="container-fluid">
+      <Analytics />
       <Cabecera />
         <Routes>
           <Route path="/" element={<Home />} />
