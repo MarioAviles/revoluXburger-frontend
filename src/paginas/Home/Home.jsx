@@ -1,6 +1,6 @@
 import './Home.css';
 import { Link } from 'react-router-dom';
-import moneda from './assets/img/monedaRevoluxBurger.png';
+import moneda from '../../assets//img/monedaRevoluxBurger.png';
 
 const Home = () => {
   return (
