@@ -1,5 +1,6 @@
 import './Home.css';
 import { Link } from 'react-router-dom';
+import moneda from './assets/img/monedaRevoluxBurger.png';
 
 const Home = () => {
   return (
@@ -74,7 +75,7 @@ const Home = () => {
           <div className="row justify-content-center align-items-center">
             <div className="col-12 col-md-6 col-lg-4 text-center">
               <img
-                src="src/assets/img/monedaRevoluxBurger.png"
+                src={moneda}
                 alt="Moneda"
                 className="moneda"
               />
