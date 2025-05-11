@@ -74,7 +74,7 @@ const Home = () => {
           <div className="row justify-content-center align-items-center">
             <div className="col-12 col-md-6 col-lg-4 text-center">
               <img
-                src="src\assets\monedaReboluxBurger.png"
+                src="src/assets/img/monedaRevoluxBurger.png"
                 alt="Moneda"
                 className="moneda"
               />
