@@ -5,7 +5,7 @@ const HeroSection = () => {
     <div className="hero-section">
       <div className="overlay">
         <h1 className="hero-title">RevoluXBurger</h1>
-        <p className="hero-subtitle">"Más que burger... ¡es Revolux!"</p>
+        <p className="hero-subtitle">"Más que burger... ¡es <strong className='amarillo'>Revolux</strong>!"</p>
         <Link to="/carta"><button className='btn-hero'>VER AHORA</button></Link>
       </div>
     </div>

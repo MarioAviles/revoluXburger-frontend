@@ -5,6 +5,7 @@
     letter-spacing: 2px;
     margin-top: 2rem;
     width: 100%;
+    padding-top: 20px;
 }
 
 
@@ -23,34 +24,22 @@
 }
 
 .footer-text {
-    font-size: 1rem;
     color: #ffffff;
-    line-height: 2;
-    font-size: 1rem;
-    font-family: "Poppins", sans-serif;
-
-}
-
-
-.footer-menu li {
-    margin-bottom: 0.5rem;
-}
-
-.footer-menu li a {
-    color: #ffffff; 
-    text-decoration: none;
-    transition: color 0.3s ease;
     font-size: 1.1rem;
-    font-weight: 500;
     font-family: "Poppins", sans-serif;
     letter-spacing: 2px;
 }
 
-.footer-menu li a:hover {
-    color: #ffc107;
+.secciones a{
+    color: #ffffff;
+    font-weight: 500;
 }
 
-
+.secciones a:hover{
+    color: #FCB300;
+    transition: 0.3s;
+    transform: scale(1.5) !important;
+}
 .footer-copy {
     font-size: 1.5rem;
     color: #ffffff;

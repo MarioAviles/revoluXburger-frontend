@@ -21,20 +21,21 @@ const Footer = () => {
                     <div className="col-12 col-md-4 mb-3">
                         <h5 className="footer-title">Ubicación</h5>
                         <p className="footer-text">
-                            Calle Carlos III<br />
-                            Cartagena, Murcia, España<br />
+                            Calle Carlos III<br /> <br />
+                            Cartagena, Murcia, España<br /><br />
                             Teléfono: +34 968 53 41 48  
                         </p>
                     </div>
 
-                    <div className="col-12 col-md-4 mb-3">
+                     <div className="col-12 col-md-4 mb-3">
                         <h5 className="footer-title">Secciones</h5>
-                        <ul className="footer-menu list-unstyled">
-                            <li><Link to="/carta">CARTA</Link></li>
-                            <li><Link to="/reservas">RESERVAS</Link></li>
-                            <li><Link to="/login">REGISTRO</Link></li>
-                        </ul>
+                        <p className="secciones footer-text ">
+                            <Link to="/carta">Carta</Link><br /> <br />
+                            <Link to="/reservas">Reservas</Link><br /> <br />
+                            <Link to="/login">Registro</Link> 
+                        </p>
                     </div>
+
                 </div>
                 
                 <div className="text-center mt-3 ">

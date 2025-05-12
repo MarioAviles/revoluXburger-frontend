@@ -18,6 +18,8 @@ function App() {
           <Route path="/reservas" element={<Reservas />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Registro />} />
+          <Route path="/carta/:seccion" element={<Carta />} />
+          <Route path="*" element={<h1><br />404 - Página no encontrada</h1>} />
         </Routes>
       <Footer />
     </div>

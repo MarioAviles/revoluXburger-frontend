@@ -13,8 +13,8 @@ const PuntosBurger = () => {
           </div>
           <div className="col-12 col-md-6 col-lg-6 text-center">
             <p className="texto-puntos mt-4 p-3">
-              ¡Regístrate ahora y empieza a acumular XCoin con cada compra!
-              Canjea tus XCoins por descuentos exclusivos y disfruta de
+              ¡Regístrate y acumula  <strong className='amarillo'>XCoins</strong> con cada compra! <br />
+              <br />Canjea tus <strong className='amarillo'>XCoins</strong> por descuentos exclusivos y disfruta de
               nuestras deliciosas hamburguesas.
             </p>
             <Link to="/login" className="btn-custom btn">

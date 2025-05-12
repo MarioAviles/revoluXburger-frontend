@@ -26,6 +26,7 @@
     padding-top: 10px;
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 3px;
+    font-weight: bold;
 }
 
 .navbar-nav .nav-link:hover {

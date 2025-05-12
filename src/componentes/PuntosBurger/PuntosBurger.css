@@ -6,6 +6,7 @@
     text-align: center;
     padding-top: 3rem !important;
     padding-bottom: 3rem !important;
+    width: 100%;
 }
 
 .texto-puntos {
@@ -16,15 +17,20 @@
     letter-spacing: 2px;
 }
 
+.amarillo {
+    color: #fcb300;
+}
+
 .moneda {
-    width: 200px;
-    height: 200px;
+    width: 350px;
+    height: 350px;
     transition: transform 0.7s ease;
     margin: 0 auto;
+    margin-left: -0.5px;
 }
 
 .moneda:hover {
-    transform: rotate(360deg) scale(1.15) translateY(-10px);
+    transform: rotate(360deg) scale(1.10) translateY(-10px);
 }
 
 .btn-custom {

@@ -1,4 +1,18 @@
-/*
-Va a recoger los datos del servicio y los va a transformar en un array de objetos
-con la estructura que necesita el componente.
-*/
+import { useEffect, useState } from "react";
+import { getCategorias } from "../servicios/getCategorias";
+
+const useCategorias = () => {    
+    const [listaCategorias, setListaCategorias] = useState([]);
+       
+    function obtenerCategorias() {
+        getCategorias().then(data => {
+            setListaCategorias(data.listaCategorias);
+        });
+    }
+
+    useEffect(obtenerCategorias, []);
+
+    return listaCategorias;
+}
+
+export default useCategorias;
