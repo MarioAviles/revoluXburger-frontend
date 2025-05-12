@@ -25,7 +25,7 @@ body {
 
 /* Contenedor principal */
 .container-fluid {
-    padding: 0 !important;
+   padding: 0 !important;
     width: 100% !important;
     height: 100%;
     display: flex;
@@ -34,7 +34,6 @@ body {
     align-items: center;
     text-align: center;
     margin: 0 auto;
-    /* Elimina max-width si no es necesario */
 }
 
 /* Asegura que las imágenes sean responsivas */
@@ -43,11 +42,6 @@ img {
     height: auto;
     display: block;
     margin: 0 auto;
-}
-
-/* Centrado de texto y contenido */
-.text-center {
-    text-align: center;
 }
 
 .justify-content-center {
@@ -78,6 +72,6 @@ button:hover, .btn:hover {
     }
 
     .container-fluid {
-        padding: 0 1rem;
+        padding: 0 0 !important;
     }
 }

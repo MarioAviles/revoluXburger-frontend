@@ -28,6 +28,10 @@
     text-align: center;
 }
 
+.btn-hero{
+    font-size: 22px;
+    margin-top: 10px;
+}
 .hero-title {
     font-size: 4rem;
     font-weight: bold;
@@ -42,6 +46,7 @@
     font-weight: 400;
     font-family: "Poppins", sans-serif;
     color: #ffffff;
+    padding-bottom: 5px;
 }
 
 @media (max-width: 768px) {

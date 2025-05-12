@@ -6,6 +6,7 @@ import Reservas from './paginas/Reservas/Reservas';
 import Login from './paginas/Login/Login';
 import Cabecera from './componentes/Cabecera/Cabecera';
 import Footer from './componentes/Footer/Footer';
+import Registro from './paginas/Registro/Registro';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/carta" element={<Carta />} />
           <Route path="/reservas" element={<Reservas />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/registro" element={<Registro />} />
         </Routes>
       <Footer />
     </div>

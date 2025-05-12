@@ -30,9 +30,9 @@ const Footer = () => {
                     <div className="col-12 col-md-4 mb-3">
                         <h5 className="footer-title">Secciones</h5>
                         <ul className="footer-menu list-unstyled">
-                            <li><Link to="/carta">Carta</Link></li>
-                            <li><Link to="/reservas">Reservas</Link></li>
-                            <li><Link to="/login">Registro</Link></li>
+                            <li><Link to="/carta">CARTA</Link></li>
+                            <li><Link to="/reservas">RESERVAS</Link></li>
+                            <li><Link to="/login">REGISTRO</Link></li>
                         </ul>
                     </div>
                 </div>

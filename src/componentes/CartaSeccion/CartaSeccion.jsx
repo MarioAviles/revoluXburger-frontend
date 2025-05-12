@@ -33,7 +33,7 @@ const CartaSeccion = () => {
           </div>
         </div>
       </div>
-      <div className="text-center mt-4 subtitulo-carta">
+      <div className="text-center mt-4 subtitulo-carta p-3">
         <p>Haz clic en la sección que más te apetezca y explora nuestra carta.</p>
       </div>
     </div>

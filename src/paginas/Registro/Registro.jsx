@@ -1,10 +1,10 @@
-import './Login.css';
+import './Registro.css';
 import { Link } from 'react-router-dom';
-const Login = () => {
+const Registro = () => {
     return (
        
-         <div className="login container text-center">
-            <h1>Iniciar Sesión</h1>
+         <div className="registro container text-center">
+            <h1>Registrate </h1>
             <form className='text-center align-items-center justify-content-center flex-column'>
                 <div className="mb-3">
                     <label htmlFor="email">Correo Electrónico</label>
@@ -14,11 +14,11 @@ const Login = () => {
                      <label htmlFor="password">Contraseña</label>
                     <input type="password" id="password" required />
                 </div>  
-                <button type="submit" className="btn btn-custom">Iniciar sesión</button>
+                <button type="submit" className="btn btn-custom">Registrarse</button>
             </form>
-              <p>¿No tienes una cuenta? <br /> <br /><Link to="/registro">Haz click y registrate ahora</Link></p>
+              <p>¿Tienes una cuenta? <br /><br /><Link to="/login">Iniciar sesión ahora</Link></p>
         </div>
     );
 };
 
-export default Login;
+export default Registro;

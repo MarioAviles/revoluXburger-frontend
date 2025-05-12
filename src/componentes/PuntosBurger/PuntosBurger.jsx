@@ -12,7 +12,7 @@ const PuntosBurger = () => {
             <img src={moneda} alt="Moneda" className="moneda" />
           </div>
           <div className="col-12 col-md-6 col-lg-6 text-center">
-            <p className="texto-puntos mt-4">
+            <p className="texto-puntos mt-4 p-3">
               ¡Regístrate ahora y empieza a acumular XCoin con cada compra!
               Canjea tus XCoins por descuentos exclusivos y disfruta de
               nuestras deliciosas hamburguesas.

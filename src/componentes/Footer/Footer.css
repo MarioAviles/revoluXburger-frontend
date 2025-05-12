@@ -19,13 +19,15 @@
     font-size: 1.7rem;
     color: #FCB300; 
     margin-bottom: 1rem;
+
 }
 
 .footer-text {
     font-size: 1rem;
     color: #ffffff;
     line-height: 2;
-        font-size: 1rem;
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
 
 }
 
@@ -39,6 +41,9 @@
     text-decoration: none;
     transition: color 0.3s ease;
     font-size: 1.1rem;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 2px;
 }
 
 .footer-menu li a:hover {
@@ -49,7 +54,9 @@
 .footer-copy {
     font-size: 1.5rem;
     color: #ffffff;
-    margin-top: 2rem;
+    margin-top: 2rem;    
+    font-family: "Bebas Neue", sans-serif;
+
 }
 
 .row {

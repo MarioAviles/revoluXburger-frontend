@@ -1,0 +1,94 @@
+.registro {
+    background-color: #343a40; /* Fondo oscuro para la sección */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
+    text-align: center; /* Centra el texto */
+    margin: 3rem auto; /* Margen superior e inferior y centrado horizontal */
+    max-width: 800px; /* Ancho máximo */
+    padding: 2rem; /* Espaciado interno */
+}
+
+h2 {
+    font-family: "Bebas Neue", sans-serif; 
+    color: #fab73d; 
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem; 
+    text-align: left; 
+}
+
+label {
+    font-family: "Poppins", sans-serif; 
+    color: #ffffff; 
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+input {
+    background-color: #212529; 
+    color: #ffffff; 
+    border: 1px solid #fab73d; 
+    border-radius: 5px; 
+    padding: 0.75rem; 
+    width: 100%; 
+    margin-bottom: 1rem; 
+}
+
+input:focus {
+    background-color: #343a40; 
+    color: #ffffff; 
+    border-color: #ffc107; 
+    box-shadow: 0 0 5px rgba(250, 183, 61, 0.5); 
+}
+
+button {
+    background-color: #fab73d; 
+    color: #343a40;
+    padding: 0.75rem 1.5rem; 
+    font-size: 1.2rem; 
+    font-family: "Bebas Neue", sans-serif; 
+    text-transform: uppercase; /* Texto en mayúsculas */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+}
+
+button:hover {
+    background-color: #ffc107; /* Fondo más claro al pasar el cursor */
+    transform: scale(1.05); /* Efecto de zoom */
+    color: #212529; /* Texto más oscuro */
+}
+
+p {
+    font-family: "Poppins", sans-serif; /* Fuente consistente */
+    color: #ffffff; /* Texto blanco */
+    margin-top: 1.5rem; /* Espaciado superior */
+}
+
+a {
+    color: #fab73d; /* Color amarillo */
+    text-decoration: none; /* Sin subrayado */
+    font-weight: bold;
+}
+
+a:hover {
+    color: #ffc107; /* Color más claro al pasar el cursor */
+    text-decoration: underline; /* Subrayado al pasar el cursor */
+}
+
+@media (max-width: 768px) {
+    .login {
+        padding: 2rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    button {
+        font-size: 1rem;
+    }
+}
