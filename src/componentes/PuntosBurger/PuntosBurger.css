@@ -1,0 +1,57 @@
+.puntos-section {
+    background-color: #343a40;
+    color: #ffffff;
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: 3px;
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.texto-puntos {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 2px;
+}
+
+.moneda {
+    width: 200px;
+    height: 200px;
+    transition: transform 0.7s ease;
+    margin: 0 auto;
+}
+
+.moneda:hover {
+    transform: rotate(360deg) scale(1.15) translateY(-10px);
+}
+
+.btn-registrarse {
+    background-color: #FCB300;
+    color: #212529;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.2rem;
+    font-family: "Bebas Neue", sans-serif;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-registrarse:hover {
+    background-color: #b17f00;
+    color: #ffffff;
+    scale: 1.05;
+}
+
+@media (max-width: 768px) {
+    .texto-puntos {
+        font-size: 1.2rem;
+    }
+
+    .moneda {
+        width: 150px;
+        height: 150px;
+    }
+}

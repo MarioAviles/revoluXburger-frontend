@@ -1,4 +1,0 @@
-/*
-Contendra el pie de pagina de la hamburgueseria
- y los enlaces a las redes sociales.
-*/

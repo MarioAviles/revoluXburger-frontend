@@ -1,17 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-/* Cabecera fija y full width */
-
 
 .cabecera {
     width: 100%;
-    z-index: 1030;
     background-color: #343a40;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     animation: fade-in 0.8s ease-in-out;
 }
 
-
-/* Logo centrado y más grande */
 .logo {
     max-height: 250px;
     height: auto;
@@ -19,7 +14,6 @@
     padding-bottom: 5px;
 }
 
-/* Menú estilizado */
 .navbar-nav .nav-item {
     margin: 0 1rem;
 }

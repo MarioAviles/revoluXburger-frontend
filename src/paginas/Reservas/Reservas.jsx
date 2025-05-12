@@ -2,9 +2,9 @@ import './Reservas.css';
 
 const Reservas = () => {   
     return (
-        <div className="container-reservas container-fluid mt-5">
+        <div className="container-reservas container text-center">
             <h1>Reservar Mesa</h1>
-            <form>
+            <form className='text-center align-items-center justify-content-center flex-column'>
                 <div className="mb-3">
                     <label htmlFor="nombre" className="form-label">Nombre</label>
                     <input 
@@ -12,6 +12,23 @@ const Reservas = () => {
                         className="form-control" 
                         id="nombre" 
                         placeholder="Introduce tu nombre" 
+                    />
+                </div>
+                  <div className="mb-3">
+                    <label htmlFor="telefono" className="form-label">Telefono</label>
+                    <input 
+                        type="text" 
+                        className="form-control" 
+                        id="telefono" 
+                        placeholder="Introduce tu telefono" 
+                    />
+                </div>
+                  <div className="mb-3">
+                    <label htmlFor="descripcion" className="form-label">Descripción</label>
+                    <textarea
+                        className="form-control" 
+                        id="descripcion" 
+                        placeholder="Introduce una breve descripción de la reserva" 
                     />
                 </div>
                 <div className="mb-3">

@@ -9,12 +9,10 @@ const Cabecera = () => {
       <nav className="navbar navbar-expand-md navbar-dark">
         <div className="container-fluid d-flex flex-column align-items-center">
           
-          {/* Logo centrado */}
           <Link to="/" className="d-block text-center my-2">
             <img src={logoRevoluX} alt="Logo RevoluX" className="logo" />
           </Link>
 
-          {/* Menú */}
           <button
             className="navbar-toggler"
             type="button"

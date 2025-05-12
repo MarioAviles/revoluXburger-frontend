@@ -1,4 +1,0 @@
-/*
-Contendra la carta de la hamburgueseria
-y los productos que se ofrecen en esta.
-*/

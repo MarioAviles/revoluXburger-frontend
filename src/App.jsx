@@ -9,7 +9,7 @@ import Footer from './componentes/Footer/Footer';
 
 function App() {
   return (
-    <div className="container-fluid">
+    <div className="container-fluid p-0 m-0">
       <Cabecera />
         <Routes>
           <Route path="/" element={<Home />} />

@@ -1,5 +1,0 @@
-/*
-Contendra un carrusel con los 
-productos populares de la 
-hamburgueseria
-*/

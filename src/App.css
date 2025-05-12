@@ -13,14 +13,71 @@
     font-style: normal;
   }
 
-  html, body{
-    overflow-x: hidden;
-  }
-  
-.container-fluid {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #2c2c2c; /* Fondo oscuro */
+    color: #ffffff;
+    font-family: "Poppins", sans-serif;
+    width: 100% !important;
+    overflow-x: hidden; /* Evita el scroll horizontal */
+}
 
+/* Contenedor principal */
+.container-fluid {
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    /* Elimina max-width si no es necesario */
+}
+
+/* Asegura que las imágenes sean responsivas */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Centrado de texto y contenido */
+.text-center {
+    text-align: center;
+}
+
+.justify-content-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Botones globales */
+button, .btn {
+    font-family: "Bebas Neue", sans-serif;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+button:hover, .btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    .container-fluid {
+        padding: 0 1rem;
+    }
 }
