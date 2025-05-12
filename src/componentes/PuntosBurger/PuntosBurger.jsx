@@ -17,7 +17,7 @@ const PuntosBurger = () => {
               Canjea tus XCoins por descuentos exclusivos y disfruta de
               nuestras deliciosas hamburguesas.
             </p>
-            <Link to="/login" className="btn btn-registrarse">
+            <Link to="/login" className="btn-custom btn">
               Regístrate Ahora
             </Link>
           </div>

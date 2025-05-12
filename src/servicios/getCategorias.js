@@ -1,0 +1,4 @@
+/*
+Va a realizar la consulta a la API para obtener las categorias
+y devolverlas en formato JSON.
+*/

@@ -31,7 +31,8 @@
 .btn-hero{
     font-size: 22px;
     margin-top: 10px;
-}
+    background-color: #fcb300;
+    }
 .hero-title {
     font-size: 4rem;
     font-weight: bold;

@@ -4,7 +4,8 @@
     font-family: "Bebas Neue", sans-serif;
     letter-spacing: 3px;
     text-align: center;
-    padding: 3rem 0;
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
 }
 
 .texto-puntos {
@@ -26,23 +27,22 @@
     transform: rotate(360deg) scale(1.15) translateY(-10px);
 }
 
-.btn-registrarse {
-    background-color: #FCB300;
-    color: #212529;
-    padding: 0.75rem 1.5rem;
-    font-size: 1.2rem;
-    font-family: "Bebas Neue", sans-serif;
-    text-transform: uppercase;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    text-decoration: none;
+.btn-custom {
+    background-color: #fab73d; 
+    color: #343a40; 
+    border: none; 
+    padding: 0.75rem 1.5rem; 
+    font-size: 1.2rem; 
+    border-radius: 5px; 
+    transition: background-color 0.3s ease, transform 0.2s ease; 
 }
 
-.btn-registrarse:hover {
-    background-color: #b17f00;
-    color: #ffffff;
-    scale: 1.05;
+.btn-custom:hover {
+    background-color: #ffc107; 
+    transform: scale(1.05); 
+    color: #212529; 
+    text-decoration: none;
+   
 }
 
 @media (max-width: 768px) {

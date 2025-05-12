@@ -1,0 +1,4 @@
+/*
+Va a recoger los datos del servicio y los va a transformar en un array de objetos
+con la estructura que necesita el componente.
+*/
