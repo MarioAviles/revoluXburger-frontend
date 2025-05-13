@@ -14,7 +14,7 @@
 
 .categoria-item {
     position: relative;
-    background-color: #343a40; /* Fondo oscuro para los recuadros */
+    background-color: #343a40; /* Fondo gris oscuro */
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);

@@ -1,16 +1,22 @@
 import './App.css';
+import React from 'react';
+import LazyLoad from 'react-lazy-load';
 import { Routes, Route } from 'react-router-dom';
 import Home from './paginas/Home/Home';
 import Carta from './paginas/Carta/Carta';
 import Reservas from './paginas/Reservas/Reservas';
 import Login from './paginas/Login/Login';
 import Cabecera from './componentes/Cabecera/Cabecera';
-import Footer from './componentes/Footer/Footer';
 import Registro from './paginas/Registro/Registro';
+import ScrollUpDown from './componentes/ScrollUpDown/ScrollUpDown';
+
+const Footer = React.lazy(() => import('./componentes/Footer/Footer'));
+import { Suspense } from 'react'
+
 
 function App() {
   return (
-    <div className="container-fluid p-0 m-0">
+    <div className="container-fluid w-100 p-0 m-0 d-flex min-vh-100 flex-column">
       <Cabecera />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -21,7 +27,22 @@ function App() {
           <Route path="/carta/:seccion" element={<Carta />} />
           <Route path="*" element={<h1><br />404 - Página no encontrada</h1>} />
         </Routes>
-      <Footer />
+
+        <Suspense fallback={"Cargando pie de página"}>
+      
+              {/* En el componente Pie, estamos usando React.lazy para cargarlo de forma dinámica */}
+                <LazyLoad offset={250} className='w-100'>
+      
+              {/* En el componente LazyLoad, estamos usando el offset para cargar 
+                el componente Pie cuando esté a 250px de la vista del usuario */}
+                
+                  <Footer />
+      
+                </LazyLoad>
+      
+      </Suspense>
+
+        <ScrollUpDown />
     </div>
   );
 }

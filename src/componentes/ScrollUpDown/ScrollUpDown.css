@@ -1,0 +1,42 @@
+.ir-arriba {
+    display: inline-block;
+    padding: 10px;
+    background: #FCB300; /* Color amarillo consistente con la página */
+    border-radius: 25px;
+    font-size: 20px;
+    color: #343a40; /* Texto oscuro para contraste */
+    cursor: pointer;
+    position: fixed;
+    bottom: 75px;
+    right: 20px;
+    z-index: 1;
+    border: 1px solid #343a40; /* Borde oscuro */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.ir-arriba:hover {
+    background: #ffc107; /* Color amarillo más claro al pasar el cursor */
+}
+
+.ir-abajo {
+    display: inline-block;
+    padding: 10px;
+    background: #FCB300; /* Color amarillo consistente con la página */
+    border-radius: 25px;
+    font-size: 20px;
+    color: #343a40; /* Texto oscuro para contraste */
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1;
+    border: 1px solid #343a40; /* Borde oscuro */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.ir-abajo:hover {
+    background: #ffc107; /* Color amarillo más claro al pasar el cursor */
+}
+.girada {
+    transform: rotate(180deg);
+}

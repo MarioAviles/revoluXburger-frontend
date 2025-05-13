@@ -19,7 +19,10 @@ const Carta = () => {
     return <h1 className="text-center mt-5">Sección no encontrada</h1>;
   }
 
+
+    {/* Antes de mostrar cada categoria, se pondra un ajax loader para saber que se estan cargando los datos */}
   return (
+
     <div className="carta container py-5">
       <h1 className="titulo-carta mb-4">{seccion.charAt(0).toUpperCase() + seccion.slice(1)}</h1>
       <div className="row">

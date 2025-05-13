@@ -4,11 +4,14 @@
     border-radius: 10px; /* Bordes redondeados */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
     text-align: center; /* Centra el texto */
-    margin: 3rem !important; /* Margen superior e inferior */
+    margin: 3rem auto !important; /* Margen superior e inferior y centrado horizontal */
     max-width: 800px; /* Ancho máximo */
     padding-top: 2rem;
     padding-bottom: 2rem;
-
+    display: flex; /* Asegura que el contenido interno sea flexible */
+    flex-direction: column; /* Alinea los elementos en columna */
+    align-items: center; /* Centra los elementos horizontalmente */
+    justify-content: center; /* Centra los elementos verticalmente */
 }
 
 h1 {
