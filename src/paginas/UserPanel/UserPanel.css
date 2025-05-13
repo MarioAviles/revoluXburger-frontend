@@ -1,0 +1,30 @@
+.user-panel {
+    background-color: #2c2c2c;
+    color: #ffffff;
+    font-family: "Poppins", sans-serif;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.user-panel h1 {
+    color: #FCB300;
+    font-family: "Bebas Neue", sans-serif;
+    margin-bottom: 20px;
+}
+
+.user-panel button {
+    font-family: "Bebas Neue", sans-serif;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FCB300;
+    color: #343a40;
+    transition: all 0.3s ease;
+}
+
+.user-panel button:hover {
+    background-color: #ffc107;
+    transform: scale(1.05);
+}
