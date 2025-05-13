@@ -16,5 +16,3 @@ const useBebidas = () => {
 }
 
 export default useBebidas;
-
-
