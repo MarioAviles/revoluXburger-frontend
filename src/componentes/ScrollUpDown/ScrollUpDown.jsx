@@ -2,31 +2,27 @@ import './ScrollUpDown.css'
 
 const ScrollUpDown = () => {
 
-    // Función para hacer scroll hacia arriba
+      // Función para hacer scroll hacia arriba de forma suave
     function scrollup() {
-
-        // Con window.scrollTo(0, 0) hacemos scroll hacia arriba siendo el primer 0 el eje X (Derecha, Izquierda).
-
-        window.scrollTo(0, 0);
+        // Usamos scrollIntoView para ir al principio de la página de forma suave
+        document.documentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // Función para hacer scroll hacia abajo
-
+    // Función para hacer scroll hacia abajo de forma suave
     function scrollDown() {
-
-        // Con window.scrollTo(0, document.body.scrollHeight) hacemos scroll hacia abajo siendo 0 el eje X (Derecha, Izquierda)
-        window.scrollTo(0, document.body.scrollHeight);
+        // Usamos scrollIntoView para ir al final de la página de forma suave
+        document.documentElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
 
     return (
         <div>
-            <span className="ir-arriba"
-                id="button-up"
-                onClick={scrollup}>^
+
+            <span className="ir-arriba" onClick={scrollup} aria-label="Subir">
+                ↑
             </span>
-            <span className="ir-abajo girada"
-                id="button-down"
-                onClick={scrollDown}>^
+
+            <span className="ir-abajo" onClick={scrollDown} aria-label="Bajar">
+                ↓
             </span>
 
         </div>

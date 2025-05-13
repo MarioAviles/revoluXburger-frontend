@@ -20,17 +20,13 @@ html, body {
     color: #ffffff;
     font-family: "Poppins", sans-serif;
     width: 100% !important;
-    overflow-x: hidden; /* Evita el scroll horizontal */
-    height: 100% !important;
-    min-height: 100% !important;
-    overflow-y: auto !important;
-
 }
 
-/* Contenedor principal */
-
-
-
+.container-fluid {
+    padding: 0;
+    width: 100%;
+    overflow: hidden; /* Asegura que el contenedor no se salga del área visible */
+}
 
 /* Asegura que las imágenes sean responsivas */
 img {
@@ -39,7 +35,6 @@ img {
     display: block;
     margin: 0 auto;
 }
-
 
 /* Botones globales */
 button, .btn {

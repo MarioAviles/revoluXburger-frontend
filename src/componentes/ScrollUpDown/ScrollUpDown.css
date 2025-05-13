@@ -12,6 +12,7 @@
     z-index: 1;
     border: 1px solid #343a40; /* Borde oscuro */
     transition: background-color 0.3s ease, transform 0.3s ease;
+    /* Añadir overflow oculto aquí si es necesario */
 }
 
 .ir-arriba:hover {
@@ -37,6 +38,7 @@
 .ir-abajo:hover {
     background: #ffc107; /* Color amarillo más claro al pasar el cursor */
 }
+
 .girada {
-    transform: rotate(180deg);
+    transform: rotate(180deg); /* Esta propiedad rota el icono de "bajar". Si no quieres rotarlo, puedes eliminarla */
 }
