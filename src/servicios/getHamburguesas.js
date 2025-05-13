@@ -11,7 +11,6 @@ export async function getHamburguesas() {
             precio: hamburguesa.price,
             imagen: hamburguesa.imageUrl
         }));
-        console.log(listaHamburguesas);
     return {
         listaHamburguesas
     };

@@ -12,8 +12,7 @@ const useProducto = (producto) => {
             setCargando(false);
         });
     }
-    useEffect(() => obtenerProducto, [producto]);
-
+useEffect(() => {obtenerProducto();}, [producto]);
     return { productoSeleccionado, cargando };
 };
 

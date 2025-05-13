@@ -16,7 +16,7 @@ const Footer = React.lazy(() => import('./componentes/Footer/Footer'));
 
 function App() {
   return (
-    <div className="container-fluid w-100 p-0 m-0 d-flex min-vh-100 flex-column">
+    <div className="container-fluid w-100 p-0 m-0">
       <Cabecera />
 
         <Routes>
