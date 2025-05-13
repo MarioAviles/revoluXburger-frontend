@@ -7,24 +7,26 @@ const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    // De momento he puesto esta URL pero no funciona
-    const response = await fetch('https://revoluxburger-backend.onrender.com/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        name: event.target.name.value,
-        password: event.target.password.value,
-      }),
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const username = event.target.username.value;
+    const password = event.target.password.value;
 
-    const data = await response.json();
+    try {
+      const response = await fetch('https://revoluxburger-backend.onrender.com/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
 
-    if (data.token) {
-      localStorage.setItem('token', data.token); // Guarda el token
-      localStorage.setItem('user', JSON.stringify(data.user)); // Guarda los datos del usuario
-      navigate('/panel'); // Redirige al panel de usuario
-    } else {
-      alert('Credenciales incorrectas');
+      if (!response.ok) {
+        throw new Error('Credenciales incorrectas');
+      }
+
+      const data = await response.json();
+
+      localStorage.setItem('token', data.token);
+      navigate('/panel');
+    } catch (error) {
+      alert(error.message);
     }
   };
 
@@ -33,12 +35,12 @@ const Login = () => {
       <h1>Iniciar Sesión</h1>
       <form onSubmit={handleLogin} className="text-center align-items-center justify-content-center flex-column">
         <div className="mb-3">
-          <label htmlFor="name">Nombre de usuario</label>
-          <input type="name" id="name" required />
+          <label htmlFor="username">Nombre de usuario</label>
+          <input type="text" id="username" name="username" required />
         </div>
         <div className="mb-3">
           <label htmlFor="password">Contraseña</label>
-          <input type="password" id="password" required />
+          <input type="password" id="password" name="password" required />
         </div>
         <button type="submit" className="btn btn-custom">Iniciar sesión</button>
       </form>
