@@ -7,25 +7,30 @@ const Registro = () => {
   const handleRegistro = async (event) => {
     event.preventDefault();
 
-    // De momento he puesto esta URL pero no funciona
-    const response = await fetch('https://revoluxburger-backend.onrender.com/auth/register', {
-      method: 'POST',
-      body: JSON.stringify({
-        name: event.target.name.value,
-        email: event.target.email.value,
-        password: event.target.password.value,
-      }),
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const username = event.target.username.value;
+    const email = event.target.email.value;
+    const password = event.target.password.value;
 
-    const data = await response.json();
+    try {
+      const response = await fetch('https://revoluxburger-backend.onrender.com/auth/register', {
+        method: 'POST',
+        body: JSON.stringify({
+          username, // Cambié 'name' a 'username'
+          email,
+          password,
+        }),
+        headers: { 'Content-Type': 'application/json' },
+      });
 
-    if (data.token) {
-      localStorage.setItem('token', data.token); // Guarda el token
-      localStorage.setItem('user', JSON.stringify(data.user)); // Guarda los datos del usuario
-      navigate('/panel'); // Redirige al panel de usuario
-    } else {
-      alert('Error al registrarse');
+      if (!response.ok) {
+        throw new Error('Error al registrarse');
+      }
+
+      // Si el registro fue exitoso, redirige al login
+      alert('Registro exitoso! Ahora puedes iniciar sesión');
+      navigate('/login');
+    } catch (error) {
+      alert(error.message);
     }
   };
 
@@ -34,20 +39,20 @@ const Registro = () => {
       <h1>Regístrate</h1>
       <form onSubmit={handleRegistro} className="text-center align-items-center justify-content-center flex-column">
         <div className="mb-3">
-          <label htmlFor="name">Nombre</label>
-          <input type="text" id="name" required />
+          <label htmlFor="username">Nombre de usuario</label>
+          <input type="text" id="username" name="username" required />
         </div>
         <div className="mb-3">
           <label htmlFor="email">Correo Electrónico</label>
-          <input type="email" id="email" required />
+          <input type="email" id="email" name="email" required />
         </div>
         <div className="mb-3">
           <label htmlFor="password">Contraseña</label>
-          <input type="password" id="password" required />
+          <input type="password" id="password" name="password" required />
         </div>
         <button type="submit" className="btn btn-custom">Registrarse</button>
       </form>
-      <p>¿Tienes una cuenta? <br /><br /><Link to="/login">Inicia sesión ahora</Link></p>
+      <p>¿Ya tienes una cuenta? <br /><br /><Link to="/login">Inicia sesión ahora</Link></p>
     </div>
   );
 };
