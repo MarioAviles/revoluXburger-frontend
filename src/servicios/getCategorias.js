@@ -1,13 +1,13 @@
 export async function getCategorias() {
-
     const fetchCategorias = `https://revoluxburger-backend.onrender.com/menu`;
 
     const categoriasResponse = await fetch(fetchCategorias)
         .then(response => response.json());
 
-    const listaCategorias = [...new Set(categoriasResponse.map(item => item.categoria))] // Extrae categorías únicas
+    // Extrae categorías únicas y las mapea correctamente
+    const listaCategorias = [...new Set(categoriasResponse.map(item => item.category))] 
         .map(categoria => ({
-            nombre: categoria
+            nombre: categoria 
         }));
 
     return {
@@ -15,5 +15,3 @@ export async function getCategorias() {
     };
 }
 
-/* Esto es provisional para que el host pueda cargar la página, ya que las categorias 
-no se van a coger desde ahí, pero es necesario para que el componente se renderize correctamente*/
