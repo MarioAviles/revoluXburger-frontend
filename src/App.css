@@ -48,7 +48,6 @@ button, .btn {
 
 button:hover, .btn:hover {
     transform: scale(1.05);
-    opacity: 0.9;
 }
 
 /* Ajustes responsivos */

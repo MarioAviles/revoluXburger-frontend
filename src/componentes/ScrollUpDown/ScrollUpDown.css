@@ -10,7 +10,6 @@
     bottom: 75px;
     right: 20px;
     z-index: 1;
-    border: 1px solid #343a40; /* Borde oscuro */
     transition: background-color 0.3s ease, transform 0.3s ease;
     /* Añadir overflow oculto aquí si es necesario */
 }
@@ -31,7 +30,6 @@
     bottom: 20px;
     right: 20px;
     z-index: 100;
-    border: 1px solid #343a40; /* Borde oscuro */
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 

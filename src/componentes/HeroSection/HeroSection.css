@@ -31,8 +31,16 @@
 .btn-hero{
     font-size: 22px;
     margin-top: 10px;
-    background-color: #fcb300;
-    }
+    background-color: #FCB300;
+}
+
+.btn-hero:hover{
+    background-color: #ffe344;
+    color: #343a40;
+    transition: 0.5s;
+    transform: scale(1.1);
+}
+
 .hero-title {
     font-size: 4rem;
     font-weight: bold;
