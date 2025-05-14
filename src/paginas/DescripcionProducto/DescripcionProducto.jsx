@@ -5,6 +5,7 @@ import useProducto from '../../hooks/useProducto';
 const DescripcionProducto = () => {
   const { producto } = useParams(); // Captura los parámetros de la URL
   const { productoSeleccionado, cargando } = useProducto(producto);
+  const baseImageUrl = "https://revoluxburger-backend.onrender.com";
 
   if (cargando) {
     return <h1 className="text-center mt-5">Cargando producto...</h1>;
@@ -21,7 +22,7 @@ const DescripcionProducto = () => {
       <div className="row">
         <div className="col-12 col-md-6">
           <img
-            src={productoSeleccionado.imageUrl}
+            src= {`${baseImageUrl}${productoSeleccionado.imageUrl}`}
             alt={productoSeleccionado.name}
             className="img-fluid producto-img"
           />
