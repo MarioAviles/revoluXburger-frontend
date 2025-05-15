@@ -9,13 +9,11 @@ const Footer = () => {
             <div className="container ">
 
                 <div className="row text-center">
-                    
+
                     <div className="col-12 col-md-4 mb-3">
-                        <img 
-                            src={logoRevoluX}
-                            alt="Logo RevoLuX" 
-                            className="footer-logo"
-                        />
+                        <Link to="/" className="d-block text-center my-2">
+                            <img src={logoRevoluX} alt="Logo RevoluX" className="logo" />
+                        </Link>
                     </div>
 
                     <div className="col-12 col-md-4 mb-3">
@@ -23,21 +21,21 @@ const Footer = () => {
                         <p className="footer-text">
                             Calle Carlos III<br /> <br />
                             Cartagena, Murcia, España<br /><br />
-                            Teléfono: +34 968 53 41 48  
+                            Teléfono: +34 968 53 41 48
                         </p>
                     </div>
 
-                     <div className="col-12 col-md-4 mb-3">
+                    <div className="col-12 col-md-4 mb-3">
                         <h5 className="footer-title">Secciones</h5>
                         <p className="secciones footer-text ">
                             <Link to="/carta">Carta</Link><br /> <br />
                             <Link to="/reservas">Reservas</Link><br /> <br />
-                            <Link to="/login">Registro</Link> 
+                            <Link to="/login">Registro</Link>
                         </p>
                     </div>
 
                 </div>
-                
+
                 <div className="text-center mt-3 ">
                     <p className="footer-copy">&copy; 2025 RevoluXBurger. Todos los derechos reservados.</p>
                 </div>

@@ -66,6 +66,7 @@
     color: #ffffff ; /* Color blanco */
     font-size: 1.2rem;
     font-family: "Bebas Neue", sans-serif;
-    letter-spacing: 3px;
+    font-weight: lighter;
+    letter-spacing: 1px;
     margin-top: -1.8rem;
 }
