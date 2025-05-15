@@ -37,7 +37,7 @@ const Cabecera = () => {
                 <Link className="nav-link" to="/reservas">Reservas</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/login">Xcoins</Link>
+                <Link className="nav-link" to="/panel">Cuenta</Link>
               </li>
             </ul>
           </div>

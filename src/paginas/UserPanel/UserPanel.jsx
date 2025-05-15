@@ -1,8 +1,9 @@
 import './UserPanel.css';
 import useAuthenticatedUser from '../../hooks/useAuthenticatedUser';
-
+import { useNavigate } from 'react-router-dom';
 const UserPanel = () => {
   const { user, loading, error } = useAuthenticatedUser();
+    const navigate = useNavigate();
 
   if (loading) {
     return (
@@ -19,7 +20,12 @@ const UserPanel = () => {
         <p className="text-center">{error}</p>
       </div>
     );
+    
   }
+
+  if (!loading && !user) {
+          navigate('/login');
+      }
 
   return (
     <div className="user-panel container py-5">
@@ -35,7 +41,7 @@ const UserPanel = () => {
             className="btn btn-danger"
             onClick={() => {
               localStorage.clear(); // Limpia el almacenamiento local
-              window.location.href = '/login'; // Redirige al login
+              navigate('/login'); // Redirige al login
             }}
           >
             Cerrar Sesión

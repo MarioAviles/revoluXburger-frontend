@@ -16,14 +16,17 @@ const Login = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
+          console.log('Response Status:', response.status); // Verifica el código de estado
 
       if (!response.ok) {
         throw new Error('Credenciales incorrectas');
       }
 
       const data = await response.json();
+          console.log('Response Data:', data); // Verifica el contenido de la respuesta
 
       localStorage.setItem('token', data.token);
+      console.log('Redirigiendo al panel...');
       navigate('/panel');
     } catch (error) {
       alert(error.message);

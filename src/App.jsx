@@ -1,5 +1,5 @@
 import './App.css';
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './paginas/Home/Home';
 import Carta from './paginas/Carta/Carta';
@@ -14,7 +14,33 @@ import UserPanel from './paginas/UserPanel/UserPanel'; // Importa el panel de us
 const Footer = React.lazy(() => import('./componentes/Footer/Footer'));
 
 function App() {
-  const isAuthenticated = localStorage.getItem('token'); // Verifica si el usuario está autenticado
+
+const [estaAutenticado, setEstaAutenticado] = useState(false); // Estado para manejar la autenticación
+
+  // Función para verificar si el usuario está autenticado
+  function verificarAutenticacion() {
+    const token = localStorage.getItem('token'); // Obtiene el token del almacenamiento local
+    setEstaAutenticado(!!token); // Actualiza el estado según si el token existe
+  };
+
+  function inicializarAutenticacion() {
+    verificarAutenticacion(); // Verifica la autenticación al cargar la aplicación
+
+    function manejarCambioEnStorage() {
+      verificarAutenticacion();
+      //Funcion que se ejecuta cuando hay un cambio en el localStorage
+    };
+
+    window.addEventListener('storage', manejarCambioEnStorage); // Escucha cambios en localStorage por si 
+    // el token se agrega o elimina desde otra pestaña
+
+    return () => {
+      window.removeEventListener('storage', manejarCambioEnStorage);
+    };
+  };
+
+  // useEffect que se ejecuta una vez para inicializar la autenticación
+  useEffect(inicializarAutenticacion, []);
 
   return (
     <div className="container-fluid w-100 p-0 m-0">
@@ -29,7 +55,7 @@ function App() {
         <Route path="/carta/:categoria/:producto" element={<DescripcionProducto />} />
         <Route
           path="/panel"
-          element={isAuthenticated ? <UserPanel /> : <Navigate to="/login" />}
+          element={estaAutenticado ? <UserPanel /> : <Navigate to="/login" />}
         />
         <Route path="*" element={<h1 className='text-center justify-content-center'><br />404 - Página no encontrada</h1>} />
       </Routes>

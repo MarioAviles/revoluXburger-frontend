@@ -26,10 +26,9 @@
     max-width: 100%;
     height: auto;
     margin: 0 auto;
-    transition: transform 0.6s ease, box-shadow 0.6s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border: #FCB300 2px solid;
+    box-shadow: 0 4px 8px rgba(252, 179, 0, 0.2);
 }
-
 
 @media (max-width: 768px) {
     .titulo-menu-dia {

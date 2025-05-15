@@ -38,7 +38,7 @@ export const getAllUsers = async (token) => {
 };
 
 export const getAuthenticatedUser = async (token) => {
-  const res = await fetch(`${BASE_URL}/me`, {
+  const res = await fetch(`${BASE_URL}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`, // Envía el token en el encabezado
