@@ -37,6 +37,21 @@ export const getAllUsers = async (token) => {
   return res.json();
 };
 
+export const getAuthenticatedUser = async (token) => {
+  const res = await fetch(`${BASE_URL}/me`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`, // Envía el token en el encabezado
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Error al obtener los datos del usuario autenticado");
+  }
+
+  return res.json(); // Devuelve los datos del usuario
+};
+
 export const deleteUser = async (id, token) => {
   const res = await fetch(`${BASE_URL}/${id}`, {
     method: "DELETE",

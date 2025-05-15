@@ -31,9 +31,9 @@ function App() {
           path="/panel"
           element={isAuthenticated ? <UserPanel /> : <Navigate to="/login" />}
         />
-        <Route path="*" element={<h1><br />404 - Página no encontrada</h1>} />
+        <Route path="*" element={<h1 className='text-center justify-content-center'><br />404 - Página no encontrada</h1>} />
       </Routes>
-      <Suspense fallback={<div>Cargando pie de página...</div>}>
+      <Suspense fallback={<div className='text-center justify-content-center'>Cargando pie de página...</div>}>
         <Footer />
       </Suspense>
       <ScrollUpDown />

@@ -7,7 +7,7 @@ const CartaSeccion = () => {
       <h2 className="titulo mb-4">Carta</h2>
       <div className="container">
         <div className="row">
-          <div className="col-12 col-md-6 col-lg-4 mb-4">
+          <div className="col-12 col-md-6 mb-4">
             <Link to="/carta/hamburguesas" className="menu-item menu-item-1">
               <div className="menu-overlay"></div>
               <div className="menu-text">
@@ -15,7 +15,7 @@ const CartaSeccion = () => {
               </div>
             </Link>
           </div>
-          <div className="col-12 col-md-6 col-lg-4 mb-4">
+          <div className="col-12 col-md-6 mb-4">
             <Link to="/carta/entrantes" className="menu-item menu-item-2">
               <div className="menu-overlay"></div>
               <div className="menu-text">
@@ -23,11 +23,19 @@ const CartaSeccion = () => {
               </div>
             </Link>
           </div>
-          <div className="col-12 col-md-6 col-lg-4 mb-4">
+          <div className="col-12 col-md-6 mb-4">
             <Link to="/carta/bebidas" className="menu-item menu-item-3">
               <div className="menu-overlay"></div>
               <div className="menu-text">
                 <p className="m-0">Bebidas</p>
+              </div>
+            </Link>
+          </div>
+          <div className="col-12 col-md-6 mb-4">
+            <Link to="/carta/postres" className="menu-item menu-item-4">
+              <div className="menu-overlay"></div>
+              <div className="menu-text">
+                <p className="m-0">Postres</p>
               </div>
             </Link>
           </div>

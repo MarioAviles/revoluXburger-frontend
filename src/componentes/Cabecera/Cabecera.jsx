@@ -5,7 +5,7 @@ import logoRevoluX from '../../assets/img/logoRevoluXAmarillo.png';
 const Cabecera = () => {
   return (
     
-    <header className="cabecera container-fluid text-center">
+    <header className="cabecera sticky-top container-fluid text-center">
       <nav className="navbar navbar-expand-md navbar-dark">
         <div className="container-fluid d-flex flex-column align-items-center">
           

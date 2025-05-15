@@ -61,3 +61,11 @@
 .producto-item, .producto-nombre {
     color: #FCB300; /* Color amarillo */
 }
+
+.producto-overlay .producto-precio {
+    color: #ffffff ; /* Color blanco */
+    font-size: 1.2rem;
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: 3px;
+    margin-top: -1.8rem;
+}

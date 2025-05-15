@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import useHamburguesas from '../../hooks/useHamburguesas';
 import useEntrantes from '../../hooks/useEntrantes';
 import useBebidas from '../../hooks/useBebidas';
+import usePostres from '../../hooks/usePostres';
 import CartaSeccion from '../../componentes/CartaSeccion/CartaSeccion'; // Importa el componente de sección de carta
 
 const Carta = () => {
@@ -16,6 +17,8 @@ const Carta = () => {
     productos = useEntrantes();
   } else if (seccion === 'bebidas') {
     productos = useBebidas();
+  } else if (seccion === 'postres') {
+    productos = usePostres();
   } else {
     return <CartaSeccion />; // Si no hay sección válida, muestra la sección de carta
   }
@@ -35,7 +38,7 @@ const Carta = () => {
                 <div className="producto-item">
                   <img src={producto.imagen} alt={producto.nombre} className="img-fluid producto-img" />
                   <div className="producto-overlay">
-                    <h2 className="producto-nombre">{producto.nombre}</h2>
+                    <h2 className="producto-nombre mt-3">{producto.nombre}</h2>
                     <p className="producto-precio">{producto.precio.toFixed(2)} €</p>
                   </div>
                 </div>
