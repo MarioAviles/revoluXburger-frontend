@@ -9,7 +9,7 @@ const PuntosBurger = () => {
       <div className="container-fluid">
         <div className="row justify-content-center align-items-center">
           <div className="col-12 col-md-6 col-lg-4 text-center">
-            <img src={moneda} alt="Moneda" className="moneda" />
+            <img src={moneda} alt="Moneda" className="moneda" loading="lazy" />
           </div>
           <div className="col-12 col-md-6 col-lg-6 text-center">
             <p className="texto-puntos mt-4 p-3">
