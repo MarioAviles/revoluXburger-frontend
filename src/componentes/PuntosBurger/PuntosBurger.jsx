@@ -1,6 +1,6 @@
 import './PuntosBurger.css';
 import { Link } from 'react-router-dom';
-import moneda from '../../assets/img/monedaRevoluxBurger.png';
+import moneda from '../../assets/video/monedaGirando.gif';
 
 const PuntosBurger = () => {
   return (

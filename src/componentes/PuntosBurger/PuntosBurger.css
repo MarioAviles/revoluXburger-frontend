@@ -24,14 +24,10 @@
 .moneda {
     width: 350px;
     height: 350px;
-    transition: transform 0.7s ease;
     margin: 0 auto;
     margin-left: -0.5px;
 }
 
-.moneda:hover {
-    transform: rotate(360deg) scale(1.10) translateY(-10px);
-}
 
 .btn-custom{
     font-size: 22px;
