@@ -1,4 +1,4 @@
-.hero-section {
+/* .hero-section {
     width: 100%;
     height: 75vh;
     background-image: url('../../assets/img/hero-section-img.jpg');
@@ -26,6 +26,52 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+} */
+
+.hero-section {
+    width: 100%;
+    height: 75vh;
+    /* background-image: url('../../assets/img/hero-section-img.jpg'); */
+    /* background-image: url('../../assets//video/videoBurgerGirando.gif'); */
+    /* background-size: cover; */
+    /* background-position: center;
+    background-repeat: no-repeat; */
+    position: relative;
+    margin: 0;
+    padding: 0;
+    animation: fade-in 1.5s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2c2c2c;
+    overflow: hidden;
+}
+
+.hero-burger {
+  position: absolute;
+  width: 100%; /* Ajusta según lo grande que quieras la hamburguesa */
+  max-width: 70em;
+  height: auto;
+  z-index: 1;
+  opacity: 0.4; /* opcional: para no tapar demasiado el contenido */
+  margin-top: -13em;
+}
+
+.hero-overlay-dark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Oscurece el fondo sin tapar GIF */
+  z-index: 2;
+}
+
+.overlay {
+  z-index: 3;
+  position: relative;
+  text-align: center;
+  color: white;
 }
 
 .btn-hero{
