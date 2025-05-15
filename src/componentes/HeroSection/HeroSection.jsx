@@ -1,6 +1,6 @@
 import './HeroSection.css';
 import { Link } from 'react-router-dom';
-import burger from '../../assets/video/videoBurgerGirando.gif';
+import burger from '../../assets/video/videoBurgers.gif';
 const HeroSection = () => {
   return (
     <div className="hero-section">
