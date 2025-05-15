@@ -29,7 +29,7 @@ const DescripcionProducto = () => {
         </div>
         <div className="col-12 col-md-6">
           <p className="producto-descripcion">{productoSeleccionado.description}</p>
-          <p className="producto-precio">Precio: {productoSeleccionado.price} €</p>
+          <p className="producto-precio">Precio: {productoSeleccionado.price.toFixed(2)} €</p>
           <p className="producto-puntos">Puntos: {productoSeleccionado.points}</p>
         </div>
       </div>
