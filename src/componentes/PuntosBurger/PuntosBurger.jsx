@@ -17,8 +17,8 @@ const PuntosBurger = () => {
               <br />Canjea tus <strong className='amarillo'>XCoins</strong> por descuentos exclusivos y disfruta de
               nuestras deliciosas hamburguesas.
             </p>
-            <Link to="/login" className="btn-custom btn">
-              Regístrate Ahora
+            <Link to="/login" >
+              <button className="btn-custom">Regístrate Ahora</button>
             </Link>
           </div>
         </div>

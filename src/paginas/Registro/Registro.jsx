@@ -50,7 +50,7 @@ const Registro = () => {
           <label htmlFor="password">Contraseña</label>
           <input type="password" id="password" name="password" required />
         </div>
-        <button type="submit" className="btn btn-custom">Registrarse</button>
+        <button type="submit" className="btn-custom">Registrarse</button>
       </form>
       <p>¿Ya tienes una cuenta? <br /><br /><Link to="/login">Inicia sesión ahora</Link></p>
     </div>
