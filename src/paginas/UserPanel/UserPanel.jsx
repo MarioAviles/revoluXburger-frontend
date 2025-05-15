@@ -1,9 +1,10 @@
 import './UserPanel.css';
 import useAuthenticatedUser from '../../hooks/useAuthenticatedUser';
 import { useNavigate } from 'react-router-dom';
+
 const UserPanel = () => {
   const { user, loading, error } = useAuthenticatedUser();
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   if (loading) {
     return (
@@ -20,12 +21,11 @@ const UserPanel = () => {
         <p className="text-center">{error}</p>
       </div>
     );
-    
   }
 
   if (!loading && !user) {
-          navigate('/login');
-      }
+    navigate('/login');
+  }
 
   return (
     <div className="user-panel container py-5">

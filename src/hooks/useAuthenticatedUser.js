@@ -9,6 +9,7 @@ const useAuthenticatedUser = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem("token"); // Obtén el token del almacenamiento local
+      console.log("Token obtenido del localStorage:", token); // Verifica el token
 
       if (!token) {
         setError("No se encontró un token de autenticación. Inicia sesión.");
@@ -18,8 +19,10 @@ const useAuthenticatedUser = () => {
 
       try {
         const userData = await getAuthenticatedUser(token);
-        setUser(userData); // Guarda los datos del usuario
+        console.log("Datos del usuario obtenidos:", userData); // Verifica los datos en la consola
+        setUser(userData); // Guarda los datos del usuario en el estado
       } catch (err) {
+        console.error("Error al obtener los datos del usuario:", err.message);
         setError(err.message);
       } finally {
         setLoading(false);

@@ -42,16 +42,20 @@ export const getAuthenticatedUser = async (token) => {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`, // Envía el token en el encabezado
+      "Content-Type": "application/json",
     },
   });
 
-  if (!res.ok) {
-    throw new Error("Error al obtener los datos del usuario autenticado");
+  
+
+  try {
+    const data = await res.json(); // Convierte la respuesta a JSON
+    console.log("Datos del usuario autenticado:", data); // Verifica los datos en la consola
+    return data; // Devuelve los datos del usuario
+  } catch (error) {
+    throw new Error("Error al procesar la respuesta del servidor");
   }
-
-  return res.json(); // Devuelve los datos del usuario
 };
-
 export const deleteUser = async (id, token) => {
   const res = await fetch(`${BASE_URL}/${id}`, {
     method: "DELETE",
