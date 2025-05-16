@@ -1,28 +1,45 @@
-import React, { useState } from "react";
-import { createReservation } from "../../../servicios/reservasService";
-
-const allowedHours = [
-  "13:00", "13:15", "13:30", "13:45",
-  "14:00", "14:15", "14:30", "14:45",
-  "15:00", "15:15", "15:30", "15:45",
-  "20:00", "20:15", "20:30", "20:45",
-  "21:00", "21:15", "21:30", "21:45",
-  "22:00", "22:15", "22:30", "22:45"
-];
+import React, { useState, useEffect } from "react";
+import { createReservation, getAvailableTimes } from "../../../servicios/reservasService";
 
 const AddReservation = () => {
   const [form, setForm] = useState({
     name: "",
     phone: "",
     description: "",
-    date: "", // yyyy-MM-dd (input date)
-    time: ""  // HH:mm (from allowedHours)
+    date: "",
+    time: ""
   });
 
+  const [availableHours, setAvailableHours] = useState([]);
+  const [loadingHours, setLoadingHours] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
 
-  const handleChange = e => {
+  useEffect(() => {
+    const fetchAvailableHours = async () => {
+      if (!form.date) {
+        setAvailableHours([]);
+        return;
+      }
+
+      setLoadingHours(true);
+      setError("");
+      try {
+        const token = localStorage.getItem("token");
+        const hours = await getAvailableTimes(form.date, token);
+        setAvailableHours(hours);
+      } catch (err) {
+        setError(err.message || "Error al cargar horas disponibles");
+        setAvailableHours([]);
+      } finally {
+        setLoadingHours(false);
+      }
+    };
+
+    fetchAvailableHours();
+  }, [form.date]);
+
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -36,10 +53,8 @@ const AddReservation = () => {
       return;
     }
 
-    // Combinar fecha y hora para enviar en formato ISO-8601
-    const dateTime = form.date + "T" + form.time;
+    const dateTime = `${form.date}T${form.time}`;
 
-    // Crear objeto con el formato que espera el backend
     const reservationData = {
       name: form.name,
       phone: form.phone,
@@ -53,6 +68,7 @@ const AddReservation = () => {
       await createReservation(reservationData, token);
       setMensaje("Reserva añadida correctamente");
       setForm({ name: "", phone: "", description: "", date: "", time: "" });
+      setAvailableHours([]);
     } catch (err) {
       setError(err.message || "Error al añadir reserva");
     }
@@ -73,6 +89,7 @@ const AddReservation = () => {
             required
           />
         </div>
+
         <div className="mb-3">
           <label>Teléfono</label>
           <input
@@ -84,6 +101,7 @@ const AddReservation = () => {
             required
           />
         </div>
+
         <div className="mb-3">
           <label>Descripción</label>
           <textarea
@@ -94,6 +112,7 @@ const AddReservation = () => {
             required
           />
         </div>
+
         <div className="mb-3">
           <label>Fecha</label>
           <input
@@ -105,6 +124,7 @@ const AddReservation = () => {
             required
           />
         </div>
+
         <div className="mb-3">
           <label>Hora</label>
           <select
@@ -113,19 +133,39 @@ const AddReservation = () => {
             value={form.time}
             onChange={handleChange}
             required
+            disabled={loadingHours || (form.date && availableHours.length === 0)}
           >
-            <option value="">-- Selecciona hora --</option>
-            {allowedHours.map(hour => (
-              <option key={hour} value={hour}>
-                {hour}
+            {!form.date && (
+              <option value="" hidden>
+                -- Selecciona una fecha primero --
               </option>
-            ))}
+            )}
+            {form.date && !loadingHours && availableHours.length === 0 && (
+              <option value="" disabled>
+                No hay horas disponibles
+              </option>
+            )}
+            {form.date && !loadingHours && availableHours.length > 0 && (
+              <>
+                <option value="">-- Selecciona hora --</option>
+                {availableHours.map(hour => (
+                  <option key={hour} value={hour}>
+                    {hour}
+                  </option>
+                ))}
+              </>
+            )}
           </select>
+
+
+          {loadingHours && <small>Cargando horas disponibles...</small>}
         </div>
+
         <button className="btn btn-success" type="submit">
           Añadir
         </button>
       </form>
+
       {mensaje && <div className="alert alert-success mt-3">{mensaje}</div>}
       {error && <div className="alert alert-danger mt-3">{error}</div>}
     </div>
