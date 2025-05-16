@@ -12,7 +12,7 @@ const AdminPanel = () => {
     category: '',
     type: '',
     points: '',
-    image: '',
+    imageUrl: '',
     price: ''
 
   });
@@ -24,31 +24,41 @@ const AdminPanel = () => {
   };
 
   const handleSubmit = async e => {
-    e.preventDefault();
-    setSuccess(false);
-    setError(null);
-    try {
-      const token = localStorage.getItem('token');
-      const res = await fetch('https://revoluxburger-backend.onrender.com/menu', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(form)
-      });
-      if (!res.ok) throw new Error('Error al añadir producto');
-      setSuccess(true);
-      setForm({ name: '', description: '', category: '', type: '', points: '', image: '', price: '' });
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+  e.preventDefault();
+  setSuccess(false);
+  setError(null);
+  try {
+    const token = localStorage.getItem('token');
+    // Prepara el objeto con los nombres y tipos correctos
+    const dataToSend = {
+      name: form.name,
+      description: form.description,
+      category: form.category,
+      type: form.type,
+      points: Number(form.points),
+      imageUrl: form.imageUrl,
+      price: Number(form.price)
+    };
+    const res = await fetch('https://revoluxburger-backend.onrender.com/menu', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(dataToSend)
+    });
+    if (!res.ok) throw new Error('Error al añadir producto');
+    setSuccess(true);
+    setForm({ name: '', description: '', category: '', type: '', points: '', imageUrl: '', price: '' });
+  } catch (err) {
+    setError(err.message);
+  }
+};
 
   return (
     <div className="admin-panel container py-5">
       <h2 className="mb-4 text-center">Panel de Administración</h2>
-      <div className="admin-form-box p-4 mx-auto" style={{ maxWidth: 500, background: "#232323", borderRadius: 10 }}>
+      <div className="admin-form-box p-4 mx-auto" >
         <h4 className="mb-3 text-warning">Añadir producto al menú</h4>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -83,7 +93,7 @@ const AdminPanel = () => {
           </div>
           <div className="mb-3">
             <label className="form-label text-light">Imagen (URL)</label>
-            <input type="text" className="form-control" name="image" value={form.image} onChange={handleChange} />
+            <input type="text" className="form-control" name="imageUrl" value={form.imageUrl} onChange={handleChange} />
           </div>
           <div className="mb-3">
             <label className="form-label text-light">Precio</label>

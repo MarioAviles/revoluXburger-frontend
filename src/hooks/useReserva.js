@@ -1,17 +1,24 @@
-import { useState } from "react";
-import { createReservation } from "../servicios/reservasService";
-
+import { useState } from 'react';
 const useReserva = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-  const reservar = async (reservaData) => {
+  const reservar = async (form) => {
     setLoading(true);
     setError(null);
     setSuccess(false);
     try {
-      await createReservation(reservaData);
+      const token = localStorage.getItem('token'); // <-- obtiene el token si existe
+      const res = await fetch('https://revoluxburger-backend.onrender.com/reservations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token && { Authorization: `Bearer ${token}` }) // añade la cabecera si hay token
+        },
+        body: JSON.stringify(form)
+      });
+      if (!res.ok) throw new Error('Error al realizar la reserva');
       setSuccess(true);
     } catch (err) {
       setError(err.message);
