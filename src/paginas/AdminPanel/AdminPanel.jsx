@@ -5,9 +5,12 @@ const AdminPanel = () => {
   const [form, setForm] = useState({
     name: '',
     description: '',
-    price: '',
     category: '',
-    image: ''
+    type: '',
+    points: '',
+    image: '',
+    price: ''
+
   });
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
@@ -32,7 +35,7 @@ const AdminPanel = () => {
       });
       if (!res.ok) throw new Error('Error al añadir producto');
       setSuccess(true);
-      setForm({ name: '', description: '', price: '', category: '', image: '' });
+      setForm({ name: '', description: '', category: '', type: '', points: '', image: '', price: '' });
     } catch (err) {
       setError(err.message);
     }
@@ -53,16 +56,48 @@ const AdminPanel = () => {
             <textarea className="form-control" name="description" value={form.description} onChange={handleChange} required />
           </div>
           <div className="mb-3">
-            <label className="form-label text-light">Precio</label>
-            <input type="number" className="form-control" name="price" value={form.price} onChange={handleChange} required />
+            <label className="form-label text-light">Categoría</label>
+            <select
+              className="form-control"
+              name="category"
+              value={form.category}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Selecciona una categoría</option>
+              <option value="Burger">Burger</option>
+              <option value="Entrante">Entrante</option>
+              <option value="Bebida">Bebida</option>
+              <option value="Postre">Postre</option>
+            </select>
           </div>
           <div className="mb-3">
-            <label className="form-label text-light">Categoría</label>
-            <input type="text" className="form-control" name="category" value={form.category} onChange={handleChange} required />
+            <label className="form-label text-light">Tipo</label>
+            <select
+              className="form-control"
+              name="type"
+              value={form.type}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Selecciona un tipo</option>
+              <option value="Medallón">Medallon</option>
+              <option value="Pollo">Pollo</option>
+              <option value="Vegana">Vegana</option>
+              <option value="Smash">Smash</option>
+            </select>
+          </div>
+          <div className="mb-3">
+            <label className="form-label text-light">Puntos</label>
+            <input type="number" step="0.01" className="form-control" name="points" value={form.points} onChange={handleChange} required />
           </div>
           <div className="mb-3">
             <label className="form-label text-light">Imagen (URL)</label>
             <input type="text" className="form-control" name="image" value={form.image} onChange={handleChange} />
+          </div>
+          <div className="mb-3">
+            <label className="form-label text-light">Precio</label>
+            <input type="number" step="0.01" className="form-control" name="price" value={form.price} onChange={handleChange} required />
           </div>
           <button type="submit" className="btn btn-warning w-100">Añadir al menú</button>
         </form>
