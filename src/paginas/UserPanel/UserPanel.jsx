@@ -22,7 +22,7 @@ const UserPanel = ({ setToken }) => {
       </div>
     );
   }
-
+console.log("Valor de user en UserPanel:", user);
   return (
     <div className="user-panel container py-5 d-flex flex-column align-items-center">
       <div className="avatar-container mb-3">

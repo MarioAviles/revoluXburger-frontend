@@ -15,14 +15,14 @@ const useAuthenticatedUser = () => {
       }
       try {
         const userData = await getAuthenticatedUser(token);
-        // Si es un array y tiene al menos un usuario, usa el primero
-        if (Array.isArray(userData) && userData.length > 0) {
-          setUser(userData[0]);
-        } else if (userData && typeof userData === "object") {
-          setUser(userData);
-        } else {
-          setUser(null);
+        let usuario = userData;
+
+        // Si es un array (admin), busca el usuario admin
+        if (Array.isArray(userData)) {
+          usuario = userData.find(user => user.role === "ADMIN") || userData[0];
         }
+
+        setUser(usuario || null);
       } catch {
         setUser(null);
       } finally {
