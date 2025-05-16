@@ -11,7 +11,11 @@ const Footer = () => {
                 <div className="row text-center">
 
                     <div className="col-12 col-md-4 mb-3">
-                        <Link to="/" className="d-block text-center my-2">
+                        <Link
+                            to="/"
+                            className="d-block text-center my-2"
+                            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                        >
                             <img src={logoRevoluX} alt="Logo RevoluX" className="logo" />
                         </Link>
                     </div>
