@@ -4,35 +4,35 @@ import { getAuthenticatedUser } from "../servicios/userService";
 const useAuthenticatedUser = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const token = localStorage.getItem("token"); // Obtén el token del almacenamiento local
-      console.log("Token obtenido del localStorage:", token); // Verifica el token
-
+      const token = localStorage.getItem("token");
       if (!token) {
-        setError("No se encontró un token de autenticación. Inicia sesión.");
+        setUser(null);
         setLoading(false);
         return;
       }
-
       try {
         const userData = await getAuthenticatedUser(token);
-        console.log("Datos del usuario obtenidos:", userData); // Verifica los datos en la consola
-        setUser(userData); // Guarda los datos del usuario en el estado
-      } catch (err) {
-        console.error("Error al obtener los datos del usuario:", err.message);
-        setError(err.message);
+        // Si es un array y tiene al menos un usuario, usa el primero
+        if (Array.isArray(userData) && userData.length > 0) {
+          setUser(userData[0]);
+        } else if (userData && typeof userData === "object") {
+          setUser(userData);
+        } else {
+          setUser(null);
+        }
+      } catch {
+        setUser(null);
       } finally {
         setLoading(false);
       }
     };
-
     fetchUser();
   }, []);
 
-  return { user, loading, error };
+  return { user, loading };
 };
 
 export default useAuthenticatedUser;

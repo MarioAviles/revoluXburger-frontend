@@ -1,7 +1,7 @@
 import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ setToken }) => {
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
@@ -16,17 +16,14 @@ const Login = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
-          console.log('Response Status:', response.status); // Verifica el código de estado
 
       if (!response.ok) {
         throw new Error('Credenciales incorrectas');
       }
 
       const data = await response.json();
-          console.log('Response Data:', data); // Verifica el contenido de la respuesta
 
-      localStorage.setItem('token', data.token);
-      console.log('Redirigiendo al panel...');
+      setToken(data.token); // Actualiza el estado global del token
       navigate('/panel');
     } catch (error) {
       alert(error.message);
