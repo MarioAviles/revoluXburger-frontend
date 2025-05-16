@@ -1,7 +1,11 @@
 import './AdminPanel.css';
 import { useState } from 'react';
+import useCategorias from '../../hooks/useCategorias';
+import useTipos from '../../hooks/useTipos';
 
 const AdminPanel = () => {
+    const categorias = useCategorias();
+    const tipos = useTipos();
   const [form, setForm] = useState({
     name: '',
     description: '',
@@ -55,36 +59,22 @@ const AdminPanel = () => {
             <label className="form-label text-light">Descripción</label>
             <textarea className="form-control" name="description" value={form.description} onChange={handleChange} required />
           </div>
-          <div className="mb-3">
-            <label className="form-label text-light">Categoría</label>
-            <select
-              className="form-control"
-              name="category"
-              value={form.category}
-              onChange={handleChange}
-              required
-            >
+           <div className="mb-3">
+            <label className="form-label text-light">Categoria</label>
+            <select className="form-control" name="category" value={form.category} onChange={handleChange} required>
               <option value="">Selecciona una categoría</option>
-              <option value="Burger">Burger</option>
-              <option value="Entrante">Entrante</option>
-              <option value="Bebida">Bebida</option>
-              <option value="Postre">Postre</option>
+              {categorias.map(cat => (
+                <option key={cat.nombre} value={cat.nombre}>{cat.nombre}</option>
+              ))}
             </select>
           </div>
           <div className="mb-3">
             <label className="form-label text-light">Tipo</label>
-            <select
-              className="form-control"
-              name="type"
-              value={form.type}
-              onChange={handleChange}
-              required
-            >
+            <select className="form-control" name="type" value={form.type} onChange={handleChange} required>
               <option value="">Selecciona un tipo</option>
-              <option value="Medallón">Medallon</option>
-              <option value="Pollo">Pollo</option>
-              <option value="Vegana">Vegana</option>
-              <option value="Smash">Smash</option>
+              {tipos.map(typ => (
+                <option key={typ.nombre} value={typ.nombre}>{typ.nombre}</option>
+              ))}
             </select>
           </div>
           <div className="mb-3">
