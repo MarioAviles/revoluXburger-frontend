@@ -3,11 +3,13 @@ import { useState } from 'react';
 import useReserva from '../../hooks/useReserva';
 
 const Reservas = () => {
+  
   const [form, setForm] = useState({
     name: '',
     phone: '',
     description: '',
-    date: ''
+    date: '',
+    time: ''
   });
   const { reservar, loading, error, success } = useReserva();
 
