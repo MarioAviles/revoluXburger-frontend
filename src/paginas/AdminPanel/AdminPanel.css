@@ -5,3 +5,113 @@
 .admin-form-box {
   box-shadow: 0 2px 8px rgba(252, 179, 0, 0.08);
 }
+
+.admin-crud-page {
+  background: #232323; /* Fondo más oscuro para contraste */
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15), 0 1.5px 6px 0 rgba(252, 179, 0, 0.10);
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin: 2rem 0;
+  max-width: 480px;
+  min-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: box-shadow 0.3s;
+  border: 1.5px solid #fcb30022;
+  position: relative;
+}
+
+.admin-crud-page h3 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.1rem;
+  color: #fcb300;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 0 2px 8px #18181833;
+}
+
+.admin-crud-page label {
+  font-weight: 600;
+  color: #fff; /* Blanco para contraste */
+  margin-bottom: 0.5rem;
+  display: block;
+  font-size: 1.05rem;
+}
+
+.admin-crud-page input,
+.admin-crud-page select,
+.admin-crud-page textarea {
+  border-radius: 7px;
+  border: 1.5px solid #fcb30099;
+  background: #181818;
+  color: #fff;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+  width: 100%;
+  transition: border 0.2s, background 0.2s, color 0.2s;
+}
+
+.admin-crud-page input:focus,
+.admin-crud-page select:focus,
+.admin-crud-page textarea:focus {
+  border-color: #fcb300;
+  outline: none;
+  background: #232323;
+  color: #fff;
+}
+
+.admin-crud-page button,
+.admin-crud-page .btn {
+  background: linear-gradient(90deg, #fcb300 60%, #ffd700 100%);
+  color: #181818;
+  font-weight: 700;
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: 7px;
+  padding: 0.8rem 2.2rem;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(252, 179, 0, 0.10);
+  transition: background 0.2s, transform 0.2s;
+  margin-top: 0.5rem;
+}
+
+.admin-crud-page button:hover,
+.admin-crud-page .btn:hover {
+  background: linear-gradient(90deg, #ffd700 60%, #fcb300 100%);
+  color: #181818;
+  transform: translateY(-2px) scale(1.04);
+}
+
+.admin-crud-page .alert {
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-top: 1.2rem;
+  padding: 0.9rem 1.2rem;
+  text-align: center;
+}
+
+.admin-crud-page .alert-success {
+  background: #eafbe7;
+  color: #1e7d2d;
+  border: 1.5px solid #b6e6b0;
+}
+
+.admin-crud-page .alert-danger,
+.admin-crud-page .alert-info {
+  background: #fff4e6;
+  color: #b85c00;
+  border: 1.5px solid #ffd699;
+}
+
+@media (max-width: 600px) {
+  .admin-crud-page {
+    padding: 1.2rem 0.5rem;
+    max-width: 98vw;
+  }
+  .admin-crud-page h3 {
+    font-size: 1.5rem;
+  }
+}

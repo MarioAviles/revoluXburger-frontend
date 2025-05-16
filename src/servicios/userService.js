@@ -66,7 +66,8 @@ export const deleteUser = async (id, token) => {
   if (!res.ok) throw new Error("Error al eliminar usuario");
 };
 
-export const updateUser = async (id, data, token) => {
+export const updateUser = async (id, data) => {
+  const token = localStorage.getItem("token");
   const res = await fetch(`${BASE_URL}/${id}`, {
     method: "PUT",
     headers: {
