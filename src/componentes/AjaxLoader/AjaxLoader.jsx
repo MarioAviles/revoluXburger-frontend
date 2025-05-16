@@ -1,8 +1,9 @@
-const AjaxLoader = (props) => {
+import loader from '../../assets/video/monedaGirando.gif';
+const AjaxLoader = () => {
 
     return (
         <div>
-            <img src={props.loader} alt="ajax-loader"/>
+            <img src={loader} alt="ajax-loader"/>
         </div>
     )
 }

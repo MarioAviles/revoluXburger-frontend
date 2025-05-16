@@ -10,21 +10,25 @@ import Registro from './paginas/Registro/Registro';
 import ScrollUpDown from './componentes/ScrollUpDown/ScrollUpDown';
 import DescripcionProducto from './paginas/DescripcionProducto/DescripcionProducto';
 import UserPanel from './paginas/UserPanel/UserPanel';
-
+import AdminPanel from './paginas/AdminPanel/AdminPanel';
+import useAuthenticatedUser from './hooks/useAuthenticatedUser';
+import AjaxLoader from './componentes/AjaxLoader/AjaxLoader';
 const Footer = React.lazy(() => import('./componentes/Footer/Footer'));
 
 function App() {
+
   // Estado para el token
-  const [token, setToken] = useState(localStorage.getItem('token'));
+ const [token, setToken] = useState(localStorage.getItem('token')); // Inicializa el token desde el localStorage
+ const { user, loading } = useAuthenticatedUser(); // Hook para obtener el usuario autenticado
 
   // Función para actualizar el token desde Login o Panel
-  const handleSetToken = (newToken) => {
+  function handleSetToken(newToken){
     if (newToken) {
-      localStorage.setItem('token', newToken);
+      localStorage.setItem('token', newToken); // Guarda el token en el localStorage
       setToken(newToken);
     } else {
-      localStorage.removeItem('token');
-      setToken(null);
+      localStorage.removeItem('token'); 
+      setToken(null); // Elimina el token del localStorage
     }
   };
 
@@ -32,22 +36,31 @@ function App() {
     <div className="container-fluid w-100 p-0 m-0">
       <Cabecera />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/carta" element={<Carta />} />
-        <Route path="/reservas" element={<Reservas />} />
-        <Route path="/login" element={<Login setToken={handleSetToken} />} />
-        <Route path="/registro" element={<Registro />} />
-        <Route path="/carta/:seccion" element={<Carta />} />
-        <Route path="/carta/:categoria/:producto" element={<DescripcionProducto />} />
-        <Route path="/panel"
-          element={token ? <UserPanel setToken={handleSetToken} /> : <Navigate to="/login" />} />
+        <Route path="/" element={<Home />} /> {/* Página de inicio */}
+        <Route path="/carta" element={<Carta />} /> {/* Página de carta */}
+        <Route path="/reservas" element={<Reservas />} /> {/* Página de reservas */}
+        <Route path="/login" element={<Login setToken={handleSetToken} />} /> {/* Página de login */}
+        <Route path="/registro" element={<Registro />} /> {/* Página de registro */}
+        <Route path="/carta/:seccion" element={<Carta />} /> {/* Página de carta por sección */}
+        <Route path="/carta/:categoria/:producto" element={<DescripcionProducto />} /> {/* Página de descripción del producto */}
+        <Route path="/panel" element={token ? <UserPanel setToken={handleSetToken} /> 
+                                            : <Navigate to="/login" />} /> {/* Página de usuario autenticado */}
+        <Route path="/admin-panel" element={
+            loading ? (<div className="text-center py-5"><AjaxLoader /></div> ) 
+                    : user && user.role === "ADMIN" ? ( <AdminPanel /> ) 
+                    : (<div className="text-center py-5 text-danger"><h2>Permiso denegado</h2></div>)
+        }/>  {/* Página de administración */}
+
         <Route path="*" element={<h1 className='text-center justify-content-center'>
-          <br />404 - Página no encontrada</h1>} />
+          <br />404 - Página no encontrada</h1>} /> {/* Página de error 404 */}
       </Routes>
-      <Suspense fallback={<div className='text-center justify-content-center'>Cargando pie de página...</div>}>
+
+      {/* Carga el pie de página de forma diferida */}
+      <Suspense fallback={<div className='text-center justify-content-center'></div>}>
         <Footer />
       </Suspense>
-      <ScrollUpDown />
+      <ScrollUpDown /> {/* Componente para desplazarse hacia arriba */}
+
     </div>
   );
 }

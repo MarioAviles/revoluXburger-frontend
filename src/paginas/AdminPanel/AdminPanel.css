@@ -1,0 +1,7 @@
+.admin-panel {
+  background: #181818;
+  min-height: 100vh;
+}
+.admin-form-box {
+  box-shadow: 0 2px 8px rgba(252, 179, 0, 0.08);
+}

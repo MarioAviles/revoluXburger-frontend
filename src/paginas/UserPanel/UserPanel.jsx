@@ -2,13 +2,12 @@ import './UserPanel.css';
 import useAuthenticatedUser from '../../hooks/useAuthenticatedUser';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-
+import AjaxLoader from '../../componentes/AjaxLoader/AjaxLoader';
 const UserPanel = ({ setToken }) => {
   const { user, loading } = useAuthenticatedUser();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Si terminó de cargar y no hay usuario válido, elimina el token y redirige
     if (!loading && !user) {
       setToken(null);
       navigate('/login', { replace: true });
@@ -18,11 +17,11 @@ const UserPanel = ({ setToken }) => {
   if (loading || !user) {
     return (
       <div className="user-panel container py-5">
-        <h1 className="text-center">Cargando...</h1>
+        <h1 className="text-center"><AjaxLoader /></h1>
       </div>
     );
   }
-console.log("Valor de user en UserPanel:", user);
+
   return (
     <div className="user-panel container py-5 d-flex flex-column align-items-center">
       <div className="avatar-container mb-3">
@@ -41,10 +40,18 @@ console.log("Valor de user en UserPanel:", user);
           <span className="user-value">{user.points}</span>
         </div>
       </div>
+      {user.role === "ADMIN" && (
+        <button
+          className="btn btn-warning mt-2 mb-2"
+          onClick={() =>  window.location.href = '/admin-panel'}
+        >
+          Ir al Panel de Administración
+        </button>
+      )}
       <button
         className="btn btn-danger mt-2"
         onClick={() => {
-          setToken(null); // Limpia el token global y localStorage
+          setToken(null);
           navigate('/login');
         }}
       >
