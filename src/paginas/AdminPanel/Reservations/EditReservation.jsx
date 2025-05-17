@@ -28,17 +28,18 @@ const EditReservation = () => {
   }, [token]);
 
   const handleSelect = (e) => {
-    const id = e.target.value;
-    setSelectedId(id);
-    const reserva = reservas.find(r => r._id === id);
-    setForm({
-      name: reserva?.name || "",
-      phone: reserva?.phone || "",
-      description: reserva?.description || "",
-      date: reserva?.date ? reserva.date.slice(0, 16) : ""
-    });
-    setMensaje("");
-  };
+  const id = e.target.value;
+  setSelectedId(id);
+  // Busca la reserva por id o _id
+  const reserva = reservas.find(r => String(r.id) === String(id) || String(r._id) === String(id));
+  setForm({
+    name: reserva?.name || "",
+    phone: reserva?.phone || "",
+    description: reserva?.description || "",
+    date: reserva?.date ? reserva.date.slice(0, 16) : ""
+  });
+  setMensaje("");
+};
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });

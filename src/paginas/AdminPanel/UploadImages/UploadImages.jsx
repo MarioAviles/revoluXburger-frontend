@@ -65,7 +65,7 @@ const UploadImages = () => {
     };
 
     return (
-        <div className="upload-images-container">
+        <div className="upload-images-container text-center">
             <h2>Subir Imagen</h2>
             <form onSubmit={handleSubmit} className="upload-form">
                 <div

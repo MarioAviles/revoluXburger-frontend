@@ -31,7 +31,7 @@ const Login = ({ setToken }) => {
   };
 
   return (
-    <div className="login container text-center">
+    <div className="login-container text-center">
       <h1>Iniciar Sesión</h1>
       <form onSubmit={handleLogin} className="text-center align-items-center justify-content-center flex-column">
         <div className="mb-3">

@@ -1,94 +1,94 @@
-.login {
-    background-color: #343a40; /* Fondo oscuro para la sección */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
-    text-align: center; /* Centra el texto */
-    margin: 3rem auto; /* Margen superior e inferior y centrado horizontal */
-    max-width: 800px; /* Ancho máximo */
-    padding: 2rem; /* Espaciado interno */
+.login-container {
+  background: #232323; /* Fondo más oscuro para contraste */
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15), 0 1.5px 6px 0 rgba(252, 179, 0, 0.10);
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin: 2rem 0;
+  max-width: 480px;
+  min-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: box-shadow 0.3s;
+  border: 1.5px solid #fcb30022;
+  position: relative;
 }
 
-h2, h1  {
-    font-family: "Bebas Neue", sans-serif; 
-    color: #fab73d; 
-    margin-bottom: 2rem;
+.login-container h3, h1 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.1rem;
+  color: #fcb300;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 0 2px 8px #18181833;
 }
 
-.form-group {
-    margin-bottom: 1.5rem; 
-    text-align: left; 
+.login-container label {
+  font-weight: 600;
+  color: #fff; /* Blanco para contraste */
+  margin-bottom: 0.5rem;
+  display: block;
+  font-size: 1.05rem;
 }
 
-label {
-    font-family: "Poppins", sans-serif; 
-    color: #ffffff; 
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-    display: block;
+.login-container input,
+.login-container select,
+.login-container textarea {
+  border-radius: 7px;
+  border: 1.5px solid #fcb30099;
+  background: #181818;
+  color: #fff;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+  width: 100%;
+  transition: border 0.2s, background 0.2s, color 0.2s;
 }
 
-input {
-    background-color: #212529; 
-    color: #ffffff; 
-    border: 1px solid #fab73d; 
-    border-radius: 5px; 
-    padding: 0.75rem; 
-    width: 100%; 
-    margin-bottom: 1rem; 
+.login-container input:focus,
+.login-container select:focus,
+.login-container textarea:focus {
+  border-color: #fcb300;
+  outline: none;
+  background: #232323;
+  color: #fff;
 }
 
-input:focus {
-    background-color: #343a40; 
-    color: #ffffff; 
-    border-color: #ffc107; 
-    box-shadow: 0 0 5px rgba(250, 183, 61, 0.5); 
+.login-container p {
+  font-weight: 600;
+  color: #fff; /* Blanco para contraste */
+  margin-bottom: 0.5rem;
+  display: block;
+  font-size: 1.05rem;
+  margin-top: 1rem;
 }
 
-button {
-    background-color: #fab73d; 
-    color: #343a40;
-    padding: 0.75rem 1.5rem; 
-    font-size: 1.2rem; 
-    font-family: "Bebas Neue", sans-serif; 
-    text-transform: uppercase; /* Texto en mayúsculas */
-    border-radius: 5px; /* Bordes redondeados */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+.login-container a {
+  color: #fcb300;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05rem;
 }
 
-button:hover {
-    background-color: #ffc107; /* Fondo más claro al pasar el cursor */
-    transform: scale(1.05); /* Efecto de zoom */
-    color: #212529; /* Texto más oscuro */
+.login-container button,
+.login-container .btn {
+  background: linear-gradient(90deg, #fcb300 60%, #ffd700 100%);
+  color: #181818;
+  font-weight: 700;
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: 7px;
+  padding: 0.8rem 2.2rem;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(252, 179, 0, 0.10);
+  transition: background 0.2s, transform 0.2s;
+  margin-top: 0.5rem;
 }
 
-p {
-    font-family: "Poppins", sans-serif; /* Fuente consistente */
-    color: #ffffff; /* Texto blanco */
-    margin-top: 1.5rem; /* Espaciado superior */
-}
-
-a {
-    color: #fab73d; /* Color amarillo */
-    text-decoration: none; /* Sin subrayado */
-    font-weight: bold;
-}
-
-a:hover {
-    color: #ffc107; /* Color más claro al pasar el cursor */
-    text-decoration: underline; /* Subrayado al pasar el cursor */
-}
-
-@media (max-width: 768px) {
-    .login {
-        padding: 2rem;
-    }
-
-    h2 {
-        font-size: 1.8rem;
-    }
-
-    button {
-        font-size: 1rem;
-    }
+.login-container button:hover,
+.login-container .btn:hover {
+  background: linear-gradient(90deg, #ffd700 60%, #fcb300 100%);
+  color: #181818;
+  transform: translateY(-2px) scale(1.04);
 }

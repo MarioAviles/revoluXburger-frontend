@@ -35,7 +35,7 @@ const Registro = () => {
   };
 
   return (
-    <div className="registro container text-center">
+    <div className="registro-container text-center">
       <h1>Regístrate</h1>
       <form onSubmit={handleRegistro} className="text-center align-items-center justify-content-center flex-column">
         <div className="mb-3">

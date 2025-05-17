@@ -31,35 +31,22 @@ const EditMenuItem = () => {
 
   // Cuando seleccionas un producto, carga sus datos en el formulario
   const handleSelect = (e) => {
-    const id = e.target.value;
-    setSelectedId(id);
-     console.log("ID seleccionado:", id);
-    console.log("Productos:", productos);
-    const prod = productos.find(p => String(p._id) === String(id));    if (!prod) {
-      setForm({
-        name: "",
-        description: "",
-        category: "",
-        type: "",
-        points: "",
-        imageUrl: "",
-        price: ""
-      });
-      setError("No se encontró el producto seleccionado.");
-      return;
-    }
-    setForm({
-      name: prod.name || "",
-      description: prod.description || "",
-      category: prod.category || "",
-      type: prod.type || "",
-      points: prod.points ?? "",
-      imageUrl: prod.imageUrl || "",
-      price: prod.price ?? ""
-    });
-    setMensaje("");
-    setError("");
-  };
+  const id = e.target.value;
+  setSelectedId(id);
+  // Busca el producto por id o _id
+  const prod = productos.find(p => String(p.id) === String(id) || String(p._id) === String(id));
+  setForm({
+    name: prod?.name || "",
+    description: prod?.description || "",
+    category: prod?.category || "",
+    type: prod?.type || "",
+    points: prod?.points ?? "",
+    imageUrl: prod?.imageUrl || "",
+    price: prod?.price ?? ""
+  });
+  setMensaje("");
+  setError("");
+};
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -131,16 +118,19 @@ const EditMenuItem = () => {
             ))}
           </select>
         </div>
-        <div className="mb-3">
-          <label>Tipo</label>
-          <select className="form-control" name="type" value={form.type} onChange={handleChange} required>
-            <option value="">Selecciona un tipo</option>
-            {tipos && tipos.length === 0 && <option disabled>No hay tipos</option>}
-            {tipos && tipos.map(typ => (
-              <option key={typ.nombre} value={typ.nombre}>{typ.nombre}</option>
-            ))}
-          </select>
-        </div>
+        {/* Solo muestra el campo tipo si la categoría es Burger */}
+        {form.category === "Burger" && (
+          <div className="mb-3">
+            <label>Tipo</label>
+            <select className="form-control" name="type" value={form.type} onChange={handleChange} required>
+              <option value="">Selecciona un tipo</option>
+              {tipos && tipos.length === 0 && <option disabled>No hay tipos</option>}
+              {tipos && tipos.map(typ => (
+                <option key={typ.nombre} value={typ.nombre}>{typ.nombre}</option>
+              ))}
+            </select>
+          </div>
+        )}
         <div className="mb-3">
           <label>Puntos</label>
           <input type="number" step="0.01" className="form-control" name="points" value={form.points} onChange={handleChange} required />

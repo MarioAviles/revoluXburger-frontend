@@ -6,8 +6,8 @@ import UploadImages from './UploadImages/UploadImages';
 
 const AdminPanel = () => {
   return (
-    <div className="admin-panel container py-5">
-      <h2 className="mb-4 text-center">Panel de Administración</h2>
+    <div className="admin-panel container-fluid py-5 px-3"> 
+      <h1 className="mb-4 text-center">Bienvenido al Panel de Administración</h1>
       <div className="row">
         <div className="col-md-4">
           <MenuItemsSection />
@@ -18,7 +18,7 @@ const AdminPanel = () => {
         <div className="col-md-4">
           <UsersSection />
         </div>
-        <div className="col-md-12">
+        <div className="col-12">
           <UploadImages />
         </div>
       </div>
