@@ -16,7 +16,7 @@ const DeleteMenuItem = () => {
     try {
       const res = await fetch(BASE_URL, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // Se envía el token en la cabecera
         },
       });
       const data = await res.json();
