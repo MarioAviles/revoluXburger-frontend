@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useCategorias from "../../../hooks/useCategorias";
 import useTipos from "../../../hooks/useTipos";
+import UploadImages from "../UploadImages/UploadImages";
 
 // Componente para añadir un producto al menú
 const AddMenuItem = () => {
@@ -120,7 +121,19 @@ const AddMenuItem = () => {
         </div>
         <div className="mb-3">
           <label>Imagen (URL)</label>
-          <input type="text" className="form-control" name="imageUrl" value={form.imageUrl} onChange={handleChange} required/>
+          <UploadImages onUpload={url => setForm(f => ({ ...f, imageUrl: url }))} />
+          {form.imageUrl && (
+            <div className="mt-2">
+              <input
+                type="text"
+                className="form-control"
+                name="imageUrl"
+                value={form.imageUrl}
+                readOnly
+              />
+              <img src={form.imageUrl} alt="preview" style={{ maxWidth: "150px", marginTop: "10px" }} />
+            </div>
+          )}
         </div>
         <div className="mb-3">
           <label>Precio</label>
@@ -128,9 +141,9 @@ const AddMenuItem = () => {
         </div>
         <button type="submit" className="btn btn-warning w-100">Añadir al menú</button>
       </form>
-     
+
       {success && <div className="alert alert-success mt-3">¡Producto añadido!</div>}
-      
+
       {error && <div className="alert alert-danger mt-3">{error}</div>}
     </div>
   );

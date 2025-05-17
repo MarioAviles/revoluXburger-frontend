@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useCategorias from "../../../hooks/useCategorias";
 import useTipos from "../../../hooks/useTipos";
+import UploadImages from "../UploadImages/UploadImages";
 
 const BASE_URL = "https://revoluxburger-backend.onrender.com/menu";
 
@@ -137,7 +138,19 @@ const EditMenuItem = () => {
         </div>
         <div className="mb-3">
           <label>Imagen (URL)</label>
-          <input type="text" className="form-control" name="imageUrl" value={form.imageUrl} onChange={handleChange} />
+          <UploadImages onUpload={url => setForm(f => ({ ...f, imageUrl: url }))} />
+          {form.imageUrl && (
+            <div className="mt-2">
+              <input
+                type="text"
+                className="form-control"
+                name="imageUrl"
+                value={form.imageUrl}
+                readOnly
+              />
+              <img src={form.imageUrl} alt="preview" style={{ maxWidth: "150px", marginTop: "10px" }} />
+            </div>
+          )}
         </div>
         <div className="mb-3">
           <label>Precio</label>

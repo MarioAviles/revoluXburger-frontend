@@ -62,28 +62,6 @@
   color: #fff;
 }
 
-.admin-crud-page button,
-.admin-crud-page .btn {
-  background: linear-gradient(90deg, #fcb300 60%, #ffd700 100%);
-  color: #181818;
-  font-weight: 700;
-  font-family: "Bebas Neue", sans-serif;
-  letter-spacing: 1px;
-  border: none;
-  border-radius: 7px;
-  padding: 0.8rem 2.2rem;
-  font-size: 1.1rem;
-  box-shadow: 0 2px 8px rgba(252, 179, 0, 0.10);
-  transition: background 0.2s, transform 0.2s;
-  margin-top: 0.5rem;
-}
-
-.admin-crud-page button:hover,
-.admin-crud-page .btn:hover {
-  background: linear-gradient(90deg, #ffd700 60%, #fcb300 100%);
-  color: #181818;
-  transform: translateY(-2px) scale(1.04);
-}
 
 .admin-crud-page .alert {
   border-radius: 6px;
