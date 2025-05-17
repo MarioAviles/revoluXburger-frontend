@@ -1,6 +1,5 @@
 export async function getHamburguesas() {
     const fetchHamburguesas = `https://revoluxburger-backend.onrender.com/menu`;
-    const baseImageUrl = "https://revoluxburger-backend.onrender.com";
 
     const hamburguesasResponse = await fetch(fetchHamburguesas)
         .then(response => response.json());
@@ -10,7 +9,7 @@ export async function getHamburguesas() {
         .map(hamburguesa => ({
             nombre: hamburguesa.name,
             precio: hamburguesa.price,
-            imagen: `${baseImageUrl}${hamburguesa.imageUrl}`
+            imagen: hamburguesa.imageUrl
         }));
     return {
         listaHamburguesas

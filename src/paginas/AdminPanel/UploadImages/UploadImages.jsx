@@ -15,7 +15,7 @@ const UploadImages = () => {
 
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("category", category);
+        formData.append("folder", category);
 
         try {
             const response = await fetch("https://revoluxburger-backend.onrender.com/uploads/image", {
@@ -26,8 +26,7 @@ const UploadImages = () => {
             if (!response.ok) throw new Error("Error al subir la imagen");
 
             const result = await response.json();
-            const fullImageUrl = `https://revoluxburger-backend.onrender.com${result.url}`;
-            setUploadResult(fullImageUrl);
+            setUploadResult(result.url);
             setFile(null);
             setCategory("");
         } catch (error) {
