@@ -3,7 +3,7 @@ import "./UploadImages.css";
 
 const UploadImages = ({ onUpload }) => {
     const [file, setFile] = useState(null);
-    const [category, setCategory] = useState("");
+    const [carpeta, setCarpeta] = useState("");
     const [uploadResult, setUploadResult] = useState("");
     const [dragActive, setDragActive] = useState(false);
     const inputRef = useRef(null);
@@ -11,11 +11,11 @@ const UploadImages = ({ onUpload }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!file || !category) return;
+        if (!file || !carpeta) return;
 
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("folder", category);
+        formData.append("folder", carpeta);
 
         try {
             const response = await fetch("https://revoluxburger-backend.onrender.com/uploads/image", {
@@ -28,7 +28,7 @@ const UploadImages = ({ onUpload }) => {
             const result = await response.json();
             setUploadResult(result.url);
             setFile(null);
-            setCategory("");
+            setCarpeta("");
         } catch (error) {
             console.error(error);
         }
@@ -60,11 +60,11 @@ const UploadImages = ({ onUpload }) => {
     };
 
     const handleUpload = async () => {
-        if (!file || !category) return;
+        if (!file || !carpeta) return;
 
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("folder", category);
+        formData.append("folder", carpeta);
 
         try {
             const response = await fetch("https://revoluxburger-backend.onrender.com/uploads/image", {
@@ -77,7 +77,7 @@ const UploadImages = ({ onUpload }) => {
             const result = await response.json();
             setUploadResult(result.url);
             setFile(null);
-            setCategory("");
+            setCarpeta("");
             if (onUpload) {
                 onUpload(result.url); // Notifica al padre la URL subida
             }
@@ -121,14 +121,14 @@ const UploadImages = ({ onUpload }) => {
                 )}
             </div>
             <div className="mb-3 mt-3">
-                <label>Categoría:</label>
+                <label>Carpeta:</label>
                 <select
                     className="form-control"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
+                    value={carpeta}
+                    onChange={(e) => setCarpeta(e.target.value)}
                     required
                 >
-                    <option value="">Selecciona una categoría</option>
+                    <option value="">Selecciona una carpeta</option>
                     <option value="burgers">Burgers</option>
                     <option value="entrantes">Entrantes</option>
                     <option value="postres">Postres</option>
@@ -138,7 +138,7 @@ const UploadImages = ({ onUpload }) => {
             <button
                 type="button"
                 className="btn btn-success"
-                disabled={!file || !category}
+                disabled={!file || !carpeta}
                 onClick={handleUpload}
             >
                 Subir Imagen
