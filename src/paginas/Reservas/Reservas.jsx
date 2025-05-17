@@ -1,88 +1,173 @@
-import './Reservas.css';
-import { useState } from 'react';
-import useReserva from '../../hooks/useReserva';
+import { useState, useEffect } from "react";
+import { createReservation, getAvailableTimes } from "../../servicios/reservasService";
 
 const Reservas = () => {
-  
   const [form, setForm] = useState({
-    name: '',
-    phone: '',
-    description: '',
-    date: '',
-    time: ''
+    name: "",
+    phone: "",
+    description: "",
+    date: "",
+    time: ""
   });
-  const { reservar, loading, error, success } = useReserva();
 
-  const handleChange = e => {
+  const [availableHours, setAvailableHours] = useState([]);
+  const [loadingHours, setLoadingHours] = useState(false);
+  const [mensaje, setMensaje] = useState("");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchAvailableHours = async () => {
+      if (!form.date) {
+        setAvailableHours([]);
+        return;
+      }
+
+      setLoadingHours(true);
+      setError("");
+      try {
+        const token = localStorage.getItem("token");
+        const hours = await getAvailableTimes(form.date, token);
+        setAvailableHours(hours);
+      } catch (err) {
+        setError(err.message || "Error al cargar horas disponibles");
+        setAvailableHours([]);
+      } finally {
+        setLoadingHours(false);
+      }
+    };
+
+    fetchAvailableHours();
+  }, [form.date]);
+
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    await reservar(form);
-    setForm({ name: '', phone: '', description: '', date: '' });
+    setMensaje("");
+    setError("");
+
+    if (!form.date || !form.time) {
+      setError("Por favor selecciona fecha y hora");
+      return;
+    }
+
+    const dateTime = `${form.date}T${form.time}`;
+
+    const reservationData = {
+      name: form.name,
+      phone: form.phone,
+      description: form.description,
+      date: dateTime
+    };
+
+    const token = localStorage.getItem("token");
+
+    try {
+      await createReservation(reservationData, token);
+      setMensaje("Reserva añadida correctamente");
+      setForm({ name: "", phone: "", description: "", date: "", time: "" });
+      setAvailableHours([]);
+    } catch (err) {
+      setError(err.message || "Error al añadir reserva");
+    }
   };
 
   return (
-    <div className="container-reservas container">
-      <h1>Reservar Mesa</h1>
-      <form className='text-center align-items-center justify-content-center flex-column' onSubmit={handleSubmit}>
+    <div className="admin-crud-page">
+      <h3>Añadir reserva</h3>
+      <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="nombre" className="form-label">Nombre</label>
+          <label>Nombre del cliente</label>
           <input
             type="text"
             className="form-control"
-            id="nombre"
             name="name"
-            placeholder="Introduce tu nombre"
             value={form.name}
             onChange={handleChange}
             required
           />
         </div>
+
         <div className="mb-3">
-          <label htmlFor="telefono" className="form-label">Teléfono</label>
+          <label>Teléfono</label>
           <input
             type="text"
             className="form-control"
-            id="telefono"
             name="phone"
-            placeholder="Introduce tu teléfono"
             value={form.phone}
             onChange={handleChange}
             required
           />
         </div>
+
         <div className="mb-3">
-          <label htmlFor="descripcion" className="form-label">Descripción</label>
+          <label>Descripción</label>
           <textarea
             className="form-control"
-            id="descripcion"
             name="description"
-            placeholder="Introduce una breve descripción de la reserva"
             value={form.description}
             onChange={handleChange}
             required
           />
         </div>
+
         <div className="mb-3">
-          <label htmlFor="fechaHora" className="form-label">Fecha y Hora</label>
+          <label>Fecha</label>
           <input
-            type="datetime-local"
+            type="date"
             className="form-control"
-            id="fechaHora"
             name="date"
             value={form.date}
             onChange={handleChange}
             required
           />
         </div>
-        <button type="submit" className="btn btn-custom" disabled={loading}>
-          {loading ? "Reservando..." : "Reservar"}
+
+        <div className="mb-3">
+          <label>Hora</label>
+          <select
+            className="form-control"
+            name="time"
+            value={form.time}
+            onChange={handleChange}
+            required
+            disabled={loadingHours || (form.date && availableHours.length === 0)}
+          >
+            {!form.date && (
+              <option value="" hidden>
+                -- Selecciona una fecha primero --
+              </option>
+            )}
+            {form.date && !loadingHours && availableHours.length === 0 && (
+              <option value="" disabled>
+                No hay horas disponibles
+              </option>
+            )}
+            {form.date && !loadingHours && availableHours.length > 0 && (
+              <>
+                <option value="">-- Selecciona hora --</option>
+                {availableHours.map(hour => (
+                  <option key={hour} value={hour}>
+                    {hour}
+                  </option>
+                ))}
+              </>
+            )}
+          </select>
+
+
+          {loadingHours && <small>Cargando horas disponibles...</small>}
+        </div>
+
+        <button className="btn btn-success" type="submit">
+          Añadir
         </button>
-        {success && <div className="alert alert-success mt-3">¡Reserva realizada con éxito!</div>}
-        {error && <div className="alert alert-danger mt-3">{error}</div>}
       </form>
+
+      {mensaje && <div className="alert alert-success mt-3">{mensaje}</div>}
+      {error && <div className="alert alert-danger mt-3">{error}</div>}
     </div>
   );
 };

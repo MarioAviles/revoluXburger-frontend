@@ -8,7 +8,7 @@
     padding: 2rem; /* Espaciado interno */
 }
 
-h2 {
+h2, h1  {
     font-family: "Bebas Neue", sans-serif; 
     color: #fab73d; 
     margin-bottom: 2rem;
