@@ -2,6 +2,7 @@ import './AdminPanel.css';
 import MenuItemsSection from './MenuItems/MenuItemsSection';
 import ReservationsSection from './Reservations/ReservationSection';
 import UsersSection from './Users/UsersSection';
+import UploadImages from './UploadImages/UploadImages';
 
 const AdminPanel = () => {
   return (
@@ -16,6 +17,9 @@ const AdminPanel = () => {
         </div>
         <div className="col-md-4">
           <UsersSection />
+        </div>
+        <div className="col-md-12">
+          <UploadImages />
         </div>
       </div>
     </div>
