@@ -72,10 +72,10 @@
 
 .registro-container button,
 .registro-container .btn {
-  background: linear-gradient(90deg, #fcb300 60%, #ffd700 100%);
+  background:#fcb300;
   color: #181818;
-  font-weight: 700;
   font-family: "Bebas Neue", sans-serif;
+  font-size: 22px;
   letter-spacing: 1px;
   border: none;
   border-radius: 7px;
@@ -88,7 +88,7 @@
 
 .registro-container button:hover,
 .registro-container .btn:hover {
-  background: linear-gradient(90deg, #ffd700 60%, #fcb300 100%);
+  background:#ffe344;
   color: #181818;
   transform: translateY(-2px) scale(1.04);
 }
