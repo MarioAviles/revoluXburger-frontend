@@ -15,9 +15,9 @@
 .producto-img {
     width: 70%;
     height: auto;
-    border: 2px solid #FCB300; /* Borde amarillo */
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border: #FCB300 2px solid;
+    box-shadow: 0 4px 8px rgba(252, 179, 0, 0.2);
 }
 
 .producto-descripcion {

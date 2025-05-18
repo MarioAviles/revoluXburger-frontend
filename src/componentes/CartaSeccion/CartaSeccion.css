@@ -23,7 +23,8 @@
     width: 100%;
     max-width: 350px;
     border-radius: 8px;
-    border: 1px solid #FCB300;
+    border: 2px solid #FCB300;
+    box-shadow: 0 4px 8px rgba(252, 179, 0, 0.2);
     overflow: hidden;
     position: relative;
     font-family: "Bebas Neue", sans-serif;

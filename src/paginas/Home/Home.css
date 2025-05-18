@@ -85,17 +85,7 @@
 }
 
 /* Imagen específica para cada caja */
-.menu-item-1 {
-    background-image: url('../../assets/carta/foto_hamburguesas.png');
-}
 
-.menu-item-2 {
-    background-image: url('../../assets/carta/foto_entrantes.png');
-}
-
-.menu-item-3 {
-    background-image: url('../../assets/carta/foto_bebidas.jpg');
-}
 
 /* Superposición del menú */
 .menu-overlay {

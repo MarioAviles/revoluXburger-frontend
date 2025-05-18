@@ -24,30 +24,31 @@ const Carta = () => {
   }
 
 
-    {/* Antes de mostrar cada categoria, se pondra un ajax loader para saber que se estan cargando los datos */}
-    return (
-      <div className="carta container py-5">
-        <h1 className="titulo-carta mb-4">{seccion.charAt(0).toUpperCase() + seccion.slice(1)}</h1>
-        <div className="row">
-          {productos.map((producto, index) => (
-            <div key={index} className="col-12 col-md-6 col-lg-4 mb-4">
-              <Link
-                to={`/carta/${seccion}/${producto.nombre.toLowerCase().replace(/\s+/g, '-')}`}
-                className="text-decoration-none"
-              >
-                <div className="producto-item">
-                  <img src={producto.imagen} alt={producto.nombre} className="img-fluid producto-img" />
-                  <div className="producto-overlay">
-                    <h2 className="producto-nombre mt-3">{producto.nombre}</h2>
-                    <p className="producto-precio">{producto.precio.toFixed(2)} €</p>
-                  </div>
+  {/* Antes de mostrar cada categoria, se pondra un ajax loader para saber que se estan cargando los datos */ }
+  return (
+    <div className="carta container py-5">
+      <h1 className="titulo-carta mb-4">{seccion.charAt(0).toUpperCase() + seccion.slice(1)}</h1>
+      <div className="row">
+        {productos.map((producto, index) => (
+          <div key={index} className="col-12 col-md-6 col-lg-4 mb-4">
+            <Link
+              to={`/carta/${seccion}/${producto.nombre.toLowerCase().replace(/\s+/g, '-')}`}
+              className="text-decoration-none"
+            >
+
+              <div className="producto-item">
+                <img src={producto.imagen} alt={producto.nombre} className="img-fluid producto-img" />
+                <div className="producto-overlay">
+                  <h2 className="producto-nombre mt-3">{producto.nombre}</h2>
+                  <p className="producto-precio">{producto.precio.toFixed(2)} €</p>
                 </div>
-              </Link>
-            </div>
-          ))}
-        </div>
+              </div>
+            </Link>
+          </div>
+        ))}
       </div>
-    );
+    </div>
+  );
 };
 
 export default Carta;
