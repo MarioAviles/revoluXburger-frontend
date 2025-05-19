@@ -1,4 +1,6 @@
-Hay que instalar --------
+# 📘 Documentación del Instalación - Proyecto React js
 
-npm install react-router-dom
-npm install react-lazy-load --force
+Instalaciones:
+
+# npm install react-router-dom
+# npm install react-lazy-load --force
