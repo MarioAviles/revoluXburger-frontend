@@ -156,7 +156,7 @@ const EditMenuItem = () => {
           <label>Precio</label>
           <input type="number" step="0.01" className="form-control" name="price" value={form.price} onChange={handleChange} required />
         </div>
-        <button className="btn btn-primary" type="submit" disabled={!selectedId}>Editar</button>
+        <button className="btn btn-primary w-100" type="submit" disabled={!selectedId}>Editar</button>
       </form>
       {mensaje && <div className="alert alert-info mt-3">{mensaje}</div>}
       {error && <div className="alert alert-danger mt-3">{error}</div>}

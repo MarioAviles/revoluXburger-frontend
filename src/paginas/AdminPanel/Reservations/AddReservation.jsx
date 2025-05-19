@@ -161,7 +161,7 @@ const AddReservation = () => {
           {loadingHours && <small>Cargando horas disponibles...</small>}
         </div>
 
-        <button className="btn btn-success" type="submit">
+        <button className="btn btn-success w-100" type="submit">
           Añadir
         </button>
       </form>

@@ -3,7 +3,7 @@ import { useUsers } from "../../../hooks/useUsers";
 
 const EditUser = () => {
   const token = localStorage.getItem("token");
-  const { users, updateUser, loading, error, refetch } = useUsers(token);
+  const { users, updateUser, loading, refetch } = useUsers(token);
   const [selectedId, setSelectedId] = useState("");
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
@@ -63,7 +63,7 @@ const EditUser = () => {
               <option value="ADMIN">Administrador</option>
             </select>
           </div>
-          <button className="btn btn-primary" type="submit" disabled={!selectedId}>Editar</button>
+          <button className="btn btn-primary w-100" type="submit" disabled={!selectedId}>Editar</button>
         </form>
       )}
       {mensaje && <div className={`alert ${mensaje.includes("correctamente") ? "alert-info" : "alert-danger"} mt-3`}>{mensaje}</div>}

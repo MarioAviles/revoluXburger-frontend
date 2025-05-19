@@ -19,6 +19,8 @@
     font-size: 1.2rem;
     line-height: 1.8;
     color: #f8f9fa;
+    justify-content: center;
+    text-align: center;
 }
 
 .menu-dia-img {
@@ -27,7 +29,6 @@
     height: auto;
     margin: 0 auto;
     border: #FCB300 2px solid;
-    box-shadow: 0 4px 8px rgba(252, 179, 0, 0.2);
 }
 
 @media (max-width: 768px) {

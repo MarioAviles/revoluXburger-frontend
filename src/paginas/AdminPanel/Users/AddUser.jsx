@@ -48,7 +48,7 @@ const AddUser = () => {
             <option value="ADMIN">Administrador</option>
           </select>
         </div>
-        <button className="btn btn-success" type="submit">Añadir</button>
+        <button className="btn btn-success w-100" type="submit">Añadir</button>
       </form>
       {mensaje && <div className="alert alert-success mt-3">{mensaje}</div>}
       {error && <div className="alert alert-danger mt-3">{error}</div>}

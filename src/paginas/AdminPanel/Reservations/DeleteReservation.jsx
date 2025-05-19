@@ -55,7 +55,7 @@ const DeleteReservation = () => {
               ))}
             </select>
           </div>
-          <button className="btn btn-danger" type="submit" disabled={!selectedId}>Eliminar</button>
+          <button className="btn btn-danger w-100" type="submit" disabled={!selectedId}>Eliminar</button>
         </form>
       )}
       {mensaje && <div className="alert alert-info mt-3">{mensaje}</div>}

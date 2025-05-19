@@ -37,10 +37,10 @@ const Carta = () => {
             >
 
               <div className="producto-item">
-                <img src={producto.imagen} alt={producto.nombre} className="img-fluid producto-img" />
+                <img src={producto.imagen} alt={producto.nombre} className='w-100' />
                 <div className="producto-overlay">
-                  <h2 className="producto-nombre mt-3">{producto.nombre}</h2>
-                  <p className="producto-precio">{producto.precio.toFixed(2)} €</p>
+                  <span className="producto-nombre">{producto.nombre}</span>
+                  <span className="producto-precio">{producto.precio.toFixed(2)} €</span>
                 </div>
               </div>
             </Link>
