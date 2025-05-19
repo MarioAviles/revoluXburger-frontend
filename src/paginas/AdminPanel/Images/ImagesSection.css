@@ -1,0 +1,16 @@
+.images-section {
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.images-section h3 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.images-section img {
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}

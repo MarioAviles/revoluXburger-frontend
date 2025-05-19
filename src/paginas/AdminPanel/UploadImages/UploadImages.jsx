@@ -126,7 +126,6 @@ const UploadImages = ({ onUpload }) => {
                     className="form-control"
                     value={carpeta}
                     onChange={(e) => setCarpeta(e.target.value)}
-                    required
                 >
                     <option value="">Selecciona una carpeta</option>
                     <option value="burgers">Burgers</option>

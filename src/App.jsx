@@ -1,6 +1,8 @@
 import './App.css';
+
 import React, { Suspense, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+
 import Home from './paginas/Home/Home';
 import Carta from './paginas/Carta/Carta';
 import Reservas from './paginas/Reservas/Reservas';
@@ -9,10 +11,13 @@ import Cabecera from './componentes/Cabecera/Cabecera';
 import Registro from './paginas/Registro/Registro';
 import ScrollUpDown from './componentes/ScrollUpDown/ScrollUpDown';
 import DescripcionProducto from './paginas/DescripcionProducto/DescripcionProducto';
+
 import UserPanel from './paginas/UserPanel/UserPanel';
 import AdminPanel from './paginas/AdminPanel/AdminPanel';
 import useAuthenticatedUser from './hooks/useAuthenticatedUser';
+
 import AjaxLoader from './componentes/AjaxLoader/AjaxLoader';
+
 import AddMenuItem from './paginas/AdminPanel/MenuItems/AddMenuItem';
 import EditMenuItem from './paginas/AdminPanel/MenuItems/EditMenuItem';
 import DeleteMenuItem from './paginas/AdminPanel/MenuItems/DeleteMenuItem';
@@ -27,6 +32,12 @@ import AddUser from './paginas/AdminPanel/Users/AddUser';
 import EditUser from './paginas/AdminPanel/Users/EditUser';
 import DeleteUser from './paginas/AdminPanel/Users/DeleteUser';
 import UserList from './paginas/AdminPanel/Users/UserList';
+
+import ViewImages from './paginas/AdminPanel/Images/ViewImages';
+import DeleteImage from './paginas/AdminPanel/Images/DeleteImage';
+import EditImage from './paginas/AdminPanel/Images/EditImage';
+import AddImage from './paginas/AdminPanel/Images/AddImage';
+
 const Footer = React.lazy(() => import('./componentes/Footer/Footer'));
 
 function App() {
@@ -89,6 +100,14 @@ function App() {
       <Route path="/admin/users/edit" element={user && user.role === "ADMIN" ? <EditUser /> : <Navigate to="/login" />} />
       <Route path="/admin/users/delete" element={user && user.role === "ADMIN" ? <DeleteUser /> : <Navigate to="/login" />} />
       <Route path="/admin/users/list" element={user && user.role === "ADMIN" ? <UserList /> : <Navigate to="/login" />} />
+
+       {/* Rutas CRUD Imagenes */}
+
+      <Route path="/admin/images/add" element={user && user.role === "ADMIN" ? <AddImage /> : <Navigate to="/login" />} />
+      <Route path="/admin/images/edit" element={user && user.role === "ADMIN" ? <EditImage /> : <Navigate to="/login" />} />
+      <Route path="/admin/images/delete" element={user && user.role === "ADMIN" ? <DeleteImage /> : <Navigate to="/login" />} />
+      <Route path="/admin/images/list" element={user && user.role === "ADMIN" ? <ViewImages /> : <Navigate to="/login" />} />
+
 
       </Routes>
 

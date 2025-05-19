@@ -36,7 +36,6 @@
 }
 
 .producto-img:hover {
-    transform: scale(1.03) rotate(-1deg);
     box-shadow: 0 8px 32px rgba(252, 179, 0, 0.18), 0 2px 8px rgba(0,0,0,0.16);
     border-color: #ffd700;
 }
