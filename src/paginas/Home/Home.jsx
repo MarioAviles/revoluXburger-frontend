@@ -2,6 +2,7 @@ import HeroSection from '../../componentes/HeroSection/HeroSection';
 import CartaSeccion from '../../componentes/CartaSeccion/CartaSeccion';
 import PuntosBurger from '../../componentes/PuntosBurger/PuntosBurger';
 import MenuDia from '../../componentes/MenuDia/MenuDia';
+import SeccionContadores from '../../componentes/SeccionContadores/SeccionContadores';
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
       <CartaSeccion />
       <PuntosBurger />
       <MenuDia />
+      <SeccionContadores />
     </div>
   );
 };

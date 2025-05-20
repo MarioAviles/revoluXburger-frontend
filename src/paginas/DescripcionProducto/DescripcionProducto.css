@@ -51,6 +51,13 @@
     transition: background 0.2s;
 }
 
+.informacion-producto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .producto-descripcion:hover {
     background: rgba(252, 179, 0, 0.08);
 }

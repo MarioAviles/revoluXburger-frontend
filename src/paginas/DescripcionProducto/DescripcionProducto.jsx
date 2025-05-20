@@ -26,12 +26,15 @@ const DescripcionProducto = () => {
           />
         </div>
         <div className="col-12 col-md-6">
-          <p className="producto-descripcion">{productoSeleccionado.description}</p> 
-          <p className="producto-precio">Precio: {productoSeleccionado.price.toFixed(2)} €</p>
-          <p className="producto-puntos">Puntos: {productoSeleccionado.points}</p>
-          {productoSeleccionado.category === 'Burger' && (
-            <p className="producto-puntos">Tipo: {productoSeleccionado.type}</p>
-          )}        
+          <p className="producto-descripcion">{productoSeleccionado.description}</p>
+          <div className='informacion-producto'>
+            <p className="producto-precio">Precio: {productoSeleccionado.price.toFixed(2)} €</p>
+            <p className="producto-puntos">Puntos: {productoSeleccionado.points}</p>
+            {productoSeleccionado.category === 'Burger' && (
+              <p className="producto-puntos">Tipo: {productoSeleccionado.type}</p>
+            )}  
+          </div> 
+               
           </div> 
       </div>
     </div>

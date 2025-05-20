@@ -1,6 +1,6 @@
 import './MenuDia.css';
 import menuDiario from '../../assets/carta/RevoluxMenuDiario.png'; 
-
+import ContadorClientes from '../Contadores/ContadorClientes/ContadorClientes'; // Asegúrate de que la ruta sea correcta
 const MenuDia = () => {
   return (
     <div className="menu-dia-section py-5">

@@ -6,6 +6,13 @@
     font-style: normal;
   }
 
+
+.texto-contador{
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: #FCB300;
+}
+
 .bebas-neue-regular {
     font-family: "Bebas Neue", sans-serif;
     font-weight: 400;

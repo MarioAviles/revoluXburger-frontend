@@ -1,0 +1,49 @@
+.seccion-contadores {
+  color: #fff;
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 2px;
+  border-radius: 0 0 32px 32px;
+}
+
+.contenedor-contadores {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2rem 0;
+  background-color: #343a40;
+  border-radius: 15px;
+  box-shadow: 0 4px 24px rgba(252, 179, 0, 0.10), 0 2px 8px rgba(0, 0, 0, 0.10);
+}
+
+.titulo-contadores {
+  color: #FCB300;
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 4px;
+}
+
+.contador-icono {
+  font-size: 3.5rem;
+  color: #FCB300;
+  margin-bottom: 0.5rem;
+}
+
+.texto-contador {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #fff;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  letter-spacing: 2px;
+}
+
+.contador-label {
+  font-size: 1.3rem;
+  color: #FCB300;
+  margin-top: 0.5rem;
+  letter-spacing: 1px;
+  font-family: "Poppins", sans-serif;
+}

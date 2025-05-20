@@ -1,0 +1,19 @@
+import { animate, motion, useMotionValue, useTransform } from "motion/react"
+
+import { useEffect } from "react"
+
+export default function ContadorClientes() {
+
+    const count = useMotionValue(0)
+
+    const rounded = useTransform(() => Math.round(count.get()))
+
+    useEffect(() => {
+        const controls = animate(count, 650, { duration: 8 })
+        return () => controls.stop()
+    }, [])
+
+    return <motion.pre className="texto-contador">{rounded}</motion.pre>
+}
+
+
