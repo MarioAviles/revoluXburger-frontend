@@ -9,7 +9,9 @@ Este documento contiene los pasos de instalación y configuración para iniciar 
 Ejecuta los siguientes comandos en tu terminal:
 
 npm install react-router-dom
+
 npm install react-lazy-load --force
+
 npm install ldrs
 
 ## 🌐 Importaciones en el HTML
