@@ -2,15 +2,14 @@ import React, { useState } from "react";
 
 const DeleteImage = () => {
   const [selectedImage, setSelectedImage] = useState("");
-  const [mensaje, setMensaje] = useState("");
-  const [error, setError] = useState("");
+  const [popup, setPopup] = useState(null); // Popup personalizado
 
   const handleDelete = async () => {
     try {
       // Aquí puedes enviar la solicitud al backend para eliminar la imagen
-      setMensaje("Imagen eliminada correctamente");
+      setPopup("Imagen eliminada correctamente");
     } catch (err) {
-      setError("Error al eliminar la imagen");
+      setPopup("Error al eliminar la imagen");
     }
   };
 
@@ -33,8 +32,7 @@ const DeleteImage = () => {
       <button className="btn btn-danger w-100" onClick={handleDelete}>
         Eliminar Imagen
       </button>
-      {mensaje && <div className="alert alert-success mt-3">{mensaje}</div>}
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
+      {popup && <div className="custom-popup">{popup}</div>}
     </div>
   );
 };

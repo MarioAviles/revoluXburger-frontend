@@ -79,6 +79,8 @@ const Carta = () => {
 
       {/* Productos */}
       <div className="row mt-5">
+        <h2 className='texto-informacion'>¡ Haz click en el producto que te guste para ver su información !</h2>
+
         {productosOrdenadosPorPrecio.map((producto, index) => (
           <div key={index} className="col-12 col-md-6 col-lg-4 mb-4">
             <Link

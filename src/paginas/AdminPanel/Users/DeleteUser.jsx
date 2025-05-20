@@ -3,20 +3,22 @@ import { useUsers } from "../../../hooks/useUsers";
 
 const DeleteUser = () => {
   const token = localStorage.getItem("token");
-  const { users, deleteUser, loading, error, refetch } = useUsers(token);
+  const { users, deleteUser, loading, refetch } = useUsers(token);
   const [selectedId, setSelectedId] = useState("");
-  const [mensaje, setMensaje] = useState("");
+  const [popup, setPopup] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMensaje("");
+    setPopup(null);
     try {
       await deleteUser(selectedId);
-      setMensaje("Usuario eliminado correctamente");
+      setPopup("Usuario eliminado correctamente");
       setSelectedId("");
       refetch();
+      setTimeout(() => setPopup(null), 3000);
     } catch (err) {
-      setMensaje("Error al eliminar usuario");
+      setPopup("Error al eliminar usuario");
+      setTimeout(() => setPopup(null), 3000);
     }
   };
 
@@ -37,8 +39,7 @@ const DeleteUser = () => {
           <button className="btn btn-danger w-100" type="submit" disabled={!selectedId}>Eliminar</button>
         </form>
       )}
-      {mensaje && <div className="alert alert-info mt-3">{mensaje}</div>}
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
+      {popup && <div className="custom-popup">{popup}</div>}
     </div>
   );
 };

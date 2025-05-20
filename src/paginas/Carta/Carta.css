@@ -116,6 +116,13 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+.texto-informacion{
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 48px;
+    color: #FCB300; /* Color dorado */
+    margin-right: 20px;
+}
+
 .buscador {
   flex: 1;
   padding: 10px;

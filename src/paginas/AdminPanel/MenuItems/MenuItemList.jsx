@@ -1,30 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./MenuItemList.css"; // Importa el archivo CSS para los estilos
-const BASE_URL = "https://revoluxburger-backend.onrender.com/menu";
+import { getAllMenuItems } from "../../../servicios/menuService";
+import "./MenuItemList.css";
 
 const MenuItemList = () => {
   const [productos, setProductos] = useState([]);
-  const [search, setSearch] = useState(""); // Estado para el buscador
-  const [categoria, setCategoria] = useState(""); // Estado para la categoría seleccionada
-  const [error, setError] = useState("");
+  const [search, setSearch] = useState("");
+  const [categoria, setCategoria] = useState("");
+  const [popup, setPopup] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(BASE_URL)
-      .then((res) => res.json())
-      .then((data) => setProductos(data))
-      .catch(() => setError("Error al cargar productos"));
+    const fetchProductos = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const data = await getAllMenuItems(token);
+        setProductos(data);
+      } catch (err) {
+        setPopup("Error al cargar productos");
+        setTimeout(() => setPopup(null), 3000);
+      }
+    };
+    fetchProductos();
   }, []);
 
-  // Filtrar productos según el texto del buscador y la categoría seleccionada
   const productosFiltradosPorBusqueda = productos.filter((p) => {
     const busquedaCoincide = p.name.toLowerCase().includes(search.toLowerCase());
     const categoriaCoincide = categoria ? p.category === categoria : true;
     return busquedaCoincide && categoriaCoincide;
   });
 
-  // Obtener las categorías únicas de los productos
   const categorias = [...new Set(productos.map((p) => p.category))];
 
   return (
@@ -32,7 +37,6 @@ const MenuItemList = () => {
       <h3 className="menu-item-list-title">Lista de productos</h3>
       <p className="menu-item-list-description">Puedes buscar productos por nombre o filtrar por categoría.</p>
 
-      {/* Buscador */}
       <input
         type="text"
         className="menu-item-list-search form-control mb-3"
@@ -41,7 +45,6 @@ const MenuItemList = () => {
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      {/* Filtro de categorías */}
       <label className="menu-item-list-filter-label mb-2">Filtrar por categoría:</label>
       <select
         className="menu-item-list-filter form-control mb-3"
@@ -56,9 +59,8 @@ const MenuItemList = () => {
         ))}
       </select>
 
-      {/* Lista de productos */}
       <div className="menu-item-list-grid">
-        {productosFiltradosPorBusqueda.map((p, id) => (
+        {productosFiltradosPorBusqueda.map((p) => (
           <div
             key={p.id}
             className={`menu-item-card ${productosFiltradosPorBusqueda.length === 1 ? "producto-unico" : ""}`}
@@ -76,8 +78,7 @@ const MenuItemList = () => {
         ))}
       </div>
 
-      {/* Mensaje de error */}
-      {error && <div className="menu-item-error alert alert-danger mt-3">{error}</div>}
+      {popup && <div className="custom-popup">{popup}</div>}
     </div>
   );
 };

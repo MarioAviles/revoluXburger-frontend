@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { getAllMenuItems, updateMenuItem } from "../../../servicios/menuService";
+import UploadImages from "../UploadImages/UploadImages";
 import useCategorias from "../../../hooks/useCategorias";
 import useTipos from "../../../hooks/useTipos";
-import UploadImages from "../UploadImages/UploadImages";
-
-const BASE_URL = "https://revoluxburger-backend.onrender.com/menu";
 
 const EditMenuItem = () => {
   const categorias = useCategorias();
@@ -19,35 +18,37 @@ const EditMenuItem = () => {
     imageUrl: "",
     price: ""
   });
-  const [mensaje, setMensaje] = useState("");
-  const [error, setError] = useState("");
+  const [popup, setPopup] = useState(null);
 
-  // Cargar productos al montar
   useEffect(() => {
-    fetch(BASE_URL)
-      .then(res => res.json())
-      .then(data => setProductos(data))
-      .catch(() => setError("Error al cargar productos"));
+    const fetchProductos = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const data = await getAllMenuItems(token);
+        setProductos(data);
+      } catch {
+        setPopup("Error al cargar productos");
+        setTimeout(() => setPopup(null), 3000);
+      }
+    };
+    fetchProductos();
   }, []);
 
-  // Cuando seleccionas un producto, carga sus datos en el formulario
   const handleSelect = (e) => {
-  const id = e.target.value;
-  setSelectedId(id);
-  // Busca el producto por id o _id
-  const prod = productos.find(p => String(p.id) === String(id) || String(p._id) === String(id));
-  setForm({
-    name: prod?.name || "",
-    description: prod?.description || "",
-    category: prod?.category || "",
-    type: prod?.type || "",
-    points: prod?.points ?? "",
-    imageUrl: prod?.imageUrl || "",
-    price: prod?.price ?? ""
-  });
-  setMensaje("");
-  setError("");
-};
+    const id = e.target.value;
+    setSelectedId(id);
+    const prod = productos.find(p => String(p.id) === String(id) || String(p._id) === String(id));
+    setForm({
+      name: prod?.name || "",
+      description: prod?.description || "",
+      category: prod?.category || "",
+      type: prod?.type || "",
+      points: prod?.points ?? "",
+      imageUrl: prod?.imageUrl || "",
+      price: prod?.price ?? ""
+    });
+    setPopup(null);
+  };
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -55,35 +56,28 @@ const EditMenuItem = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMensaje("");
-    setError("");
+    setPopup(null);
     if (!selectedId) {
-      setError("Selecciona un producto para editar.");
+      setPopup("Selecciona un producto para editar.");
+      setTimeout(() => setPopup(null), 3000);
       return;
     }
-    const token = localStorage.getItem("token");
     try {
-      const dataToSend = {
+      const token = localStorage.getItem("token");
+      await updateMenuItem(selectedId, {
         name: form.name,
         description: form.description,
         category: form.category,
-        type: form.type,
+        ...(form.category === "Burger" && { type: form.type }),
         points: Number(form.points),
         imageUrl: form.imageUrl,
         price: Number(form.price)
-      };
-      const res = await fetch(`${BASE_URL}/${selectedId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(dataToSend),
-      });
-      if (!res.ok) throw new Error("Error al editar producto");
-      setMensaje("Producto editado correctamente");
+      }, token);
+      setPopup("Producto editado correctamente");
+      setTimeout(() => setPopup(null), 3000);
     } catch (err) {
-      setError(err.message || "Error al editar producto");
+      setPopup("Error al editar producto");
+      setTimeout(() => setPopup(null), 3000);
     }
   };
 
@@ -119,7 +113,6 @@ const EditMenuItem = () => {
             ))}
           </select>
         </div>
-        {/* Solo muestra el campo tipo si la categoría es Burger */}
         {form.category === "Burger" && (
           <div className="mb-3">
             <label>Tipo</label>
@@ -134,7 +127,7 @@ const EditMenuItem = () => {
         )}
         <div className="mb-3">
           <label>Puntos</label>
-          <input type="number" step="0.01" className="form-control" name="points" value={form.points} onChange={handleChange} required />
+          <input type="number" step="0.50" className="form-control" name="points" value={form.points} onChange={handleChange} required />
         </div>
         <div className="mb-3">
           <label>Imagen (URL)</label>
@@ -154,12 +147,11 @@ const EditMenuItem = () => {
         </div>
         <div className="mb-3">
           <label>Precio</label>
-          <input type="number" step="0.01" className="form-control" name="price" value={form.price} onChange={handleChange} required />
+          <input type="number" step="50" className="form-control" name="price" value={form.price} onChange={handleChange} required />
         </div>
         <button className="btn btn-primary w-100" type="submit" disabled={!selectedId}>Editar</button>
       </form>
-      {mensaje && <div className="alert alert-info mt-3">{mensaje}</div>}
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
+      {popup && <div className="custom-popup">{popup}</div>}
     </div>
   );
 };

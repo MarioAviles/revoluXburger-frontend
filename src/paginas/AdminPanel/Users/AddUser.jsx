@@ -6,22 +6,22 @@ const AddUser = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rol, setRol] = useState("USER");
-  const [mensaje, setMensaje] = useState("");
-  const [error, setError] = useState("");
+  const [popup, setPopup] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMensaje("");
-    setError("");
+    setPopup(null);
     try {
       await register({ username: nombre, password, email, role: rol });
-      setMensaje("Usuario añadido correctamente");
+      setPopup("Usuario añadido correctamente");
       setNombre("");
       setEmail("");
       setPassword("");
       setRol("USER");
+      setTimeout(() => setPopup(null), 3000);
     } catch (err) {
-      setError(err.message || "Error al añadir usuario");
+      setPopup("Error al añadir usuario");
+      setTimeout(() => setPopup(null), 3000);
     }
   };
 
@@ -50,8 +50,7 @@ const AddUser = () => {
         </div>
         <button className="btn btn-success w-100" type="submit">Añadir</button>
       </form>
-      {mensaje && <div className="alert alert-success mt-3">{mensaje}</div>}
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
+      {popup && <div className="custom-popup">{popup}</div>}
     </div>
   );
 };

@@ -93,35 +93,4 @@
   transform: translateY(-2px) scale(1.04);
 }
 
-.custom-popup {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #232323;
-  color: #fff;
-  border: 2px solid #FCB300;
-  border-radius: 8px;
-  padding: 16px 32px;
-  z-index: 9999;
-  font-size: 1.1rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-  transition: opacity 0.5s ease;
-  animation: fadeInOut 2s;
-  animation-fill-mode: forwards; /* Mantiene el estado final de la animación */
-}
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
 

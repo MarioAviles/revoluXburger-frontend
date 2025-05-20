@@ -12,8 +12,7 @@ const AddReservation = () => {
 
   const [availableHours, setAvailableHours] = useState([]);
   const [loadingHours, setLoadingHours] = useState(false);
-  const [mensaje, setMensaje] = useState("");
-  const [error, setError] = useState("");
+  const [popup, setPopup] = useState(null);
 
   useEffect(() => {
     const fetchAvailableHours = async () => {
@@ -23,14 +22,15 @@ const AddReservation = () => {
       }
 
       setLoadingHours(true);
-      setError("");
+      setPopup(null);
       try {
         const token = localStorage.getItem("token");
         const hours = await getAvailableTimes(form.date, token);
         setAvailableHours(hours);
       } catch (err) {
-        setError(err.message || "Error al cargar horas disponibles");
+        setPopup(err.message || "Error al cargar horas disponibles");
         setAvailableHours([]);
+        setTimeout(() => setPopup(null), 3000);
       } finally {
         setLoadingHours(false);
       }
@@ -45,11 +45,11 @@ const AddReservation = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMensaje("");
-    setError("");
+    setPopup(null);
 
     if (!form.date || !form.time) {
-      setError("Por favor selecciona fecha y hora");
+      setPopup("Por favor selecciona fecha y hora");
+      setTimeout(() => setPopup(null), 3000);
       return;
     }
 
@@ -66,11 +66,13 @@ const AddReservation = () => {
 
     try {
       await createReservation(reservationData, token);
-      setMensaje("Reserva añadida correctamente");
+      setPopup("Reserva añadida correctamente");
       setForm({ name: "", phone: "", description: "", date: "", time: "" });
       setAvailableHours([]);
+      setTimeout(() => setPopup(null), 3000);
     } catch (err) {
-      setError(err.message || "Error al añadir reserva");
+      setPopup(err.message || "Error al añadir reserva");
+      setTimeout(() => setPopup(null), 3000);
     }
   };
 
@@ -156,8 +158,6 @@ const AddReservation = () => {
               </>
             )}
           </select>
-
-
           {loadingHours && <small>Cargando horas disponibles...</small>}
         </div>
 
@@ -165,9 +165,7 @@ const AddReservation = () => {
           Añadir
         </button>
       </form>
-
-      {mensaje && <div className="alert alert-success mt-3">{mensaje}</div>}
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
+      {popup && <div className="custom-popup">{popup}</div>}
     </div>
   );
 };

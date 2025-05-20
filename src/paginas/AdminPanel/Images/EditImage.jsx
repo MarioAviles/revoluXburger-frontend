@@ -3,15 +3,14 @@ import React, { useState } from "react";
 const EditImage = () => {
   const [selectedImage, setSelectedImage] = useState("");
   const [newUrl, setNewUrl] = useState("");
-  const [mensaje, setMensaje] = useState("");
-  const [error, setError] = useState("");
+  const [popup, setPopup] = useState(null); // Popup personalizado
 
   const handleEdit = async () => {
     try {
       // Aquí puedes enviar la nueva URL al backend para actualizar la imagen
-      setMensaje("Imagen editada correctamente");
+      setPopup("Imagen editada correctamente");
     } catch (err) {
-      setError("Error al editar la imagen");
+      setPopup("Error al editar la imagen");
     }
   };
 
@@ -43,8 +42,7 @@ const EditImage = () => {
       <button className="btn btn-primary w-100" onClick={handleEdit}>
         Editar Imagen
       </button>
-      {mensaje && <div className="alert alert-success mt-3">{mensaje}</div>}
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
+      {popup && <div className="custom-popup">{popup}</div>}
     </div>
   );
 };

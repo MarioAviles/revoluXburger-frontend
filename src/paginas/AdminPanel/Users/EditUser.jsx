@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { useUsers } from "../../../hooks/useUsers";
 
 const EditUser = () => {
@@ -7,8 +7,8 @@ const EditUser = () => {
   const [selectedId, setSelectedId] = useState("");
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
-  const [rol, setRol] = useState(""); // Añadido para el rol
-  const [mensaje, setMensaje] = useState("");
+  const [rol, setRol] = useState(""); 
+  const [popup, setPopup] = useState(null);
 
   const handleSelect = (e) => {
     const id = e.target.value;
@@ -16,19 +16,21 @@ const EditUser = () => {
     const user = users.find(u => String(u.id) === String(id) || String(u._id) === String(id));
     setNombre(user?.username || "");
     setEmail(user?.email || "");
-    setRol(user?.role || "USER"); // Carga el rol actual o USER por defecto
-    setMensaje("");
+    setRol(user?.role || "USER");
+    setPopup(null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMensaje("");
+    setPopup(null);
     try {
-      await updateUser(selectedId, { username: nombre, email, role: rol }); // Envía el rol
-      setMensaje("Usuario actualizado correctamente");
+      await updateUser(selectedId, { username: nombre, email, role: rol });
+      setPopup("Usuario actualizado correctamente");
       refetch();
+      setTimeout(() => setPopup(null), 3000);
     } catch (err) {
-      setMensaje("Error al actualizar usuario");
+      setPopup("Error al actualizar usuario");
+      setTimeout(() => setPopup(null), 3000);
     }
   };
 
@@ -66,7 +68,7 @@ const EditUser = () => {
           <button className="btn btn-primary w-100" type="submit" disabled={!selectedId}>Editar</button>
         </form>
       )}
-      {mensaje && <div className={`alert ${mensaje.includes("correctamente") ? "alert-info" : "alert-danger"} mt-3`}>{mensaje}</div>}
+      {popup && <div className="custom-popup">{popup}</div>}
     </div>
   );
 };

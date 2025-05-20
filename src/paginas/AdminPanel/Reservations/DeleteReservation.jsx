@@ -5,18 +5,18 @@ const DeleteReservation = () => {
   const token = localStorage.getItem("token");
   const [reservas, setReservas] = useState([]);
   const [selectedId, setSelectedId] = useState("");
-  const [mensaje, setMensaje] = useState("");
-  const [error, setError] = useState("");
+  const [popup, setPopup] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     setLoading(true);
-    setError("");
+    setPopup(null);
     try {
       const data = await getAllReservations(token);
       setReservas(data);
     } catch {
-      setError("Error al cargar reservas");
+      setPopup("Error al cargar reservas");
+      setTimeout(() => setPopup(null), 3000);
     } finally {
       setLoading(false);
     }
@@ -29,15 +29,16 @@ const DeleteReservation = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMensaje("");
-    setError("");
+    setPopup(null);
     try {
       await deleteReservation(selectedId, token);
-      setMensaje("Reserva eliminada correctamente");
+      setPopup("Reserva eliminada correctamente");
       setSelectedId("");
       fetchData();
+      setTimeout(() => setPopup(null), 3000);
     } catch (err) {
-      setError(err.message || "Error al eliminar reserva");
+      setPopup(err.message || "Error al eliminar reserva");
+      setTimeout(() => setPopup(null), 3000);
     }
   };
 
@@ -58,8 +59,7 @@ const DeleteReservation = () => {
           <button className="btn btn-danger w-100" type="submit" disabled={!selectedId}>Eliminar</button>
         </form>
       )}
-      {mensaje && <div className="alert alert-info mt-3">{mensaje}</div>}
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
+      {popup && <div className="custom-popup">{popup}</div>}
     </div>
   );
 };

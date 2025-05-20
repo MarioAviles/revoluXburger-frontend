@@ -160,6 +160,7 @@
   font-size: 1rem;
 }
 
+
 @media (max-width: 600px) {
   .admin-crud-page {
     padding: 1rem 0.3rem;

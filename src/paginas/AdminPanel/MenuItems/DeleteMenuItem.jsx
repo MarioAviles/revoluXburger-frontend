@@ -1,55 +1,44 @@
 import React, { useState, useEffect } from "react";
-
-const BASE_URL = "https://revoluxburger-backend.onrender.com/menu";
+import { getAllMenuItems, deleteMenuItem } from "../../../servicios/menuService";
 
 const DeleteMenuItem = () => {
-  const token = localStorage.getItem("token");
   const [productos, setProductos] = useState([]);
   const [selectedId, setSelectedId] = useState("");
-  const [mensaje, setMensaje] = useState("");
-  const [error, setError] = useState("");
+  const [popup, setPopup] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async () => {
+  const fetchProductos = async () => {
     setLoading(true);
-    setError("");
+    setPopup(null);
     try {
-      const res = await fetch(BASE_URL, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Se envía el token en la cabecera
-        },
-      });
-      const data = await res.json();
+      const token = localStorage.getItem("token");
+      const data = await getAllMenuItems(token);
       setProductos(data);
     } catch {
-      setError("Error al cargar productos");
+      setPopup("Error al cargar productos");
+      setTimeout(() => setPopup(null), 3000);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line
-  }, [token]);
+    fetchProductos();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMensaje("");
-    setError("");
+    setPopup(null);
     try {
-      const res = await fetch(`${BASE_URL}/${selectedId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!res.ok) throw new Error("Error al eliminar producto");
-      setMensaje("Producto eliminado correctamente");
+      const token = localStorage.getItem("token");
+      await deleteMenuItem(selectedId, token);
+      setPopup("Producto eliminado correctamente");
       setSelectedId("");
-      fetchData();
+      fetchProductos();
+      setTimeout(() => setPopup(null), 3000);
     } catch (err) {
-      setError(err.message || "Error al eliminar producto");
+      setPopup("Error al eliminar producto");
+      setTimeout(() => setPopup(null), 3000);
     }
   };
 
@@ -70,8 +59,7 @@ const DeleteMenuItem = () => {
           <button className="btn btn-danger w-100" type="submit" disabled={!selectedId}>Eliminar</button>
         </form>
       )}
-      {mensaje && <div className="alert alert-info mt-3">{mensaje}</div>}
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
+      {popup && <div className="custom-popup">{popup}</div>}
     </div>
   );
 };

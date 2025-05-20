@@ -13,25 +13,23 @@ const EditReservation = () => {
   });
   const [availableHours, setAvailableHours] = useState([]);
   const [loadingHours, setLoadingHours] = useState(false);
-  const [mensaje, setMensaje] = useState("");
-  const [error, setError] = useState("");
+  const [popup, setPopup] = useState(null);
 
   const token = localStorage.getItem("token");
 
-  // Cargar todas las reservas
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getAllReservations(token);
         setReservas(data);
       } catch {
-        setError("Error al cargar reservas");
+        setPopup("Error al cargar reservas");
+        setTimeout(() => setPopup(null), 3000);
       }
     };
     fetchData();
   }, [token]);
 
-  // Cargar horas disponibles al cambiar la fecha
   useEffect(() => {
     const fetchAvailableHours = async () => {
       if (!form.date) {
@@ -40,13 +38,14 @@ const EditReservation = () => {
       }
 
       setLoadingHours(true);
-      setError("");
+      setPopup(null);
       try {
         const hours = await getAvailableTimes(form.date, token);
         setAvailableHours(hours);
       } catch (err) {
-        setError(err.message || "Error al cargar horas disponibles");
+        setPopup(err.message || "Error al cargar horas disponibles");
         setAvailableHours([]);
+        setTimeout(() => setPopup(null), 3000);
       } finally {
         setLoadingHours(false);
       }
@@ -55,7 +54,6 @@ const EditReservation = () => {
     fetchAvailableHours();
   }, [form.date, token]);
 
-  // Manejar selección de reserva
   const handleSelect = (e) => {
     const id = e.target.value;
     setSelectedId(id);
@@ -67,23 +65,20 @@ const EditReservation = () => {
       date: reserva?.date ? reserva.date.slice(0, 10) : "",
       time: reserva?.date ? reserva.date.slice(11, 16) : ""
     });
-    setMensaje("");
-    setError("");
+    setPopup(null);
   };
 
-  // Manejar cambios en el formulario
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Manejar envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMensaje("");
-    setError("");
+    setPopup(null);
 
     if (!form.date || !form.time) {
-      setError("Por favor selecciona fecha y hora");
+      setPopup("Por favor selecciona fecha y hora");
+      setTimeout(() => setPopup(null), 3000);
       return;
     }
 
@@ -98,9 +93,11 @@ const EditReservation = () => {
 
     try {
       await updateReservation(selectedId, updatedReservation, token);
-      setMensaje("Reserva editada correctamente");
+      setPopup("Reserva editada correctamente");
+      setTimeout(() => setPopup(null), 3000);
     } catch (err) {
-      setError(err.message || "Error al editar reserva");
+      setPopup(err.message || "Error al editar reserva");
+      setTimeout(() => setPopup(null), 3000);
     }
   };
 
@@ -205,9 +202,7 @@ const EditReservation = () => {
           Editar
         </button>
       </form>
-
-      {mensaje && <div className="alert alert-success mt-3">{mensaje}</div>}
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
+      {popup && <div className="custom-popup">{popup}</div>}
     </div>
   );
 };
