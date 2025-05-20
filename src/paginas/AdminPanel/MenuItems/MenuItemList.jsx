@@ -18,10 +18,10 @@ const MenuItemList = () => {
   }, []);
 
   // Filtrar productos según el texto del buscador y la categoría seleccionada
-  const filteredProductos = productos.filter((p) => {
-    const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase());
-    const matchesCategoria = categoria ? p.category === categoria : true;
-    return matchesSearch && matchesCategoria;
+  const productosFiltradosPorBusqueda = productos.filter((p) => {
+    const busquedaCoincide = p.name.toLowerCase().includes(search.toLowerCase());
+    const categoriaCoincide = categoria ? p.category === categoria : true;
+    return busquedaCoincide && categoriaCoincide;
   });
 
   // Obtener las categorías únicas de los productos
@@ -58,10 +58,10 @@ const MenuItemList = () => {
 
       {/* Lista de productos */}
       <div className="menu-item-list-grid">
-        {filteredProductos.map((p) => (
+        {productosFiltradosPorBusqueda.map((p, id) => (
           <div
-            key={p._id}
-            className="menu-item-card"
+            key={p.id}
+            className={`menu-item-card ${productosFiltradosPorBusqueda.length === 1 ? "producto-unico" : ""}`}
             onClick={() =>
               navigate(`/carta/${p.category.toLowerCase()}/${p.name.toLowerCase().replace(/\s+/g, "-")}`)
             }

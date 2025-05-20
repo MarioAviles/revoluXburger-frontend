@@ -64,4 +64,3 @@ export const getAvailableTimes = async (date, token) => {
   if (!res.ok) throw new Error("Error al obtener horas disponibles");
   return res.json();
 };
-
