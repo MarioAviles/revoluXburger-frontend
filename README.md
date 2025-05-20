@@ -14,6 +14,8 @@ npm install react-lazy-load --force
 
 npm install ldrs
 
+npm install motion
+
 ## 🌐 Importaciones en el HTML
 
 Agrega las líneas "link" dentro de la etiqueta `<head>` y las líneas "script" de la etiqueta `<body>` del archivo `public/index.html`:
