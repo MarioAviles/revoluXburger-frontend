@@ -7,8 +7,10 @@ const MenuItemList = () => {
   const [productos, setProductos] = useState([]);
   const [search, setSearch] = useState("");
   const [categoria, setCategoria] = useState("");
-  const [popup, setPopup] = useState(null);
   const navigate = useNavigate();
+  const [deletingId, setDeletingId] = useState(null);
+  const [confirmId, setConfirmId] = useState(null);
+
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -23,6 +25,21 @@ const MenuItemList = () => {
     };
     fetchProductos();
   }, []);
+
+  const handleDelete = async (id) => {
+    setDeletingId(id);
+    try {
+      const token = localStorage.getItem("token");
+      await deleteMenuItem(id, token);
+      setProductos(productos.filter(p => p.id !== id));
+    } catch {
+      setPopup("Error al eliminar producto");
+      setTimeout(() => setPopup(null), 3000);
+    } finally {
+      setDeletingId(null);
+      setConfirmId(null);
+    }
+  };
 
   const productosFiltradosPorBusqueda = productos.filter((p) => {
     const busquedaCoincide = p.name.toLowerCase().includes(search.toLowerCase());
@@ -62,23 +79,37 @@ const MenuItemList = () => {
       <div className="menu-item-list-grid">
         {productosFiltradosPorBusqueda.map((p) => (
           <div
-            key={p.id}
+            key={p.id || p._id}
             className={`menu-item-card ${productosFiltradosPorBusqueda.length === 1 ? "producto-unico" : ""}`}
-            onClick={() =>
-              navigate(`/carta/${p.category.toLowerCase()}/${p.name.toLowerCase().replace(/\s+/g, "-")}`)
-            }
           >
             <img src={p.imageUrl} alt={p.name} className="menu-item-img" />
             <div className="menu-item-info">
               <h5 className="menu-item-name">{p.name}</h5>
               <p className="menu-item-price">{p.price.toFixed(2)} €</p>
               <p className="menu-item-category">{p.category}</p>
+              <button
+                className="btn btn-danger btn-sm mt-2"
+                onClick={() => setConfirmId(p.id || p._id)}
+                disabled={deletingId === (p.id || p._id)}
+              >
+                {deletingId === (p.id || p._id) ? "Eliminando..." : "Eliminar"}
+              </button>
             </div>
           </div>
         ))}
       </div>
-
-      {popup && <div className="custom-popup">{popup}</div>}
+      {/* Popup de confirmación */}
+      {confirmId && (
+        <div className="popup-eliminar-overlay">
+          <div className="popup-eliminar">
+            <p>¿Seguro que quieres eliminar este producto?</p>
+            <div className="d-flex justify-content-center gap-2">
+              <button className="btn btn-secondary" onClick={() => setConfirmId(null)}>Cancelar</button>
+              <button className="btn btn-danger" onClick={() => handleDelete(confirmId)}>Eliminar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
