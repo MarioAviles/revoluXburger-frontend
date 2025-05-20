@@ -8,42 +8,42 @@ const Reservas = () => {
     description: "",
     date: "",
     time: ""
-  });
+  }); // Estado para manejar el formulario
 
-  const [availableHours, setAvailableHours] = useState([]);
-  const [loadingHours, setLoadingHours] = useState(false);
-  const [popup, setPopup] = useState("");
+  const [availableHours, setAvailableHours] = useState([]); // Estado para manejar las horas disponibles
+  const [loadingHours, setLoadingHours] = useState(false); // Estado para manejar la carga de horas
+  const [popup, setPopup] = useState(""); // Estado para manejar el popup
 
   useEffect(() => {
-    const fetchAvailableHours = async () => {
+    const fetchAvailableHours = async () => { 
       if (!form.date) {
-        setAvailableHours([]);
+        setAvailableHours([]); {/* Si no hay fecha seleccionada, no se cargan horas disponibles */ }
         return;
       }
 
-      setLoadingHours(true);
-      setPopup("");
+      setLoadingHours(true); // Carga de horas
+      setPopup(""); 
       try {
         const token = localStorage.getItem("token");
-        const hours = await getAvailableTimes(form.date, token);
-        setAvailableHours(hours);
+        const hours = await getAvailableTimes(form.date, token); {/* Llama a la función para obtener horas disponibles */ }
+        setAvailableHours(hours); {/* Actualiza el estado con las horas disponibles */ }
       } catch (err) {
         setPopup(err.message || "Error al cargar horas disponibles");
         setTimeout(() => setPopup(""), 3000);
         setAvailableHours([]);
       } finally {
-        setLoadingHours(false);
+        setLoadingHours(false); {/* Finaliza la carga de horas */ }
       }
     };
 
     fetchAvailableHours();
-  }, [form.date]);
+  }, [form.date]); {/* Efecto para cargar horas disponibles cuando cambia la fecha */ }
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => { {/* Maneja el envío del formulario */ }
     e.preventDefault();
     setPopup("");
 
@@ -53,26 +53,26 @@ const Reservas = () => {
       return;
     }
 
-    const dateTime = `${form.date}T${form.time}`;
+    const dateTime = `${form.date}T${form.time}`; {/* Combina fecha y hora en un solo string */ }
 
-    const reservationData = {
+    const reservationData = { 
       name: form.name,
       phone: form.phone,
-      description: form.description,
+      description: form.description, 
       date: dateTime
-    };
+    }; {/* Datos de la reserva */ }
 
     const token = localStorage.getItem("token");
 
-    try {
-      await createReservation(reservationData, token);
+    try { {/* Llama a la función para crear la reserva */ }
+      await createReservation(reservationData, token); {/* Crea la reserva */ }
       setPopup("Reserva añadida correctamente");
-      setForm({ name: "", phone: "", description: "", date: "", time: "" });
-      setAvailableHours([]);
+      setForm({ name: "", phone: "", description: "", date: "", time: "" }); {/* Resetea el formulario */ }
+      setAvailableHours([]); {/* Limpia las horas disponibles */ }
       setTimeout(() => setPopup(""), 3000);
     } catch (err) {
       setPopup(err.message || "Error al añadir reserva");
-      setTimeout(() => setPopup(""), 3000);
+      setTimeout(() => setPopup(""), 3000); 
     }
   };
 

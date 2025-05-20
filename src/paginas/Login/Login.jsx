@@ -1,39 +1,30 @@
 import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { login } from '../../servicios/userService'; // Importa la función del servicio
 
 const Login = ({ setToken }) => {
   const navigate = useNavigate();
-  const [popup, setPopup] = useState(null); // Estado para el popup
+  const [popup, setPopup] = useState(null);
 
+  // Maneja el envío del formulario de login
   const handleLogin = async (event) => {
     event.preventDefault();
-
     const username = event.target.username.value;
     const password = event.target.password.value;
 
     try {
-      const response = await fetch('https://revoluxburger-backend.onrender.com/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Credenciales incorrectas');
-      }
-
-      const data = await response.json();
-
-      setToken(data.token); // Actualiza el estado global del token
+      // Llama al servicio para hacer login
+      const data = await login(username, password);
+      setToken(data.token);
       setPopup("Inicio de sesión exitoso");
       setTimeout(() => {
         setPopup(null);
         navigate('/panel');
-      }, 2000); // Popup visible por 2 segundos
+      }, 2000);
     } catch (error) {
       setPopup(error.message);
-      setTimeout(() => setPopup(null), 5000); // Popup visible por 5 segundos
+      setTimeout(() => setPopup(null), 5000);
     }
   };
 

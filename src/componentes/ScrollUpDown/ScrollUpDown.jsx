@@ -18,11 +18,11 @@ const ScrollUpDown = () => {
         <div>
 
             <span className="ir-arriba" onClick={scrollup} aria-label="Subir">
-                <i class="bi bi-arrow-up"></i>
+                <i className="bi bi-arrow-up"></i>
             </span>
 
             <span className="ir-abajo" onClick={scrollDown} aria-label="Bajar">
-                <i class="bi bi-arrow-down"></i>     
+                <i className="bi bi-arrow-down"></i>     
                 </span>
 
         </div>

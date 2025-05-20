@@ -1,41 +1,30 @@
 import './Registro.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { register } from '../../servicios/userService'; // Importa la función del servicio
 
 const Registro = () => {
   const navigate = useNavigate();
-  const [popup, setPopup] = useState(null); // Estado para el popup
+  const [popup, setPopup] = useState(null);
 
+  // Maneja el envío del formulario de registro
   const handleRegistro = async (event) => {
     event.preventDefault();
-
     const username = event.target.username.value;
     const email = event.target.email.value;
     const password = event.target.password.value;
 
     try {
-      const response = await fetch('https://revoluxburger-backend.onrender.com/auth/register', {
-        method: 'POST',
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-        }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al registrarse');
-      }
-
+      // Llama al servicio para registrar usuario
+      await register({ username, email, password });
       setPopup("Registro exitoso. Ahora puedes iniciar sesión");
       setTimeout(() => {
         setPopup(null);
         navigate('/login');
-      }, 2000); // Popup visible por 2 segundos
+      }, 2000);
     } catch (error) {
       setPopup(error.message);
-      setTimeout(() => setPopup(null), 5000); // Popup visible por 5 segundos
+      setTimeout(() => setPopup(null), 5000);
     }
   };
 
