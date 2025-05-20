@@ -1,11 +1,18 @@
-import loader from '../../assets/video/monedaGirando.gif';
+import { dotWave } from 'ldrs'
+dotWave.register()
 const AjaxLoader = () => {
 
     return (
         <div>
-            <img src={loader} alt="ajax-loader"/>
+            <l-dot-wave
+            size="47"
+            speed="1" 
+            color="#fcb300" />
         </div>
     )
 }
 
 export default AjaxLoader;
+
+
+
