@@ -3,11 +3,19 @@ import useAuthenticatedUser from '../../hooks/useAuthenticatedUser';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import AjaxLoader from '../../componentes/AjaxLoader/AjaxLoader';
+import { deleteReservation } from '../../servicios/reservasService';
 
 const UserPanel = ({ setToken }) => {
   const { user, loading } = useAuthenticatedUser();
   const navigate = useNavigate();
-  const [mostrarReservas, setMostrarReservas] = useState(false); // Estado para mostrar/ocultar reservas
+  const [mostrarReservas, setMostrarReservas] = useState(false);
+  const [reservas, setReservas] = useState(user?.reservations || []);
+  const [borrando, setBorrando] = useState(null);
+  const [popup, setPopup] = useState(null); // Estado para el popup
+
+  useEffect(() => {
+    setReservas(user?.reservations || []);
+  }, [user]);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -17,14 +25,31 @@ const UserPanel = ({ setToken }) => {
   }, [loading, user, setToken, navigate]);
 
   const manejarVerReservas = () => {
-    setMostrarReservas(!mostrarReservas); // Alternar entre mostrar/ocultar
+    setMostrarReservas(!mostrarReservas);
   };
 
-  // Lógica para determinar si una reserva está caducada
+  const manejarBorrado = async (id) => {
+    setBorrando(id);
+    try {
+      const token = localStorage.getItem('token');
+      await deleteReservation(id, token);
+      setReservas(reservas.filter(r => r.id !== id));
+      setPopup("Reserva borrada con éxito");
+      setTimeout(() => {
+        setPopup(null);
+      }, 2000); // Popup visible por 2 segundos
+    } catch (err) {
+      setPopup("Error al borrar la reserva");
+      setTimeout(() => setPopup(null), 3000);
+    } finally {
+      setBorrando(null);
+    }
+  };
+
   const esCaducada = (fechaReserva) => {
     const ahora = new Date();
     const fecha = new Date(fechaReserva);
-    return fecha < ahora; // Devuelve true si la reserva ya pasó
+    return fecha < ahora;
   };
 
   if (loading || !user) {
@@ -62,7 +87,7 @@ const UserPanel = ({ setToken }) => {
         </button>
       )}
       {user.role === "USER" && (
-        <div className=" text-center mt-4">
+        <div className="text-center mt-4">
           <button
             className="btn btn-primary mt-2 mb-2"
             onClick={manejarVerReservas}
@@ -70,10 +95,10 @@ const UserPanel = ({ setToken }) => {
             {mostrarReservas ? 'Ocultar Reservas' : 'Ver mis Reservas'}
           </button>
           {mostrarReservas && (
-            <div className=" reservas-container mt-4 mb-4 py-4 px-4">
+            <div className="reservas-container mt-4 mb-4 py-4 px-4">
               <h4 className="reserva-titulo">Mis Reservas</h4>
-              {user.reservations.length > 0 ? (
-                user.reservations.map((reserva) => {
+              {reservas.length > 0 ? (
+                reservas.map((reserva) => {
                   const caducada = esCaducada(reserva.date);
                   return (
                     <div
@@ -98,6 +123,13 @@ const UserPanel = ({ setToken }) => {
                           </div>
                         )}
                       </div>
+                      <button
+                        className="btn btn-danger mt-2"
+                        onClick={() => manejarBorrado(reserva.id)}
+                        disabled={borrando === reserva.id}
+                      >
+                        <i className="bi bi-trash"></i> Cancelar Reserva
+                      </button>
                     </div>
                   );
                 })
@@ -117,6 +149,11 @@ const UserPanel = ({ setToken }) => {
       >
         Cerrar Sesión
       </button>
+      {popup && (
+        <div className="custom-popup">
+          {popup}
+        </div>
+      )}
     </div>
   );
 };

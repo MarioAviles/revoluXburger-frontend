@@ -1,8 +1,10 @@
 import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const Login = ({ setToken }) => {
   const navigate = useNavigate();
+  const [popup, setPopup] = useState(null); // Estado para el popup
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -24,9 +26,14 @@ const Login = ({ setToken }) => {
       const data = await response.json();
 
       setToken(data.token); // Actualiza el estado global del token
-      navigate('/panel');
+      setPopup("Inicio de sesión exitoso");
+      setTimeout(() => {
+        setPopup(null);
+        navigate('/panel');
+      }, 2000); // Popup visible por 2 segundos
     } catch (error) {
-      alert(error.message);
+      setPopup(error.message);
+      setTimeout(() => setPopup(null), 5000); // Popup visible por 5 segundos
     }
   };
 
@@ -45,6 +52,11 @@ const Login = ({ setToken }) => {
         <button type="submit" className="btn btn-custom">Iniciar sesión</button>
       </form>
       <p>¿No tienes una cuenta? <br /><br /><Link to="/registro">Haz click y regístrate ahora</Link></p>
+      {popup && (
+        <div className="custom-popup">
+          {popup}
+        </div>
+      )}
     </div>
   );
 };

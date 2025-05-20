@@ -1,8 +1,10 @@
 import './Registro.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const Registro = () => {
   const navigate = useNavigate();
+  const [popup, setPopup] = useState(null); // Estado para el popup
 
   const handleRegistro = async (event) => {
     event.preventDefault();
@@ -15,7 +17,7 @@ const Registro = () => {
       const response = await fetch('https://revoluxburger-backend.onrender.com/auth/register', {
         method: 'POST',
         body: JSON.stringify({
-          username, // Cambié 'name' a 'username'
+          username,
           email,
           password,
         }),
@@ -26,11 +28,14 @@ const Registro = () => {
         throw new Error('Error al registrarse');
       }
 
-      // Si el registro fue exitoso, redirige al login
-      alert('Registro exitoso! Ahora puedes iniciar sesión');
-      navigate('/login');
+      setPopup("Registro exitoso. Ahora puedes iniciar sesión");
+      setTimeout(() => {
+        setPopup(null);
+        navigate('/login');
+      }, 2000); // Popup visible por 2 segundos
     } catch (error) {
-      alert(error.message);
+      setPopup(error.message);
+      setTimeout(() => setPopup(null), 5000); // Popup visible por 5 segundos
     }
   };
 
@@ -53,6 +58,11 @@ const Registro = () => {
         <button type="submit" className="btn-custom">Registrarse</button>
       </form>
       <p>¿Ya tienes una cuenta? <br /><br /><Link to="/login">Inicia sesión ahora</Link></p>
+      {popup && (
+        <div className="custom-popup">
+          {popup}
+        </div>
+      )}
     </div>
   );
 };
