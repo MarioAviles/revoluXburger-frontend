@@ -16,7 +16,7 @@ npm install ldrs
 
 ## 🌐 Importaciones en el HTML
 
-Agrega las  líneas <link> dentro de la etiqueta `<head>` y las líneas <script> de la etiqueta `<body>` del archivo `public/index.html`:
+Agrega las  líneas "<link>" dentro de la etiqueta `<head>` y las líneas "<script>" de la etiqueta `<body>` del archivo `public/index.html`:
 
 🔸 [Bootstrap JS Bundle 5.3.6](https://getbootstrap.com/docs/5.3/getting-started/introduction/) → Script de Bootstrap
 
