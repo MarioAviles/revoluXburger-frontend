@@ -13,7 +13,7 @@ const SeccionContadores = () => (
             <i className="bi bi-people-fill"></i>
           </div>
           <ContadorClientes />
-          <span className="contador-label">Clientes RevoluX</span>
+          <span className="contador-label">Clientes revoluX</span>
         </div>
         <div className="col-12 col-md-3 mb-4 mb-md-0  align-items-center px-5">
           <div className="contador-icono mb-2">
