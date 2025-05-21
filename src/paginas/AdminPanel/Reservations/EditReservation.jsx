@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getAllReservations, updateReservation, getAvailableTimes } from "../../../servicios/reservasService";
 import { useParams, useNavigate } from "react-router-dom";
+
 const EditReservation = () => {
-  
   const navigate = useNavigate();
   const { reservationId } = useParams();
   const [reservas, setReservas] = useState([]);
@@ -22,16 +22,18 @@ const EditReservation = () => {
   const token = localStorage.getItem("token");
 
   const fetchData = async () => {
-      try {
-        const data = await getAllReservations(token);
-        setReservas(data);
-      } catch {
-        setPopup("Error al cargar reservas");
-        setTimeout(() => setPopup(null), 3000);
-      }
-    };
+    try {
+      const data = await getAllReservations(token);
+      setReservas(data);
+    } catch {
+      setPopup("Error al cargar reservas");
+      setTimeout(() => setPopup(null), 3000);
+    }
+  };
 
-  useEffect(() => { fetchData(); }, [token]);
+  useEffect(() => {
+    fetchData();
+  }, [token]);
 
   useEffect(() => {
     const fetchAvailableHours = async () => {
@@ -44,7 +46,19 @@ const EditReservation = () => {
       setPopup(null);
       try {
         const hours = await getAvailableTimes(form.date, token);
-        setAvailableHours(hours);
+
+        // Filtrar horas para mostrar solo las futuras si la fecha es hoy
+        const filteredHours = hours.filter(hour => {
+          if (form.date === new Date().toISOString().split("T")[0]) {
+            const currentHour = new Date().getHours();
+            const currentMinute = new Date().getMinutes();
+            const [hourPart, minutePart] = hour.split(":").map(Number);
+            return hourPart > currentHour || (hourPart === currentHour && minutePart > currentMinute);
+          }
+          return true; // Si no es hoy, mostrar todas las horas
+        });
+
+        setAvailableHours(filteredHours);
       } catch (err) {
         setPopup(err.message || "Error al cargar horas disponibles");
         setAvailableHours([]);
@@ -79,6 +93,13 @@ const EditReservation = () => {
     e.preventDefault();
     setPopup(null);
 
+    // Validar teléfono
+    if (!/^[679]\d{8}$/.test(form.phone)) {
+      setPopup("El teléfono debe comenzar con 6, 7 o 9 y tener 9 dígitos.");
+      setTimeout(() => setPopup(null), 3000);
+      return;
+    }
+
     if (!form.date || !form.time) {
       setPopup("Por favor selecciona fecha y hora");
       setTimeout(() => setPopup(null), 3000);
@@ -99,7 +120,6 @@ const EditReservation = () => {
       setPopup("Reserva editada correctamente");
       setTimeout(() => setPopup(null), 3000);
       navigate(`/admin-panel`);
-
     } catch (err) {
       setPopup(err.message || "Error al editar reserva");
       setTimeout(() => setPopup(null), 3000);
@@ -109,7 +129,7 @@ const EditReservation = () => {
   useEffect(() => {
     if (reservationId && reservas.length > 0) {
       setSelectedId(reservationId);
-      const reserva = reservas.find(r => String(r.id) === String(reservationId) || String(r._id) === String(reservationId));
+      const reserva = reservas.find(r => String(r.id) === String(reservationId));
       setForm({
         name: reserva?.name || "",
         phone: reserva?.phone || "",
@@ -130,7 +150,7 @@ const EditReservation = () => {
           <select className="form-control" value={selectedId} onChange={handleSelect} required>
             <option value="">-- Selecciona --</option>
             {reservas.map((r) => (
-              <option key={r.id || r._id} value={r.id || r._id}>
+              <option key={r.id} value={r.id}>
                 {r.name} - {new Date(r.date).toLocaleString()}
               </option>
             ))}
@@ -158,6 +178,8 @@ const EditReservation = () => {
             value={form.phone}
             onChange={handleChange}
             required
+            pattern="[679][0-9]{8}" // Validación HTML
+            title="El teléfono debe comenzar con 6, 7 o 9 y tener 9 dígitos."
           />
         </div>
 
@@ -181,6 +203,7 @@ const EditReservation = () => {
             value={form.date}
             onChange={handleChange}
             required
+            min={new Date().toISOString().split("T")[0]} // Bloquea días anteriores
           />
         </div>
 

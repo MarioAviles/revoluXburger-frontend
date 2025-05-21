@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { createReservation, getAvailableTimes } from "../../../servicios/reservasService";
 import { useNavigate } from "react-router-dom";
-const AddReservation = () => {
 
+const AddReservation = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
@@ -28,7 +28,23 @@ const AddReservation = () => {
       try {
         const token = localStorage.getItem("token");
         const hours = await getAvailableTimes(form.date, token);
-        setAvailableHours(hours);
+
+        // Filtrar horas para mostrar solo las futuras si la fecha es hoy
+
+        function filtrarHoras() {
+          hours.filter(hour => {
+            if (form.date === new Date().toISOString().split("T")[0]) {
+              const currentHour = new Date().getHours();
+              const currentMinute = new Date().getMinutes();
+              const [hourPart, minutePart] = hour.split(":").map(Number);
+              return hourPart > currentHour || (hourPart === currentHour && minutePart > currentMinute);
+            }
+            return true; // Si no es hoy, mostrar todas las horas
+          });
+        }
+        const filteredHours = filtrarHoras();
+
+        setAvailableHours(filteredHours);
       } catch (err) {
         setPopup(err.message || "Error al cargar horas disponibles");
         setAvailableHours([]);
@@ -36,6 +52,7 @@ const AddReservation = () => {
       } finally {
         setLoadingHours(false);
       }
+
     };
 
     fetchAvailableHours();
@@ -73,7 +90,6 @@ const AddReservation = () => {
       setAvailableHours([]);
       setTimeout(() => setPopup(null), 3000);
       navigate(`/admin-panel`);
-
     } catch (err) {
       setPopup(err.message || "Error al añadir reserva");
       setTimeout(() => setPopup(null), 3000);
@@ -105,6 +121,8 @@ const AddReservation = () => {
             value={form.phone}
             onChange={handleChange}
             required
+            pattern="[679][0-9]{8}" // Validación HTML
+            title="El teléfono debe comenzar con 6, 7 o 9 y tener 9 dígitos."
           />
         </div>
 
@@ -128,6 +146,7 @@ const AddReservation = () => {
             value={form.date}
             onChange={handleChange}
             required
+            min={new Date().toISOString().split("T")[0]} // Bloquea días anteriores
           />
         </div>
 

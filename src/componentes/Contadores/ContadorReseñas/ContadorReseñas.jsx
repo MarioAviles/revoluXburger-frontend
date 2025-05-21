@@ -9,7 +9,7 @@ export default function ContadorClientes() {
     const rounded = useTransform(() => Math.round(count.get()))
 
     useEffect(() => {
-        const controls = animate(count, 650, { duration: 8 })
+        const controls = animate(count, 650, { duration: 5 })
         return () => controls.stop()
     }, [])
 
