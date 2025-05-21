@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllReservations, deleteReservation } from "../../../servicios/reservasService";
 import { useNavigate } from "react-router-dom";
+import PopupConfirmacion from "../../../componentes/PopUpConfirmacion/PopUpConfirmacion";
 const ListReservation = () => {
   const [reservas, setReservas] = useState([]);
   const [search, setSearch] = useState(""); // Estado para el buscador
