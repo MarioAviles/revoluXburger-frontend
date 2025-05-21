@@ -1,5 +1,5 @@
 // src/services/uploadService.js
-const API_URL = "https://revoluxburger-backend.onrender.com/uploads";
+const API_URL = "https://revoluxburger-backend.onrender.com/images";
 
 export const uploadService = {
   async uploadImage(file, folder) {
@@ -7,7 +7,7 @@ export const uploadService = {
     formData.append("file", file);
     formData.append("folder", folder);
 
-    const response = await fetch(`${API_URL}/image`, {
+    const response = await fetch(`${API_URL}`, {
       method: "POST",
       body: formData,
     });
@@ -22,7 +22,7 @@ export const uploadService = {
   },
 
   async getImageUrls(folder) {
-    const response = await fetch(`${API_URL}/images/urls?folder=${encodeURIComponent(folder)}`);
+    const response = await fetch(`${API_URL}/urls?folder=${encodeURIComponent(folder)}`);
 
     if (!response.ok) {
       const error = await response.json();
@@ -32,4 +32,15 @@ export const uploadService = {
     const data = await response.json();
     return data.urls;
   },
+
+  async deleteImage(publicId) {
+    const response = await fetch(`${API_URL}?publicId=${encodeURIComponent(publicId)}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || "Error al borrar la imagen");
+    }
+  }
 };
