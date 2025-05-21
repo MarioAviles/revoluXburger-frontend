@@ -3,8 +3,10 @@ import { createMenuItem } from "../../../servicios/menuService";
 import UploadImages from "../UploadImages/UploadImages";
 import useCategorias from "../../../hooks/useCategorias";
 import useTipos from "../../../hooks/useTipos";
-
+import { useNavigate } from "react-router-dom";
 const AddMenuItem = () => {
+
+  const navigate = useNavigate();
   const categorias = useCategorias();
   const tipos = useTipos();
   const [form, setForm] = useState({
@@ -30,6 +32,7 @@ const AddMenuItem = () => {
         setTimeout(() => setPopup(null), 3000);
         return;
       }
+
       const token = localStorage.getItem("token");
       await createMenuItem({
         name: form.name,
@@ -40,9 +43,12 @@ const AddMenuItem = () => {
         imageUrl: form.imageUrl,
         price: Number(form.price)
       }, token);
+
       setPopup("Producto añadido correctamente");
       setForm({ name: '', description: '', category: '', type: '', points: '', imageUrl: '', price: '' });
       setTimeout(() => setPopup(null), 3000);
+      navigate(`/admin-panel`);
+
     } catch (err) {
       setPopup("Error al añadir producto");
       setTimeout(() => setPopup(null), 3000);

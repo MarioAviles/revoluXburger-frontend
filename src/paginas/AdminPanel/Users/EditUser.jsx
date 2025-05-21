@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUsers } from "../../../hooks/useUsers";
+import { useParams, useNavigate } from "react-router-dom";
 
 const EditUser = () => {
+  const navigate = useNavigate(); 
+  const { userId } = useParams();
   const token = localStorage.getItem("token");
   const { users, updateUser, loading, refetch } = useUsers(token);
   const [selectedId, setSelectedId] = useState("");
@@ -13,7 +16,7 @@ const EditUser = () => {
   const handleSelect = (e) => {
     const id = e.target.value;
     setSelectedId(id);
-    const user = users.find(u => String(u.id) === String(id) || String(u._id) === String(id));
+    const user = users.find(u => String(u.id) === String(id));
     setNombre(user?.username || "");
     setEmail(user?.email || "");
     setRol(user?.role || "USER");
@@ -28,11 +31,23 @@ const EditUser = () => {
       setPopup("Usuario actualizado correctamente");
       refetch();
       setTimeout(() => setPopup(null), 3000);
+      navigate(`/admin-panel`);
     } catch (err) {
       setPopup("Error al actualizar usuario");
       setTimeout(() => setPopup(null), 3000);
     }
   };
+
+  useEffect(() => {
+    if (userId && users.length > 0) {
+      setSelectedId(userId);
+      const user = users.find(u => String(u.id) === String(userId));
+      setNombre(user?.username || "");
+      setEmail(user?.email || "");
+      setRol(user?.role || "USER");
+      setPopup(null);
+    }
+  }, [userId, users]);
 
   return (
     <div className="admin-crud-page">
@@ -44,7 +59,7 @@ const EditUser = () => {
             <select className="form-control" value={selectedId} onChange={handleSelect} required>
               <option value="">-- Selecciona --</option>
               {users.map(u => (
-                <option key={u.id || u._id} value={u.id || u._id}>
+                <option key={u.id} value={u.id}>
                   {u.username} ({u.email})
                 </option>
               ))}

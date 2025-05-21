@@ -54,4 +54,8 @@
         margin: 0 auto;
 
     }
+
+    .btn-custom{
+        color: black !important;
+    }
 }

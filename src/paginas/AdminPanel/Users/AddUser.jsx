@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { register } from "../../../servicios/userService";
+import { useNavigate } from "react-router-dom";
 
 const AddUser = () => {
+  const navigate = useNavigate();
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,6 +21,7 @@ const AddUser = () => {
       setPassword("");
       setRol("USER");
       setTimeout(() => setPopup(null), 3000);
+      navigate(`/admin-panel`);
     } catch (err) {
       setPopup("Error al añadir usuario");
       setTimeout(() => setPopup(null), 3000);

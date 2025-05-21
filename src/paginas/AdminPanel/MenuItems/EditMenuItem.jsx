@@ -3,8 +3,11 @@ import { getAllMenuItems, updateMenuItem } from "../../../servicios/menuService"
 import UploadImages from "../UploadImages/UploadImages";
 import useCategorias from "../../../hooks/useCategorias";
 import useTipos from "../../../hooks/useTipos";
+import { useParams, useNavigate } from "react-router-dom";
 
 const EditMenuItem = () => {
+  const navigate = useNavigate();
+  const {menuItemId} = useParams();
   const categorias = useCategorias();
   const tipos = useTipos();
   const [productos, setProductos] = useState([]);
@@ -18,8 +21,10 @@ const EditMenuItem = () => {
     imageUrl: "",
     price: ""
   });
+
   const [popup, setPopup] = useState(null);
 
+  
   useEffect(() => {
     const fetchProductos = async () => {
       try {
@@ -33,6 +38,23 @@ const EditMenuItem = () => {
     };
     fetchProductos();
   }, []);
+
+   useEffect(() => {
+    if (menuItemId && productos.length > 0) {
+      setSelectedId(menuItemId);
+      const prod = productos.find(p => String(p.id) === String(menuItemId) || String(p._id) === String(menuItemId));
+      setForm({
+        name: prod?.name || "",
+        description: prod?.description || "",
+        category: prod?.category || "",
+        type: prod?.type || "",
+        points: prod?.points ?? "",
+        imageUrl: prod?.imageUrl || "",
+        price: prod?.price ?? ""
+      });
+      setPopup(null);
+    }
+  }, [menuItemId, productos]);
 
   const handleSelect = (e) => {
     const id = e.target.value;
@@ -75,6 +97,8 @@ const EditMenuItem = () => {
       }, token);
       setPopup("Producto editado correctamente");
       setTimeout(() => setPopup(null), 3000);
+      navigate(`/admin-panel`);
+
     } catch (err) {
       setPopup("Error al editar producto");
       setTimeout(() => setPopup(null), 3000);

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { getAllReservations, updateReservation, getAvailableTimes } from "../../../servicios/reservasService";
-
+import { useParams, useNavigate } from "react-router-dom";
 const EditReservation = () => {
+  
+  const navigate = useNavigate();
+  const { reservationId } = useParams();
   const [reservas, setReservas] = useState([]);
   const [selectedId, setSelectedId] = useState("");
   const [form, setForm] = useState({
@@ -11,14 +14,14 @@ const EditReservation = () => {
     date: "",
     time: ""
   });
+
   const [availableHours, setAvailableHours] = useState([]);
   const [loadingHours, setLoadingHours] = useState(false);
   const [popup, setPopup] = useState(null);
 
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
       try {
         const data = await getAllReservations(token);
         setReservas(data);
@@ -27,8 +30,8 @@ const EditReservation = () => {
         setTimeout(() => setPopup(null), 3000);
       }
     };
-    fetchData();
-  }, [token]);
+
+  useEffect(() => { fetchData(); }, [token]);
 
   useEffect(() => {
     const fetchAvailableHours = async () => {
@@ -95,11 +98,28 @@ const EditReservation = () => {
       await updateReservation(selectedId, updatedReservation, token);
       setPopup("Reserva editada correctamente");
       setTimeout(() => setPopup(null), 3000);
+      navigate(`/admin-panel`);
+
     } catch (err) {
       setPopup(err.message || "Error al editar reserva");
       setTimeout(() => setPopup(null), 3000);
     }
   };
+
+  useEffect(() => {
+    if (reservationId && reservas.length > 0) {
+      setSelectedId(reservationId);
+      const reserva = reservas.find(r => String(r.id) === String(reservationId) || String(r._id) === String(reservationId));
+      setForm({
+        name: reserva?.name || "",
+        phone: reserva?.phone || "",
+        description: reserva?.description || "",
+        date: reserva?.date ? reserva.date.slice(0, 10) : "",
+        time: reserva?.date ? reserva.date.slice(11, 16) : ""
+      });
+      setPopup(null);
+    }
+  }, [reservationId, reservas]);
 
   return (
     <div className="admin-crud-page">

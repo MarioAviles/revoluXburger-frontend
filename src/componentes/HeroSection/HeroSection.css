@@ -82,4 +82,8 @@
     .hero-subtitle {
         font-size: 1.2rem;
     }
+
+     .btn-hero{
+        color: black !important;
+    }
 }

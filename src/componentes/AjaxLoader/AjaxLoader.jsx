@@ -3,7 +3,7 @@ dotWave.register()
 const AjaxLoader = () => {
 
     return (
-        <div>
+        <div className='align-items-center justify-content-center text-center'>
             <l-dot-wave
             size="47"
             speed="1" 

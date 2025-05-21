@@ -1,17 +1,24 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useUsers } from "../../../hooks/useUsers";
 import AjaxLoader from "../../../componentes/AjaxLoader/AjaxLoader";
+import PopupConfirmacion from "../../../componentes/PopUpConfirmacion/PopUpConfirmacion";
 
 const UserList = () => {
+
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const { users, deleteUser, loading, error, refetch } = useUsers(token);
   const [search, setSearch] = useState("");
   const [deletingId, setDeletingId] = useState(null);
-  const [confirmId, setConfirmId] = useState(null); // Nuevo estado para el popup
+  const [confirmId, setConfirmId] = useState(null);
+  const [usersVisibles, setUserVisibles] = useState(10); // Número de usuarios visibles
 
-  const filteredUsers = users.filter(u =>
+ function filtrarUsuarios(users, search) {
+  return users.filter(u =>
     u.username.toLowerCase().includes(search.toLowerCase())
   );
+}
 
   const handleDelete = async (id) => {
     setDeletingId(id);
@@ -25,6 +32,12 @@ const UserList = () => {
       setConfirmId(null);
     }
   };
+
+  const filteredUsers = filtrarUsuarios(users, search)
+
+  // Solo muestra los primeros "usersVisibles" usuarios
+  const usersMostrar = filteredUsers.slice(0, usersVisibles);
+
 
   return (
     <div className="admin-crud-page">
@@ -40,37 +53,53 @@ const UserList = () => {
       {loading ? (
         <div> <AjaxLoader /></div>
       ) : (
-        <ul className="list-group">
-          {filteredUsers.map(u => (
-            <li key={u.id || u._id} className="list-group-item d-flex justify-content-between align-items-center">
-              <span>
-                {u.username} - {u.email} - {u.role}
-              </span>
+        <>
+          <ul className="list-group">
+            {usersMostrar.map(u => (
+              <li key={u.id} className="list-group-item d-flex flex-column justify-content-between align-items-center gap-3">
+                <span>
+                  {u.username} - {u.email} - {u.role}
+                </span>
+                <div className="d-flex justify-content-center gap-4">
+                  <button
+                    className="btn btn-info btn-sm me-2"
+                    onClick={() => navigate(`/admin/users/edit/${u.id}`)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => setConfirmId(u.id)}
+                    disabled={deletingId === (u.id)}
+                  >
+                    {deletingId === (u.id) ? "Eliminando..." : "Eliminar"}
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+          {/* Botón "Cargar más" */}
+          {usersVisibles < filteredUsers.length && (
+            <div className="text-center mt-3">
               <button
-                className="btn btn-danger btn-sm"
-                onClick={() => setConfirmId(u.id || u._id)}
-                disabled={deletingId === (u.id || u._id)}
+                className="btn btn-warning"
+                onClick={() => setUserVisibles(usersVisibles + 10)}
               >
-                {deletingId === (u.id || u._id) ? "Eliminando..." : "Eliminar"}
+                Cargar más
               </button>
-            </li>
-          ))}
-        </ul>
+            </div>
+          )}
+        </>
       )}
 
       {/* Popup de confirmación */}
-      
       {confirmId && (
-        <div className="popup-eliminar-overlay">
-          <div className="popup-eliminar">
-            <p>¿Seguro que quieres eliminar este usuario?</p>
-            <div className="d-flex justify-content-center gap-2">
-              <button className="btn btn-secondary" onClick={() => setConfirmId(null)}>Cancelar</button>
-              <button className="btn btn-danger" onClick={() => handleDelete(confirmId)}>Eliminar</button>
-            </div>
-          </div>
-        </div>
-      )}
+  <PopupConfirmacion
+    mensaje="¿Seguro que quieres eliminar este usuario?"
+    onCancel={() => setConfirmId(null)}
+    onConfirm={() => handleDelete(confirmId)}
+  />
+)}
       {error && <div className="alert alert-danger mt-3">{error}</div>}
     </div>
   );

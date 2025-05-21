@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { createReservation, getAvailableTimes } from "../../../servicios/reservasService";
-
+import { useNavigate } from "react-router-dom";
 const AddReservation = () => {
+
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -70,6 +72,8 @@ const AddReservation = () => {
       setForm({ name: "", phone: "", description: "", date: "", time: "" });
       setAvailableHours([]);
       setTimeout(() => setPopup(null), 3000);
+      navigate(`/admin-panel`);
+
     } catch (err) {
       setPopup(err.message || "Error al añadir reserva");
       setTimeout(() => setPopup(null), 3000);
