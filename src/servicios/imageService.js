@@ -1,59 +1,78 @@
-// src/services/uploadService.js
 const API_URL = "https://revoluxburger-backend.onrender.com/images";
 
 export const uploadService = {
-    async uploadImage(file, folder) {
-        const token = localStorage.getItem("token");
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("folder", folder);
+  async uploadImage(file, folder) {
+    const token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("folder", folder);
+    formData.append("filename", file.name); // usa el nombre del archivo original
 
-        const response = await fetch(`${API_URL}`, {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            body: formData,
-        });
+    const response = await fetch(`${API_URL}/upload`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
 
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.error || "Error al subir la imagen");
-        }
-
-        const data = await response.json();
-        return data.url;
-    },
-
-    async getImageUrls(folder) {
-        const token = localStorage.getItem("token");
-        const response = await fetch(`${API_URL}/urls?folder=${encodeURIComponent(folder)}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.error || "Error al obtener las imágenes");
-        }
-
-        const data = await response.json();
-        return data.urls;
-    },
-
-    async deleteImage(publicId) {
-        const token = localStorage.getItem("token");
-        const response = await fetch(`${API_URL}?publicId=${encodeURIComponent(publicId)}`, {
-            method: "DELETE",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.error || "Error al borrar la imagen");
-        }
+    if (!response.ok) {
+      let errorMsg = "Error al subir la imagen";
+      try {
+        const errorData = await response.json();
+        errorMsg = errorData.error || errorMsg;
+      } catch (e) {
+        // respuesta vacía o no JSON
+      }
+      throw new Error(errorMsg);
     }
+
+    const data = await response.json();
+    return data.url; // <- esperado según backend corregido
+  },
+
+  async getImageUrls(folder) {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${API_URL}/list?folder=${encodeURIComponent(folder)}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      let errorMsg = "Error al obtener las imágenes";
+      try {
+        const errorData = await response.json();
+        errorMsg = errorData.error || errorMsg;
+      } catch (e) {
+        // respuesta vacía o no JSON
+      }
+      throw new Error(errorMsg);
+    }
+
+    return await response.json(); // backend ya devuelve lista de ImageDto
+  },
+
+  async deleteImage(folder, filename) {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${API_URL}/delete?folder=${encodeURIComponent(folder)}&filename=${encodeURIComponent(filename)}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      let errorMsg = "Error al borrar la imagen";
+      try {
+        const errorData = await response.json();
+        errorMsg = errorData.error || errorMsg;
+      } catch (e) {
+        // respuesta vacía o no JSON
+      }
+      throw new Error(errorMsg);
+    }
+  }
 };
