@@ -16,6 +16,8 @@ npm install ldrs
 
 npm install motion
 
+npm install react-hook-form
+
 ## 🌐 Importaciones en el HTML
 
 Agrega las líneas "link" dentro de la etiqueta `<head>` y las líneas "script" de la etiqueta `<body>` del archivo `public/index.html`:
