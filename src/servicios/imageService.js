@@ -6,7 +6,6 @@ export const uploadService = {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("folder", folder);
-    formData.append("filename", file.name); // usa el nombre del archivo original
 
     const response = await fetch(`${API_URL}/upload`, {
       method: "POST",
