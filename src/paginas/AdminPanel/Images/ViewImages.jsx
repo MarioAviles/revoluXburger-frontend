@@ -36,22 +36,27 @@ const ViewImages = () => {
       {images.length === 0 && !loading ? (
         <p className="text-center">No hay imágenes disponibles.</p>
       ) : (
-        <ul className="list-group">
-          {images.map((url, index) => (
-            <li key={index} className="list-group-item d-flex align-items-center">
+        <ul className="list-group align-items-start text-start">
+          {images.map((image, index) => (
+            <li key={index} className="list-group-item d-flex align-items-start">
               <img
-                src={url}
-                alt={`imagen-${index}`}
-                style={{ width: "50px", height: "50px", objectFit: "cover", marginRight: "10px" }}
+                src={image.url}
+                alt={image.name}
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  objectFit: "cover",
+                  marginRight: "10px",
+                }}
               />
               <div>
                 <p className="mb-0">
-                  <strong>Nombre:</strong> {url.split("/").pop()}
+                  <strong>Nombre:</strong> {image.name}
                 </p>
                 <p className="mb-0">
                   <strong>URL:</strong>{" "}
-                  <a href={url} target="_blank" rel="noopener noreferrer">
-                    {url}
+                  <a href={image.url} target="_blank" rel="noopener noreferrer">
+                    {image.url}
                   </a>
                 </p>
               </div>
