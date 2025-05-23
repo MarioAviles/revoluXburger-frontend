@@ -2,14 +2,16 @@ import './DescripcionProducto.css';
 import { useParams } from 'react-router-dom';
 import useProducto from '../../hooks/useProducto';
 import useCategorias from '../../hooks/useCategorias';
+import useTipos from '../../hooks/useTipos';
 import AjaxLoader from '../../componentes/AjaxLoader/AjaxLoader';
 
 const DescripcionProducto = () => {
   const { producto } = useParams();
   const { productoSeleccionado, cargando } = useProducto(producto);
   const { categorias, loading: loadingCategorias } = useCategorias();
+  const { tipos, loading: loadingTipos } = useTipos();
 
-  if (cargando || loadingCategorias) {
+  if (cargando || loadingCategorias || loadingTipos) {
     return <h1 className="text-center mt-5"><AjaxLoader /></h1>;
   }
 
@@ -20,6 +22,9 @@ const DescripcionProducto = () => {
   // Buscar la categoría Burger
   const categoriaBurger = categorias.find(cat => cat.name === "Burger");
   const esBurger = categoriaBurger && productoSeleccionado.categoryId === categoriaBurger.id;
+
+  // Buscar el tipo correspondiente al producto
+  const tipoProducto = tipos.find(tipo => tipo.id === productoSeleccionado.typeId);
 
   return (
     <div className="descripcion-producto container py-5">
@@ -37,8 +42,8 @@ const DescripcionProducto = () => {
           <div className='informacion-producto'>
             <p className="producto-precio">Precio: {productoSeleccionado.price.toFixed(2)} €</p>
             <p className="producto-puntos">Puntos: {productoSeleccionado.points}</p>
-            {esBurger && (
-              <p className="producto-puntos">Tipo: {productoSeleccionado.type}</p>
+            {esBurger && tipoProducto && (
+              <p className="producto-puntos">Tipo: {tipoProducto.name}</p>
             )}
           </div>
         </div>

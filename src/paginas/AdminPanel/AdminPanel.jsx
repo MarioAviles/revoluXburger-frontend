@@ -4,6 +4,7 @@ import ReservationsSection from './Reservations/ReservationSection';
 import UsersSection from './Users/UsersSection';
 import ImagesSection from './Images/ImagesSection'; 
 import CategoriesSection from './Categories/CategoriesSection';
+import TiposSection from './Tipos/TiposSection';
 
 const AdminPanel = () => {
   return (
@@ -28,6 +29,9 @@ const AdminPanel = () => {
       <div className="row mt-4">
         <div className="col-md-6">
           <CategoriesSection />
+         </div>
+         <div className="col-md-6">
+          <TiposSection />
          </div>
       </div>
 

@@ -3,17 +3,20 @@ import { Link, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import useCategorias from '../../hooks/useCategorias';
 import useMenuItems from '../../hooks/useMenuItems';
+import useTipos from '../../hooks/useTipos';
 import CartaSeccion from '../../componentes/CartaSeccion/CartaSeccion';
 
 const Carta = () => {
   const { seccion } = useParams();
   const [busqueda, setBusqueda] = useState('');
   const [ordenPrecio, setOrdenPrecio] = useState('');
+  const [tipoSeleccionado, setTipoSeleccionado] = useState(''); // Nuevo estado para el tipo seleccionado
   const { categorias, loading: loadingCategorias, error: errorCategorias } = useCategorias();
   const { menuItems, loading: loadingMenu, error: errorMenu } = useMenuItems();
+  const { tipos, loading: loadingTipos, error: errorTipos } = useTipos();
 
-  if (loadingCategorias || loadingMenu) return <div className="text-center py-5">Cargando...</div>;
-  if (errorCategorias || errorMenu) return <div className="text-center py-5 text-danger">{errorCategorias || errorMenu}</div>;
+  if (loadingCategorias || loadingMenu || loadingTipos) return <div className="text-center py-5">Cargando...</div>;
+  if (errorCategorias || errorMenu || errorTipos) return <div className="text-center py-5 text-danger">{errorCategorias || errorMenu || errorTipos}</div>;
 
   // Buscar la categoría seleccionada por nombre (de la URL)
   const categoriaSeleccionada = categorias.find(
@@ -28,6 +31,11 @@ const Carta = () => {
   let productos = menuItems.filter(
     producto => producto.categoryId === categoriaSeleccionada.id
   );
+
+  // Si la categoría es "Burger", filtrar también por tipo seleccionado
+  if (categoriaSeleccionada.name.toLowerCase() === 'burger' && tipoSeleccionado) {
+    productos = productos.filter(producto => producto.typeId === tipoSeleccionado);
+  }
 
   // Filtrar productos por búsqueda
   const productosFiltradosPorBusqueda = busqueda
@@ -72,6 +80,21 @@ const Carta = () => {
           </button>
         </div>
       </div>
+
+      {/* Filtro por tipos de hamburguesa */}
+      {categoriaSeleccionada.name.toLowerCase() === 'burger' && (
+        <div className="filtro-tipos">
+          {tipos.map((tipo) => (
+            <button
+              key={tipo.id}
+              className={`tipo-boton ${tipoSeleccionado === tipo.id ? 'activo' : ''}`}
+              onClick={() => setTipoSeleccionado(tipoSeleccionado === tipo.id ? '' : tipo.id)}
+            >
+              {tipo.name}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Productos */}
       <div className="row mt-5">

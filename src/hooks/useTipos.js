@@ -1,18 +1,34 @@
 import { useEffect, useState } from "react";
-import { getTipos } from "../servicios/getTipos";
+import { getAllTipos } from "../servicios/tiposService";
 
-const useTipos = () => {    
-    const [listaTipos, setListaTipos] = useState([]);
-       
-    function obtenerTipos() {
-        getTipos().then(data => {
-            setListaTipos(data.listaTipos);
-        });
+const useTipos = () => {
+  const [tipos, setTipos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchTipos = async () => {
+    try {
+      setLoading(true);
+      const data = await getAllTipos();
+      setTipos(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    useEffect(obtenerTipos, []);
+  useEffect(() => {
+    fetchTipos();
+  }, []);
+  
+    return {
+        tipos,
+        loading,
+        error,
+        refetch: fetchTipos,
+    };
 
-    return listaTipos;
-}
+};
 
 export default useTipos;

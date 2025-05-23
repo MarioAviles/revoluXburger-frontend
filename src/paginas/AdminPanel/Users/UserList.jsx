@@ -56,7 +56,7 @@ const UserList = () => {
         <>
           <ul className="list-group">
             {usersMostrar.map(u => (
-              <li key={u.id} className="list-group-item d-flex flex-column justify-content-between align-items-center gap-3">
+              <li key={u.id} className="list-group-item d-flex flex-column justify-content-between align-items-center gap-3 p-3">
                 <span>
                   {u.username} - {u.email} - {u.role}
                 </span>

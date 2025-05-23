@@ -1,21 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { createMenuItem } from "../../../servicios/menuService";
-import UploadImages from "../UploadImages/UploadImages";
+import { useFetchImages } from "../../../hooks/useFetchImages";
 import useCategorias from "../../../hooks/useCategorias";
+import useTipos from "../../../hooks/useTipos";
 import { useNavigate } from "react-router-dom";
 
 const AddMenuItem = () => {
   const navigate = useNavigate();
   const { categorias, loading: loadingCategorias } = useCategorias();
+  const { tipos, loading: loadingTipos } = useTipos();
   const [form, setForm] = useState({
     name: "",
     description: "",
     categoryId: "",
+    typeId: "",
     points: "",
     imageUrl: "",
     price: ""
   });
   const [popup, setPopup] = useState(null);
+  const [selectedFolder, setSelectedFolder] = useState(""); // Carpeta seleccionada
+
+  // Hook para cargar imágenes
+  const { urls: images, error, loading, fetchImages } = useFetchImages();
+
+  // Memoizar fetchImages para evitar múltiples instancias
+  const memoizedFetchImages = useCallback(fetchImages, []);
+
+  useEffect(() => {
+    if (selectedFolder) {
+      memoizedFetchImages(selectedFolder); // Cargar imágenes de la carpeta seleccionada
+    }
+  }, [selectedFolder, memoizedFetchImages]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -30,6 +46,7 @@ const AddMenuItem = () => {
           name: form.name,
           description: form.description,
           categoryId: form.categoryId,
+          typeId: form.typeId || null,
           points: Number(form.points),
           imageUrl: form.imageUrl,
           price: Number(form.price)
@@ -38,7 +55,7 @@ const AddMenuItem = () => {
       );
 
       setPopup("Producto añadido correctamente");
-      setForm({ name: "", description: "", categoryId: "", points: "", imageUrl: "", price: "" });
+      setForm({ name: "", description: "", categoryId: "", typeId: "", points: "", imageUrl: "", price: "" });
       setTimeout(() => setPopup(null), 3000);
       navigate(`/admin-panel`);
     } catch (err) {
@@ -47,7 +64,12 @@ const AddMenuItem = () => {
     }
   };
 
-  if (loadingCategorias) return <div>Cargando categorías...</div>;
+  if (loadingCategorias || loadingTipos) return <div>Cargando datos...</div>;
+
+  // Verificar si la categoría seleccionada es "Burger"
+  const isBurgerCategory = categorias.find(
+    (cat) => cat.id === Number(form.categoryId) && cat.name.toLowerCase() === "burger"
+  );
 
   return (
     <div className="admin-crud-page">
@@ -80,7 +102,11 @@ const AddMenuItem = () => {
             className="form-control"
             name="categoryId"
             value={form.categoryId}
-            onChange={handleChange}
+            onChange={(e) => {
+              handleChange(e);
+              const selectedCategory = categorias.find((cat) => cat.id === Number(e.target.value));
+              setSelectedFolder(selectedCategory?.name || ""); // Actualiza la carpeta seleccionada
+            }}
             required
           >
             <option value="">Selecciona una categoría</option>
@@ -91,6 +117,25 @@ const AddMenuItem = () => {
             ))}
           </select>
         </div>
+        {isBurgerCategory && (
+          <div className="mb-3">
+            <label>Tipo de hamburguesa</label>
+            <select
+              className="form-control"
+              name="typeId"
+              value={form.typeId}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Selecciona un tipo</option>
+              {tipos.map((tipo) => (
+                <option key={tipo.id} value={tipo.id}>
+                  {tipo.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
         <div className="mb-3">
           <label>Puntos</label>
           <input
@@ -104,19 +149,38 @@ const AddMenuItem = () => {
           />
         </div>
         <div className="mb-3">
-          <label>Imagen (URL)</label>
-          <UploadImages onUpload={(url) => setForm((f) => ({ ...f, imageUrl: url }))} />
-          {form.imageUrl && (
-            <div className="mt-2">
-              <input
-                type="text"
-                className="form-control"
-                name="imageUrl"
-                value={form.imageUrl}
-                readOnly
-              />
-              <img src={form.imageUrl} alt="preview" style={{ maxWidth: "150px", marginTop: "10px" }} />
+          <label>Carpeta de imágenes</label>
+          <select
+            className="form-control"
+            value={selectedFolder}
+            onChange={(e) => setSelectedFolder(e.target.value)}
+          >
+            <option value="">Selecciona una carpeta</option>
+            {categorias.map((cat) => (
+              <option key={cat.id} value={cat.name}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-3">
+          <label>Seleccionar imagen</label>
+          {loading && <p>Cargando imágenes...</p>}
+          {error && <p className="text-danger">{error}</p>}
+          {images.length > 0 ? (
+            <div className="image-grid d-flex flex-wrap justify-content-center">
+              {images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image.url} // Ajuste para usar la propiedad `url`
+                  alt={image.name} // Ajuste para usar la propiedad `name`
+                  className={`image-item ${form.imageUrl === image.url ? "selected" : ""}`}
+                  onClick={() => setForm((f) => ({ ...f, imageUrl: image.url }))}
+                />
+              ))}
             </div>
+          ) : (
+            !loading && <p>No hay imágenes disponibles en esta carpeta.</p>
           )}
         </div>
         <div className="mb-3">

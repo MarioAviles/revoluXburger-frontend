@@ -14,7 +14,7 @@ import { reservationRoutes } from './ReservationRoutes/ReservationRoutes';
 import { userRoutes } from './UserRoutes/UserRoutes';
 import { imageRoutes } from './ImageRoutes/ImageRoutes';
 import { categoriesRoutes } from './CategoriesRoutes/CategoriesRoutes';
-
+import { typesRoutes } from './TypesRoutes/TypesRoutes';
 const AppRoutes = ({ token, setToken, user, loading }) => (
   <Routes>
     <Route path="/" element={<Home />} />
@@ -38,6 +38,7 @@ const AppRoutes = ({ token, setToken, user, loading }) => (
     {userRoutes(user)}
     {imageRoutes(user)}
     {categoriesRoutes(user)}
+    {typesRoutes(user)}
 
     <Route path="*" element={<h1 className='text-center justify-content-center'><br />404 - Página no encontrada</h1>} />
   </Routes>

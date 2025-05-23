@@ -1,24 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { getAllMenuItems, updateMenuItem } from "../../../servicios/menuService";
-import UploadImages from "../UploadImages/UploadImages";
 import useCategorias from "../../../hooks/useCategorias";
+import useTipos from "../../../hooks/useTipos";
+import { useFetchImages } from "../../../hooks/useFetchImages";
 import { useParams, useNavigate } from "react-router-dom";
 
 const EditMenuItem = () => {
   const navigate = useNavigate();
   const { menuItemId } = useParams();
   const { categorias, loading: loadingCategorias } = useCategorias();
+  const { tipos, loading: loadingTipos } = useTipos();
   const [productos, setProductos] = useState([]);
   const [selectedId, setSelectedId] = useState("");
   const [form, setForm] = useState({
     name: "",
     description: "",
     categoryId: "",
+    typeId: "",
     points: "",
     imageUrl: "",
     price: ""
   });
   const [popup, setPopup] = useState(null);
+  const [selectedFolder, setSelectedFolder] = useState("burgers"); // Carpeta seleccionada por defecto
+
+  // Hook para cargar imágenes
+  const { urls: images, error, loading, fetchImages } = useFetchImages();
+
+  // Memoizar fetchImages para evitar múltiples instancias
+  const memoizedFetchImages = useCallback(fetchImages, []);
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -42,13 +52,21 @@ const EditMenuItem = () => {
         name: prod?.name || "",
         description: prod?.description || "",
         categoryId: prod?.categoryId || "",
+        typeId: prod?.typeId || "",
         points: prod?.points ?? "",
         imageUrl: prod?.imageUrl || "",
         price: prod?.price ?? ""
       });
+      setSelectedFolder(categorias.find((cat) => cat.id === prod?.categoryId)?.name || "burgers"); // Seleccionar carpeta basada en la categoría
       setPopup(null);
     }
-  }, [menuItemId, productos]);
+  }, [menuItemId, productos, categorias]);
+
+  useEffect(() => {
+    if (selectedFolder) {
+      memoizedFetchImages(selectedFolder); // Cargar imágenes de la carpeta seleccionada
+    }
+  }, [selectedFolder, memoizedFetchImages]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -70,6 +88,7 @@ const EditMenuItem = () => {
           name: form.name,
           description: form.description,
           categoryId: form.categoryId,
+          typeId: form.typeId || null,
           points: Number(form.points),
           imageUrl: form.imageUrl,
           price: Number(form.price)
@@ -85,7 +104,11 @@ const EditMenuItem = () => {
     }
   };
 
-  if (loadingCategorias) return <div>Cargando categorías...</div>;
+  const isBurgerCategory = categorias.find(
+    (cat) => cat.id === Number(form.categoryId) && cat.name.toLowerCase() === "burger"
+  );
+
+  if (loadingCategorias || loadingTipos) return <div>Cargando datos...</div>;
 
   return (
     <div className="admin-crud-page">
@@ -118,7 +141,10 @@ const EditMenuItem = () => {
             className="form-control"
             name="categoryId"
             value={form.categoryId}
-            onChange={handleChange}
+            onChange={(e) => {
+              handleChange(e);
+              setSelectedFolder(categorias.find((cat) => cat.id === Number(e.target.value))?.name || "burgers");
+            }}
             required
           >
             <option value="">Selecciona una categoría</option>
@@ -128,6 +154,59 @@ const EditMenuItem = () => {
               </option>
             ))}
           </select>
+        </div>
+        {isBurgerCategory && (
+          <div className="mb-3">
+            <label>Tipo</label>
+            <select
+              className="form-control"
+              name="typeId"
+              value={form.typeId}
+              onChange={handleChange}
+            >
+              <option value="">Selecciona un tipo</option>
+              {tipos.map((tipo) => (
+                <option key={tipo.id} value={tipo.id}>
+                  {tipo.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        <div className="mb-3">
+          <label>Carpeta de imágenes</label>
+          <select
+            className="form-control"
+            value={selectedFolder}
+            onChange={(e) => setSelectedFolder(e.target.value)}
+          >
+            <option value="">Selecciona una carpeta</option>
+            {categorias.map((cat) => (
+              <option key={cat.id} value={cat.name}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-3">
+          <label>Seleccionar imagen</label>
+          {loading && <p>Cargando imágenes...</p>}
+          {error && <p className="text-danger">{error}</p>}
+          {images.length > 0 ? (
+            <div className="image-grid  d-flex flex-wrap justify-content-center">
+              {images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image.url} // Ajuste para usar la propiedad `url`
+                  alt={image.name} // Ajuste para usar la propiedad `name`
+                  className={`image-item ${form.imageUrl === image.url ? "selected" : ""}`}
+                  onClick={() => setForm((f) => ({ ...f, imageUrl: image.url }))}
+                />
+              ))}
+            </div>
+          ) : (
+            !loading && <p>No hay imágenes disponibles en esta carpeta.</p>
+          )}
         </div>
         <div className="mb-3">
           <label>Puntos</label>
@@ -140,22 +219,6 @@ const EditMenuItem = () => {
             onChange={handleChange}
             required
           />
-        </div>
-        <div className="mb-3">
-          <label>Imagen (URL)</label>
-          <UploadImages onUpload={(url) => setForm((f) => ({ ...f, imageUrl: url }))} />
-          {form.imageUrl && (
-            <div className="mt-2">
-              <input
-                type="text"
-                className="form-control"
-                name="imageUrl"
-                value={form.imageUrl}
-                readOnly
-              />
-              <img src={form.imageUrl} alt="preview" style={{ maxWidth: "150px", marginTop: "10px" }} />
-            </div>
-          )}
         </div>
         <div className="mb-3">
           <label>Precio</label>

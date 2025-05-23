@@ -1,16 +1,31 @@
-// src/components/UploadImages.js
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useUploadImage } from "../../../hooks/useUploadImage";
+import { getAllCategorias } from "../../../servicios/categoriasService"; // Importar el servicio de categorías
 import "./ImagesSection.css";
 
 const AddImage = ({ onUpload }) => {
   const [file, setFile] = useState(null);
   const [carpeta, setCarpeta] = useState("");
+  const [categorias, setCategorias] = useState([]); // Estado para las categorías
   const [uploadResult, setUploadResult] = useState("");
-  const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef(null);
 
   const { uploadImage, uploading, error } = useUploadImage();
+
+  // Obtener las categorías al cargar el componente
+  useEffect(() => {
+    const fetchCategorias = async () => {
+      try {
+        const token = localStorage.getItem("token"); // Obtener el token si es necesario
+        const data = await getAllCategorias(token);
+        setCategorias(data); // Guardar las categorías en el estado
+      } catch (err) {
+        console.error("Error al obtener categorías:", err);
+      }
+    };
+
+    fetchCategorias();
+  }, []);
 
   const handleUpload = async () => {
     if (!file || !carpeta) return;
@@ -20,25 +35,6 @@ const AddImage = ({ onUpload }) => {
       setFile(null);
       setCarpeta("");
       if (onUpload) onUpload(url);
-    }
-  };
-
-  const handleDrag = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
-    }
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setFile(e.dataTransfer.files[0]);
     }
   };
 
@@ -53,76 +49,90 @@ const AddImage = ({ onUpload }) => {
   };
 
   return (
-    <div className="upload-images-container text-center">
-      <div
-        className={`dropzone${dragActive ? " active" : ""}`}
-        onDragEnter={handleDrag}
-        onDragOver={handleDrag}
-        onDragLeave={handleDrag}
-        onDrop={handleDrop}
-        onClick={handleClick}
-      >
-        <input
-          ref={inputRef}
-          type="file"
-          accept="image/*"
-          style={{ display: "none" }}
-          onChange={handleChange}
-        />
-        {file ? (
-          <div>
-            <p>Imagen seleccionada: {file.name}</p>
+    <div className="images-section">
+      <h3 className="text-center mb-4 text-warning">Subir Imagen</h3>
+
+      <div className="upload-images-container text-center w-50 align-items-center mx-auto">
+        <div
+          className="dropzone"
+          onClick={handleClick}
+          style={{
+            border: "2px dashed #fcb300",
+            padding: "20px",
+            borderRadius: "8px",
+            cursor: "pointer",
+            backgroundColor: "#343a40",
+            color: "#f8f9fa",
+          }}
+        >
+          <input
+            ref={inputRef}
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={handleChange}
+          />
+          {file ? (
+            <div>
+              <p>Imagen seleccionada: {file.name}</p>
+              <img
+                src={URL.createObjectURL(file)}
+                alt="preview"
+                style={{ maxWidth: "200px", marginTop: "10px", borderRadius: "8px" }}
+              />
+            </div>
+          ) : (
+            <p>Haz clic aquí para seleccionar una imagen</p>
+          )}
+        </div>
+
+        <div className="mb-3 mt-3">
+          <label className="form-label text-light">Carpeta:</label>
+          <select
+            className="form-control"
+            value={carpeta}
+            onChange={(e) => setCarpeta(e.target.value)}
+            style={{
+              backgroundColor: "#343a40",
+              color: "#f8f9fa",
+              border: "1px solid #fcb300",
+            }}
+          >
+            <option value="">Selecciona una carpeta</option>
+            {categorias.map((categoria) => (
+              <option key={categoria.id} value={categoria.name}>
+                {categoria.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <button
+          type="button"
+          className="btn btn-warning"
+          disabled={!file || !carpeta || uploading}
+          onClick={handleUpload}
+        >
+          {uploading ? "Subiendo..." : "Subir Imagen"}
+        </button>
+
+        {error && <div className="alert alert-danger mt-3">❌ {error}</div>}
+
+        {uploadResult && (
+          <div className="alert alert-success mt-3">
+            Imagen subida correctamente:{" "}
+            <a href={uploadResult} target="_blank" rel="noopener noreferrer">
+              {uploadResult}
+            </a>
+            <br />
             <img
-              src={URL.createObjectURL(file)}
-              alt="preview"
-              style={{ maxWidth: "200px", marginTop: "10px" }}
+              src={uploadResult}
+              alt="subida"
+              style={{ maxWidth: "200px", marginTop: "10px", borderRadius: "8px" }}
             />
           </div>
-        ) : (
-          <p>Arrastra una imagen aquí o haz clic para seleccionar</p>
         )}
       </div>
-
-      <div className="mb-3 mt-3">
-        <label>Carpeta:</label>
-        <select
-          className="form-control"
-          value={carpeta}
-          onChange={(e) => setCarpeta(e.target.value)}
-        >
-          <option value="">Selecciona una carpeta</option>
-          <option value="burgers">Burgers</option>
-          <option value="entrantes">Entrantes</option>
-          <option value="postres">Postres</option>
-          <option value="bebidas">Bebidas</option>
-        </select>
-      </div>
-
-      <button
-        type="button"
-        className="btn btn-success"
-        disabled={!file || !carpeta || uploading}
-        onClick={handleUpload}
-      >
-        {uploading ? "Subiendo..." : "Subir Imagen"}
-      </button>
-
-      {error && <div className="alert alert-danger mt-3">❌ {error}</div>}
-
-      {uploadResult && (
-        <div className="alert alert-success mt-3">
-          Imagen subida correctamente:{" "}
-          <a href={uploadResult} target="_blank" rel="noopener noreferrer">
-            {uploadResult}
-          </a>
-          <br />
-          <img
-            src={uploadResult}
-            alt="subida"
-            style={{ maxWidth: "200px", marginTop: "10px" }}
-          />
-        </div>
-      )}
     </div>
   );
 };

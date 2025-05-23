@@ -4,3 +4,26 @@
   padding: 20px;
   margin-bottom: 20px;
 }
+
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.image-item {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.3s ease;
+}
+
+.image-item:hover {
+  border: 2px solid #fcb300;
+}
+
+.image-item.selected {
+  border: 2px solid #fcb300;
+}
