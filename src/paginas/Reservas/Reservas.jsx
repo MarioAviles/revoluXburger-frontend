@@ -42,6 +42,7 @@ const Reservas = () => {
     const reservationData = {
       name: data.name,
       phone: data.phone,
+      email: data.email,
       description: data.description,
       date: dateTime,
     };
@@ -88,6 +89,22 @@ const Reservas = () => {
             })}
           />
           {errors.phone && <small className="text-danger">{errors.phone.message}</small>}
+        </div>
+
+        <div className="mb-3">
+          <label>Email</label>
+          <input
+            type="email"
+            className="form-control"
+            {...register("email", {
+              required: "El email es obligatorio",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Introduce un email válido",
+              },
+            })}
+          />
+          {errors.email && <small className="text-danger">{errors.email.message}</small>}
         </div>
 
         <div className="mb-3">
