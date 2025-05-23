@@ -13,6 +13,7 @@ import { menuRoutes } from './MenuRoutes/MenuRoutes';
 import { reservationRoutes } from './ReservationRoutes/ReservationRoutes';
 import { userRoutes } from './UserRoutes/UserRoutes';
 import { imageRoutes } from './ImageRoutes/ImageRoutes';
+import { categoriesRoutes } from './CategoriesRoutes/CategoriesRoutes';
 
 const AppRoutes = ({ token, setToken, user, loading }) => (
   <Routes>
@@ -32,14 +33,11 @@ const AppRoutes = ({ token, setToken, user, loading }) => (
     } />
 
     {/* Secciones agrupadas */}
-
     {menuRoutes(user)}
     {reservationRoutes(user)}
     {userRoutes(user)}
     {imageRoutes(user)}
-    
-    {/* Se tiene que hacer asi ya que no se pueden tener mas route dentro de un Routes
-    entonces se hacen arrays de routes para poder administrarlas correctamente */}
+    {categoriesRoutes(user)}
 
     <Route path="*" element={<h1 className='text-center justify-content-center'><br />404 - Página no encontrada</h1>} />
   </Routes>

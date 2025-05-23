@@ -1,18 +1,25 @@
 import './DescripcionProducto.css';
 import { useParams } from 'react-router-dom';
 import useProducto from '../../hooks/useProducto';
-import AjaxLoader from '../../componentes/AjaxLoader/AjaxLoader'; // Importa el componente de carga
-const DescripcionProducto = () => {
-  const { producto } = useParams(); // Captura los parámetros de la URL
-  const { productoSeleccionado, cargando } = useProducto(producto); // Hook para obtener el producto seleccionado
+import useCategorias from '../../hooks/useCategorias';
+import AjaxLoader from '../../componentes/AjaxLoader/AjaxLoader';
 
-  if (cargando) {
-    return <h1 className="text-center mt-5"><AjaxLoader /></h1>; // Muestra el componente de carga mientras se obtienen los datos
+const DescripcionProducto = () => {
+  const { producto } = useParams();
+  const { productoSeleccionado, cargando } = useProducto(producto);
+  const { categorias, loading: loadingCategorias } = useCategorias();
+
+  if (cargando || loadingCategorias) {
+    return <h1 className="text-center mt-5"><AjaxLoader /></h1>;
   }
 
   if (!productoSeleccionado) {
-    return <h1 className="text-center mt-5">Producto no encontrado</h1>; // Muestra un mensaje si no se encuentra el producto
+    return <h1 className="text-center mt-5">Producto no encontrado</h1>;
   }
+
+  // Buscar la categoría Burger
+  const categoriaBurger = categorias.find(cat => cat.name === "Burger");
+  const esBurger = categoriaBurger && productoSeleccionado.categoryId === categoriaBurger.id;
 
   return (
     <div className="descripcion-producto container py-5">
@@ -20,7 +27,7 @@ const DescripcionProducto = () => {
       <div className="row">
         <div className="col-12 col-md-6">
           <img
-            src= {productoSeleccionado.imageUrl} // Asegúrate de que la URL de la imagen sea correcta
+            src={productoSeleccionado.imageUrl}
             alt={productoSeleccionado.name}
             className="img-fluid producto-img"
           />
@@ -30,12 +37,11 @@ const DescripcionProducto = () => {
           <div className='informacion-producto'>
             <p className="producto-precio">Precio: {productoSeleccionado.price.toFixed(2)} €</p>
             <p className="producto-puntos">Puntos: {productoSeleccionado.points}</p>
-            {productoSeleccionado.category === 'Burger' && (
+            {esBurger && (
               <p className="producto-puntos">Tipo: {productoSeleccionado.type}</p>
-            )}  
-          </div> 
-               
-          </div> 
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

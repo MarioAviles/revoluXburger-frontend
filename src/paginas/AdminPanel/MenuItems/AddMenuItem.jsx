@@ -2,58 +2,52 @@ import React, { useState } from "react";
 import { createMenuItem } from "../../../servicios/menuService";
 import UploadImages from "../UploadImages/UploadImages";
 import useCategorias from "../../../hooks/useCategorias";
-import useTipos from "../../../hooks/useTipos";
 import { useNavigate } from "react-router-dom";
-const AddMenuItem = () => {
 
+const AddMenuItem = () => {
   const navigate = useNavigate();
-  const categorias = useCategorias();
-  const tipos = useTipos();
+  const { categorias, loading: loadingCategorias } = useCategorias();
   const [form, setForm] = useState({
     name: "",
     description: "",
-    category: "",
-    type: "",
+    categoryId: "",
     points: "",
     imageUrl: "",
     price: ""
   });
   const [popup, setPopup] = useState(null);
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (form.category === "Burger" && !form.type) {
-        setPopup("Debes seleccionar un tipo para las burgers.");
-        setTimeout(() => setPopup(null), 3000);
-        return;
-      }
-
       const token = localStorage.getItem("token");
-      await createMenuItem({
-        name: form.name,
-        description: form.description,
-        category: form.category,
-        ...(form.category === "Burger" && { type: form.type }),
-        points: Number(form.points),
-        imageUrl: form.imageUrl,
-        price: Number(form.price)
-      }, token);
+      await createMenuItem(
+        {
+          name: form.name,
+          description: form.description,
+          categoryId: form.categoryId,
+          points: Number(form.points),
+          imageUrl: form.imageUrl,
+          price: Number(form.price)
+        },
+        token
+      );
 
       setPopup("Producto añadido correctamente");
-      setForm({ name: '', description: '', category: '', type: '', points: '', imageUrl: '', price: '' });
+      setForm({ name: "", description: "", categoryId: "", points: "", imageUrl: "", price: "" });
       setTimeout(() => setPopup(null), 3000);
       navigate(`/admin-panel`);
-
     } catch (err) {
       setPopup("Error al añadir producto");
       setTimeout(() => setPopup(null), 3000);
     }
   };
+
+  if (loadingCategorias) return <div>Cargando categorías...</div>;
 
   return (
     <div className="admin-crud-page">
@@ -84,41 +78,24 @@ const AddMenuItem = () => {
           <label>Categoría</label>
           <select
             className="form-control"
-            name="category"
-            value={form.category}
+            name="categoryId"
+            value={form.categoryId}
             onChange={handleChange}
             required
           >
             <option value="">Selecciona una categoría</option>
-            {categorias && categorias.length === 0 && <option disabled>No hay categorías</option>}
-            {categorias && categorias.map(cat => (
-              <option key={cat.nombre} value={cat.nombre}>{cat.nombre}</option>
+            {categorias.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
             ))}
           </select>
         </div>
-        {form.category === "Burger" && (
-          <div className="mb-3">
-            <label>Tipo</label>
-            <select
-              className="form-control"
-              name="type"
-              value={form.type}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Selecciona un tipo</option>
-              {tipos && tipos.length === 0 && <option disabled>No hay tipos</option>}
-              {tipos && tipos.map(typ => (
-                <option key={typ.nombre} value={typ.nombre}>{typ.nombre}</option>
-              ))}
-            </select>
-          </div>
-        )}
         <div className="mb-3">
           <label>Puntos</label>
           <input
             type="number"
-            step="50"
+            step="0.50"
             className="form-control"
             name="points"
             value={form.points}
@@ -128,7 +105,7 @@ const AddMenuItem = () => {
         </div>
         <div className="mb-3">
           <label>Imagen (URL)</label>
-          <UploadImages onUpload={url => setForm(f => ({ ...f, imageUrl: url }))} />
+          <UploadImages onUpload={(url) => setForm((f) => ({ ...f, imageUrl: url }))} />
           {form.imageUrl && (
             <div className="mt-2">
               <input
@@ -154,7 +131,9 @@ const AddMenuItem = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-warning w-100">Añadir al menú</button>
+        <button type="submit" className="btn btn-warning w-100">
+          Añadir al menú
+        </button>
       </form>
       {popup && <div className="custom-popup">{popup}</div>}
     </div>

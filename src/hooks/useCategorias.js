@@ -1,18 +1,33 @@
 import { useEffect, useState } from "react";
-import { getCategorias } from "../servicios/getCategorias";
+import { getAllCategorias } from "../servicios/categoriasService";
 
-const useCategorias = () => {    
-    const [listaCategorias, setListaCategorias] = useState([]);
-       
-    function obtenerCategorias() {
-        getCategorias().then(data => {
-            setListaCategorias(data.listaCategorias);
-        });
+const useCategorias = () => {
+  const [categorias, setCategorias] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchCategorias = async () => {
+    try {
+      setLoading(true);
+      const data = await getAllCategorias();
+      setCategorias(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    useEffect(obtenerCategorias, []);
+  useEffect(() => {
+    fetchCategorias();
+  }, []);
 
-    return listaCategorias;
-}
+  return {
+    categorias,
+    loading,
+    error,
+    refetch: fetchCategorias,
+  };
+};
 
 export default useCategorias;

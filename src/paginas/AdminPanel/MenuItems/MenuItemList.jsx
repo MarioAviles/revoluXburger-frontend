@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllMenuItems, deleteMenuItem } from "../../../servicios/menuService";
 import "./MenuItemList.css";
-import PopUpConfirmacion from "../../../componentes/PopUpConfirmacion/PopUpConfirmacion"
-import MenuItemCard from "./MenuItemCard"
+import PopUpConfirmacion from "../../../componentes/PopUpConfirmacion/PopUpConfirmacion";
+import MenuItemCard from "./MenuItemCard";
+import useCategorias from "../../../hooks/useCategorias";
 
 const MenuItemList = () => {
   const [productos, setProductos] = useState([]);
@@ -14,7 +15,9 @@ const MenuItemList = () => {
   const [confirmId, setConfirmId] = useState(null);
   const [popup, setPopup] = useState(null);
 
-   const fetchProductos = async () => {
+  const { categorias, loading: loadingCategorias } = useCategorias();
+
+  const fetchProductos = async () => {
     try {
       const token = localStorage.getItem("token");
       const data = await getAllMenuItems(token);
@@ -34,7 +37,7 @@ const MenuItemList = () => {
     try {
       const token = localStorage.getItem("token");
       await deleteMenuItem(id, token);
-      setProductos(productos.filter(p => p.id !== id));
+      setProductos(productos.filter((p) => p.id !== id));
     } catch {
       setPopup("Error al eliminar producto");
       setTimeout(() => setPopup(null), 3000);
@@ -44,20 +47,14 @@ const MenuItemList = () => {
     }
   };
 
-  function filtrarProductos(productos, search, categoria) {
-    return productos.filter((p) => {
-      const busquedaCoincide = p.name.toLowerCase().includes(search.toLowerCase());
-      const categoriaCoincide = categoria ? p.category === categoria : true;
-      return busquedaCoincide && categoriaCoincide;
-    });
-  }
+  const productosFiltradosPorBusqueda = productos.filter((p) => {
+    const busquedaCoincide = p.name.toLowerCase().includes(search.toLowerCase());
+    const categoriaCoincide = categoria ? p.categoryId === categoria : true;
+    return busquedaCoincide && categoriaCoincide;
+  });
 
-  function obtenerCategorias(productos) {
-    return [...new Set(productos.map((p) => p.category))];
-  }
-  const productosFiltradosPorBusqueda = filtrarProductos(productos, search, categoria);
+  if (loadingCategorias) return <div>Cargando categorías...</div>;
 
-  const categorias = obtenerCategorias(productos);
   return (
     <div className="menu-item-list-page">
       <h3 className="menu-item-list-title">Lista de productos</h3>
@@ -79,8 +76,8 @@ const MenuItemList = () => {
       >
         <option value="">Todas las categorías</option>
         {categorias.map((cat) => (
-          <option key={cat} value={cat}>
-            {cat}
+          <option key={cat.id} value={cat.id}>
+            {cat.name}
           </option>
         ))}
       </select>
@@ -102,6 +99,7 @@ const MenuItemList = () => {
           onConfirm={() => handleDelete(confirmId)}
         />
       )}
+      {popup && <div className="custom-popup">{popup}</div>}
     </div>
   );
 };

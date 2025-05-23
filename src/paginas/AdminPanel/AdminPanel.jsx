@@ -3,6 +3,7 @@ import MenuItemsSection from './MenuItems/MenuItemsSection';
 import ReservationsSection from './Reservations/ReservationSection';
 import UsersSection from './Users/UsersSection';
 import ImagesSection from './Images/ImagesSection'; 
+import CategoriesSection from './Categories/CategoriesSection';
 
 const AdminPanel = () => {
   return (
@@ -24,6 +25,12 @@ const AdminPanel = () => {
           <ImagesSection /> 
         </div>
       </div>
+      <div className="row mt-4">
+        <div className="col-md-6">
+          <CategoriesSection />
+         </div>
+      </div>
+
     </div>
   );
 };

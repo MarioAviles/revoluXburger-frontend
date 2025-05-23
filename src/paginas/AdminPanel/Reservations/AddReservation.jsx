@@ -29,20 +29,19 @@ const AddReservation = () => {
         const token = localStorage.getItem("token");
         const hours = await getAvailableTimes(form.date, token);
 
-        // Filtrar horas para mostrar solo las futuras si la fecha es hoy
-
-        function filtrarHoras() {
-          hours.filter(hour => {
-            if (form.date === new Date().toISOString().split("T")[0]) {
-              const currentHour = new Date().getHours();
-              const currentMinute = new Date().getMinutes();
-              const [hourPart, minutePart] = hour.split(":").map(Number);
-              return hourPart > currentHour || (hourPart === currentHour && minutePart > currentMinute);
-            }
-            return true; // Si no es hoy, mostrar todas las horas
-          });
+        if (!Array.isArray(hours)) {
+          throw new Error("El servidor devolvió un formato inesperado");
         }
-        const filteredHours = filtrarHoras();
+
+        const filteredHours = hours.filter(hour => {
+          if (form.date === new Date().toISOString().split("T")[0]) {
+            const currentHour = new Date().getHours();
+            const currentMinute = new Date().getMinutes();
+            const [hourPart, minutePart] = hour.split(":").map(Number);
+            return hourPart > currentHour || (hourPart === currentHour && minutePart > currentMinute);
+          }
+          return true; // Si no es hoy, mostrar todas las horas
+        });
 
         setAvailableHours(filteredHours);
       } catch (err) {
@@ -52,7 +51,6 @@ const AddReservation = () => {
       } finally {
         setLoadingHours(false);
       }
-
     };
 
     fetchAvailableHours();
