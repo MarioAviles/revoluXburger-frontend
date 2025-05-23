@@ -4,6 +4,17 @@ import burger from '../../assets/video/videoBurgers.mp4';
 const HeroSection = () => {
   return (
     <div className="hero-section">
+      <video
+        className="hero-burger"
+        autoPlay
+        loop
+        muted
+        playsInline
+      >
+        <source src={burger} type="video/mp4" loading="lazy" />
+        Your browser does not support the video tag.
+      </video>
+
       <div className="overlay">
         <h1 className="hero-title">RevoluXBurger</h1>
         <p className="hero-subtitle">"Más que burger... ¡es <strong className='amarillo'>Revolux</strong>!"</p>
