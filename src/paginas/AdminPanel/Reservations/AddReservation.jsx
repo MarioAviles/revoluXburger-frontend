@@ -7,6 +7,7 @@ const AddReservation = () => {
   const [form, setForm] = useState({
     name: "",
     phone: "",
+    email: "", // Añadido
     description: "",
     date: "",
     time: ""
@@ -75,6 +76,7 @@ const AddReservation = () => {
     const reservationData = {
       name: form.name,
       phone: form.phone,
+      email: form.email, // Añadido
       description: form.description,
       date: dateTime
     };
@@ -84,7 +86,7 @@ const AddReservation = () => {
     try {
       await createReservation(reservationData, token);
       setPopup("Reserva añadida correctamente");
-      setForm({ name: "", phone: "", description: "", date: "", time: "" });
+      setForm({ name: "", phone: "", email: "", description: "", date: "", time: "" });
       setAvailableHours([]);
       setTimeout(() => setPopup(null), 3000);
       navigate(`/admin-panel`);
@@ -121,6 +123,20 @@ const AddReservation = () => {
             required
             pattern="[679][0-9]{8}" // Validación HTML
             title="El teléfono debe comenzar con 6, 7 o 9 y tener 9 dígitos."
+          />
+        </div>
+
+        <div className="mb-3">
+          <label>Email</label>
+          <input
+            type="email"
+            className="form-control"
+            name="email"
+            value={form.email || ""}
+            onChange={handleChange}
+            required
+            pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+            title="Introduce un email válido"
           />
         </div>
 
