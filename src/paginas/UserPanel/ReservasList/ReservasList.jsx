@@ -2,47 +2,84 @@ import { useState } from "react";
 import { deleteReservation } from "../../../servicios/reservasService";
 
 const esCaducada = (fechaReserva) => {
-  const ahora = new Date(); // Fecha y hora actual
-  const fecha = new Date(fechaReserva); // Convertir la fecha de la reserva a un objeto Date
-  return fecha < ahora; // Compara si la fecha de la reserva es anterior a la fecha actual
+  const ahora = new Date();
+  const fecha = new Date(fechaReserva);
+  return fecha < ahora;
 };
 
-const ReservasList = ({ reservas, setReservas, popupHandler }) => { 
-   // Componente para mostrar la lista de reservas
-  const [mostrarReservas, setMostrarReservas] = useState(false); // Estado para mostrar u ocultar reservas
-  const [borrando, setBorrando] = useState(null);  // Estado para manejar el ID de la reserva que se está borrando
+const generarGoogleCalendarLink = (reserva) => {
+  const startDate = new Date(reserva.date);
+  const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // Duración 1 hora
+  const formatDate = (date) => date.toISOString().replace(/[-:]|\.\d{3}/g, "");
 
-  const manejarVerReservas = () => setMostrarReservas(!mostrarReservas); // Función para alternar la visibilidad de las reservas
+  const text = encodeURIComponent(`Reserva ${reserva.name}`);
+  const details = encodeURIComponent(reserva.description || "Detalles de la reserva");
+  const location = encodeURIComponent(reserva.location || "");
+  const dates = `${formatDate(startDate)}/${formatDate(endDate)}`;
 
-  const manejarBorrado = async (id) => { 
-    setBorrando(id); // Establece el ID de la reserva que se está borrando
+  return `https://www.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${dates}&details=${details}&location=${location}&sf=true&output=xml`;
+};
+
+const generarICS = (reserva) => {
+  const startDate = new Date(reserva.date);
+  const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // Duración 1 hora
+
+  const formatDate = (date) => date.toISOString().replace(/[-:]|\.\d{3}/g, "").slice(0, 15) + "Z";
+
+  return `BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:Reserva ${reserva.name}
+DESCRIPTION:${reserva.description || "Detalles de la reserva"}
+LOCATION:${reserva.location || ""}
+DTSTART:${formatDate(startDate)}
+DTEND:${formatDate(endDate)}
+END:VEVENT
+END:VCALENDAR`;
+};
+
+const ReservasList = ({ reservas, setReservas, popupHandler }) => {
+  const [mostrarReservas, setMostrarReservas] = useState(false);
+  const [borrando, setBorrando] = useState(null);
+
+  const manejarVerReservas = () => setMostrarReservas(!mostrarReservas);
+
+  const manejarBorrado = async (id) => {
+    setBorrando(id);
     try {
-      const token = localStorage.getItem('token'); // Obtiene el token del almacenamiento local
-      await deleteReservation(id, token); // Llama a la función para borrar la reserva
-      setReservas(prev => prev.filter(r => r.id !== id)); // Actualiza el estado de reservas eliminando la reserva borrada
-      popupHandler("Reserva borrada con éxito", 2000); // Muestra un mensaje de éxito al borrar la reserva
+      const token = localStorage.getItem('token');
+      await deleteReservation(id, token);
+      setReservas(prev => prev.filter(r => r.id !== id));
+      popupHandler("Reserva borrada con éxito", 2000);
     } catch {
-      popupHandler("Error al borrar la reserva", 3000); // Muestra un mensaje de error si la eliminación falla
+      popupHandler("Error al borrar la reserva", 3000);
     } finally {
-      setBorrando(null); // Resetea el estado de borrando
+      setBorrando(null);
     }
-  }; 
+  };
+
+  const descargarICS = (reserva) => {
+    const blob = new Blob([generarICS(reserva)], { type: 'text/calendar;charset=utf-8' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `reserva-${reserva.id}.ics`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <div className="text-center mt-4">
-      <button
-        className="btn btn-primary mt-2 mb-2"
-        onClick={manejarVerReservas}
-      >
-        {mostrarReservas ? 'Ocultar Reservas' : 'Ver mis Reservas'} {/* Cambia el texto del botón según el estado de mostrarReservas */}
+      <button className="btn btn-primary mt-2 mb-2" onClick={manejarVerReservas}>
+        {mostrarReservas ? 'Ocultar Reservas' : 'Ver mis Reservas'}
       </button>
       {mostrarReservas && (
         <div className="reservas-container mt-4 mb-4 py-4 px-4">
           <h4 className="reserva-titulo">Mis Reservas</h4>
           {reservas.length > 0 ? (
             reservas.map((reserva) => {
-              const caducada = esCaducada(reserva.date); // Verifica si la reserva está caducada
-              // Si la reserva está caducada, se muestra con un estilo diferente
+              const caducada = esCaducada(reserva.date);
               return (
                 <div
                   key={reserva.id}
@@ -67,20 +104,40 @@ const ReservasList = ({ reservas, setReservas, popupHandler }) => {
                     )}
                   </div>
                   <button
-                    className="btn btn-danger mt-2" 
-                    onClick={() => manejarBorrado(reserva.id)} // Llama a la función para borrar la reserva
-                    disabled={borrando === reserva.id} // Deshabilita el botón si se está borrando esta reserva
+                    className="btn btn-danger mt-2"
+                    onClick={() => manejarBorrado(reserva.id)}
+                    disabled={borrando === reserva.id}
                   >
                     <i className="bi bi-trash"></i> Cancelar Reserva
                   </button>
+
+                  {/* 📅 Botón para añadir al calendario */}
+                  {!caducada && (
+                    <div className="mt-2">
+                      <a
+                        href={generarGoogleCalendarLink(reserva)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-success me-2"
+                      >
+                        <i className="bi bi-calendar-plus"></i> Añadir a Google Calendar
+                      </a>
+                      <button
+                        className="btn btn-outline-primary"
+                        onClick={() => descargarICS(reserva)}
+                      >
+                        <i className="bi bi-calendar-plus"></i> Añadir a Calendario (ICS)
+                      </button>
+                    </div>
+                  )}
                 </div>
               );
             })
           ) : (
-            <p className="reservas-text">No tienes reservas.</p> // Mensaje si no hay reservas
+            <p className="reservas-text">No tienes reservas.</p>
           )}
         </div>
-      )} 
+      )}
     </div>
   );
 };
