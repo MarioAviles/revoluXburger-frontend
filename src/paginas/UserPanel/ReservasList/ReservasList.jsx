@@ -123,7 +123,7 @@ const ReservasList = ({ reservas, setReservas, popupHandler }) => {
                         <i className="bi bi-calendar-plus"></i> Añadir a Google Calendar
                       </a>
                       <button
-                        className="btn btn-success me-2"
+                        className="btn btn-success me-2 px-3 py-2"
                         onClick={() => descargarICS(reserva)}
                       >
                         <i className="bi bi-calendar-plus"></i> Añadir a Calendario (Smartphone)
