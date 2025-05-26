@@ -1,0 +1,32 @@
+.carrito-icono-link {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 0.4rem;
+  margin-left: 0.5rem;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.carrito-icono-link .bi-cart {
+  font-size: 1.2rem;
+  color: #FCB300; /* Color amarillo del carrito */
+  transition: color 0.2s;
+}
+
+.carrito-icono-link .bi-cart:hover {
+  color: #fffbe6; /* Un amarillo más claro al pasar el ratón */
+}
+
+.carrito-icono-link .badge {
+  font-size: 0.7rem;
+  top: 0;
+  right: 5;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #FCB300;
+  color: #343a40;
+  border: 1px solid #fffbe6;
+}

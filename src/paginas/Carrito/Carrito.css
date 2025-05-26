@@ -1,0 +1,8 @@
+.texto-carrito {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #FCB300;      /* Amarillo marca */
+  text-align: center;
+  margin: 0;
+  letter-spacing: 1px;
+}

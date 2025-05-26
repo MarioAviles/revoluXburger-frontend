@@ -79,3 +79,14 @@ export const updateUser = async (id, data) => {
   if (!res.ok) throw new Error("Error al actualizar usuario");
   return res.json();
 };
+
+export const sumarPuntosUsuario = async (id, puntos, token) => {
+  const res = await fetch(`https://revoluxburger-backend.onrender.com/auth/${id}/points?pointsToAdd=${puntos}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  });
+  if (!res.ok) throw new Error("Error al sumar puntos");
+  return res.json();
+};

@@ -8,12 +8,14 @@ import AvatarPanel from './AvatarPanel/AvatarPanel';
 import Popup from './Popup/Popup';
 import ReservasList from './ReservasList/ReservasList';
 import UserInfoBox from './UserInfoBox/UserInfoBox';
+import { useCart } from "../../contextos/CartContext";
 
 const UserPanel = ({ setToken }) => {
   const { user, loading } = useAuthenticatedUser(); // Hook para obtener el usuario autenticado
   const navigate = useNavigate(); // Hook para la navegación
   const [reservas, setReservas] = useState(user?.reservations || []); // Estado para las reservas
   const [popup, setPopup] = useState(null); // Estado para el popup
+  const { clearCart } = useCart();
 
   useEffect(() => {
     setReservas(user?.reservations || []); 
@@ -60,9 +62,13 @@ const UserPanel = ({ setToken }) => {
       <button
         className="btn btn-danger mt-2"
         onClick={() => {
-          setToken(null);
-          navigate('/login'); // Redirige a login y limpia el token
-          localStorage.removeItem('token'); // Elimina el token del almacenamiento local
+            if (user && user.id) {
+              setToken(null);
+              navigate('/login'); // Redirige a login y limpia el token
+              localStorage.removeItem('token'); // Elimina el token del almacenamiento local
+              localStorage.removeItem(`cart_${user.id}`);
+              clearCart(); // <-- Limpia el carrito en memoria
+            }
         }}
       >
         Cerrar Sesión

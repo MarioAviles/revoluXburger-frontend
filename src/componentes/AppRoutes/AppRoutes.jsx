@@ -8,6 +8,7 @@ import DescripcionProducto from '../../paginas/DescripcionProducto/DescripcionPr
 import UserPanel from '../../paginas/UserPanel/UserPanel';
 import AdminPanel from '../../paginas/AdminPanel/AdminPanel';
 import AjaxLoader from '../AjaxLoader/AjaxLoader';
+import Carrito from '../../paginas/Carrito/Carrito';
 
 import { menuRoutes } from './MenuRoutes/MenuRoutes';
 import { reservationRoutes } from './ReservationRoutes/ReservationRoutes';
@@ -24,6 +25,9 @@ const AppRoutes = ({ token, setToken, user, loading }) => (
     <Route path="/registro" element={<Registro />} />
     <Route path="/carta/:seccion" element={<Carta />} />
     <Route path="/carta/:categoria/:producto" element={<DescripcionProducto />} />
+    <Route path="/carrito" element={<Carrito />} />
+    
+    {/* Rutas protegidas */}
     <Route path="/panel" element={token ? <UserPanel setToken={setToken} /> : <Navigate to="/login" />} />
 
     <Route path="/admin-panel" element={

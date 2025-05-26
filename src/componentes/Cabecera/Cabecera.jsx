@@ -1,6 +1,7 @@
 import './Cabecera.css';
 import { Link } from 'react-router-dom';
 import logoRevoluX from '../../assets/img/logoRevoluXAmarillo.png';
+import CarritoIcono from '../CarritoIcono/CarritoIcono';
 
 const Cabecera = () => {
   return (
@@ -38,6 +39,10 @@ const Cabecera = () => {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/panel">Cuenta</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/carrito"><CarritoIcono /></Link>
+                
               </li>
             </ul>
           </div>

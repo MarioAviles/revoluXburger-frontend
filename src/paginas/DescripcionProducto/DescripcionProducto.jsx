@@ -4,12 +4,14 @@ import useProducto from '../../hooks/useProducto';
 import useCategorias from '../../hooks/useCategorias';
 import useTipos from '../../hooks/useTipos';
 import AjaxLoader from '../../componentes/AjaxLoader/AjaxLoader';
+import { useCart } from "../../contextos/CartContext";
 
 const DescripcionProducto = () => {
   const { producto } = useParams();
   const { productoSeleccionado, cargando } = useProducto(producto);
   const { categorias, loading: loadingCategorias } = useCategorias();
   const { tipos, loading: loadingTipos } = useTipos();
+  const { addToCart } = useCart();
 
   if (cargando || loadingCategorias || loadingTipos) {
     return <h1 className="text-center mt-5"><AjaxLoader /></h1>;
@@ -46,6 +48,15 @@ const DescripcionProducto = () => {
               <p className="producto-puntos">Tipo: {tipoProducto.name}</p>
             )}
           </div>
+          <div className=' align-items-center text-center justify-content-center'>
+            <button
+              className="btn btn-warning mt-3"
+              onClick={() => addToCart(productoSeleccionado)}
+            >
+              Añadir al carrito
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
