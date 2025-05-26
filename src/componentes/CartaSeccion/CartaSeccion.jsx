@@ -1,11 +1,17 @@
 import './CartaSeccion.css';
 import { Link } from 'react-router-dom';
 import useCategorias from '../../hooks/useCategorias';
+import AjaxLoader from '../AjaxLoader/AjaxLoader';
 
 const CartaSeccion = () => {
   const { categorias, loading, error } = useCategorias();
 
-  if (loading) return <div className="text-center py-5">Cargando categorías...</div>;
+  if (loading) return (
+    <div className="text-center py-5">
+      <AjaxLoader />
+      <div className="mt-3">Cargando categorías...</div>
+    </div>
+  );
   if (error) return <div className="text-center py-5 text-danger">{error}</div>;
 
   return (

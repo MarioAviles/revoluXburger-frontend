@@ -30,18 +30,29 @@
     font-style: normal;
   }
 
-html, body {
+html, body, #root {
     margin: 0 !important;
     padding: 0 !important;
-    background-color: #2c2c2c; /* Fondo oscuro */
+    background-color: #2c2c2c; 
     font-family: "Poppins", sans-serif;
     width: 100% !important;
+    height: 100% !important; 
+    overflow-x: hidden;
+}
+
+.content-wrapper {
+    min-height: calc(100vh - 80px); 
+    display: flex;
+    flex-direction: column;
+}
+
+.content-wrapper .flex-fill {
+    flex: 1; 
 }
 
 .container-fluid {
     padding: 0;
     width: 100%;
-    overflow: hidden; /* Asegura que el contenedor no se salga del área visible */
 }
 
 /* Asegura que las imágenes sean responsivas */
@@ -81,7 +92,7 @@ button:hover, .btn:hover {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
   transition: opacity 0.5s ease;
   animation: fadeInOut 2s;
-  animation-fill-mode: forwards; /* Mantiene el estado final de la animación */
+  animation-fill-mode: forwards; 
 }
 
 @keyframes fadeInOut {
@@ -100,7 +111,7 @@ button:hover, .btn:hover {
 }
 
 
-/* Ajustes responsivos */
+/* Ajustes responsive */
 @media (max-width: 768px) {
 
     body {

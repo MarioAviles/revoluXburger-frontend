@@ -4,7 +4,7 @@ import useCategorias from "../../../hooks/useCategorias";
 import { uploadService } from "../../../servicios/imageService"; // Importar el servicio
 import PopUpConfirmacion from "../../../componentes/PopUpConfirmacion/PopUpConfirmacion"; // Importar el popup
 import "./ImagesSection.css";
-
+import AjaxLoader from "../../../componentes/AjaxLoader/AjaxLoader";
 const ViewImages = () => {
   const [folder, setFolder] = useState(""); // Carpeta seleccionada
   const { urls: images, error, loading, fetchImages } = useFetchImages();
@@ -43,7 +43,7 @@ const ViewImages = () => {
     }
   };
 
-  if (loadingCategorias) return <div>Cargando categorías...</div>;
+  if (loadingCategorias) return <div><AjaxLoader/></div>;
 
   return (
     <div className="images-section">
@@ -70,7 +70,7 @@ const ViewImages = () => {
       </div>
 
       {error && <div className="alert alert-danger">{error}</div>}
-      {loading && <p className="text-center text-light">Cargando imágenes...</p>}
+      {loading && <AjaxLoader />}
 
       {images.length === 0 && !loading ? (
         <p className="text-center text-light">No hay imágenes disponibles en esta carpeta.</p>

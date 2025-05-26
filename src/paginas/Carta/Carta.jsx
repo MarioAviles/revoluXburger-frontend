@@ -5,6 +5,7 @@ import useCategorias from '../../hooks/useCategorias';
 import useMenuItems from '../../hooks/useMenuItems';
 import useTipos from '../../hooks/useTipos';
 import CartaSeccion from '../../componentes/CartaSeccion/CartaSeccion';
+import AjaxLoader from '../../componentes/AjaxLoader/AjaxLoader';
 
 const Carta = () => {
   const { seccion } = useParams();
@@ -15,7 +16,12 @@ const Carta = () => {
   const { menuItems, loading: loadingMenu, error: errorMenu } = useMenuItems();
   const { tipos, loading: loadingTipos, error: errorTipos } = useTipos();
 
-  if (loadingCategorias || loadingMenu || loadingTipos) return <div className="text-center py-5">Cargando...</div>;
+  if (loadingCategorias || loadingMenu || loadingTipos) return (
+    <div className="text-center py-5">
+      <AjaxLoader />
+      <div className="mt-3">Cargando...</div>
+    </div>
+  );
   if (errorCategorias || errorMenu || errorTipos) return <div className="text-center py-5 text-danger">{errorCategorias || errorMenu || errorTipos}</div>;
 
   // Buscar la categoría seleccionada por nombre (de la URL)
@@ -40,17 +46,17 @@ const Carta = () => {
   // Filtrar productos por búsqueda
   const productosFiltradosPorBusqueda = busqueda
     ? productos.filter((producto) =>
-        producto.name.toLowerCase().includes(busqueda.toLowerCase())
-      )
+      producto.name.toLowerCase().includes(busqueda.toLowerCase())
+    )
     : productos;
 
   // Ordenar productos por precio
   const productosOrdenadosPorPrecio = ordenPrecio
     ? [...productosFiltradosPorBusqueda].sort((a, b) => {
-        if (ordenPrecio === 'mayor-menor') return b.price - a.price;
-        if (ordenPrecio === 'menor-mayor') return a.price - b.price;
-        return 0;
-      })
+      if (ordenPrecio === 'mayor-menor') return b.price - a.price;
+      if (ordenPrecio === 'menor-mayor') return a.price - b.price;
+      return 0;
+    })
     : productosFiltradosPorBusqueda;
 
   return (

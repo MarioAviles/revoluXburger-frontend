@@ -23,12 +23,18 @@ function App() {
   }
 
   return (
-    <div key={location.pathname} className="container-fluid w-100 p-0 m-0 page-animation">
+     <div key={location.pathname} className="container-fluid w-100 p-0 m-0 page-animation">
       <Cabecera />
-      <AppRoutes location={location} token={token} setToken={manejarToken} user={user} loading={loading} />
-      <Suspense fallback={<div className='text-center justify-content-center'></div>}>
-        <Footer />
-      </Suspense>
+      
+      <div className="content-wrapper d-flex flex-column">
+        <div className="flex-fill">
+          <AppRoutes location={location} token={token} setToken={manejarToken} user={user} loading={loading} />
+        </div>
+        <Suspense fallback={<div className='text-center justify-content-center'></div>}>
+          <Footer />
+        </Suspense>
+      </div>
+      
       <ScrollUpDown />
     </div>
   );

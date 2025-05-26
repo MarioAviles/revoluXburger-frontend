@@ -5,11 +5,11 @@ import logoRevoluX from '../../assets/img/logoRevoluXAmarillo.png';
 const Cabecera = () => {
   return (
     
-    <header className="cabecera sticky-top container-fluid text-center">
-      <nav className="navbar navbar-expand-md navbar-dark">
+    <header className="cabecera sticky-top container-fluid text-center align-items-center justify-content-center">
+      <nav className="navbar navbar-expand-md navbar-dark align-items-center justify-content-center text-center">
         <div className="container-fluid d-flex flex-column align-items-center">
           
-          <Link to="/" className="d-block text-center my-2">
+          <Link to="/" className="d-block text-center mb-2">
             <img src={logoRevoluX} alt="Logo RevoluX" className="logo" />
           </Link>
 
