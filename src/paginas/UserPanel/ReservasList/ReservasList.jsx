@@ -118,12 +118,12 @@ const ReservasList = ({ reservas, setReservas, popupHandler }) => {
                         href={generarGoogleCalendarLink(reserva)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn btn-success me-2"
+                        className="btn btn-success me-2 px-3 py-2 mt-2"
                       >
                         <i className="bi bi-calendar-plus"></i> Añadir a Google Calendar
                       </a>
                       <button
-                        className="btn btn-success me-2 px-3 py-2"
+                        className="btn btn-success me-2 px-3 py-2 mt-2"
                         onClick={() => descargarICS(reserva)}
                       >
                         <i className="bi bi-calendar-plus"></i> Añadir a Calendario (Smartphone)
