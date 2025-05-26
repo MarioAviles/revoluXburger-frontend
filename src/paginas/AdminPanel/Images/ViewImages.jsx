@@ -60,6 +60,7 @@ const ViewImages = () => {
           onChange={(e) => setFolder(e.target.value)}
         >
           <option value="">Selecciona una carpeta</option>
+          <option value="Categorias">Categorias</option>
           {categorias.map((cat) => (
             <option key={cat.id} value={cat.name}>
               {cat.name}
@@ -86,6 +87,12 @@ const ViewImages = () => {
                 <h5 className="menu-item-name">{image.name}</h5>
                 <p className="menu-item-category">
                   <strong>Carpeta:</strong> {folder}
+                </p>
+                <p className="menu-item-url">
+                  <strong>URL:</strong>{" "}
+                  <a href={image.url} target="_blank" rel="noopener noreferrer">
+                    Ver Imagen
+                  </a>
                 </p>
                 <div className="d-flex justify-content-center gap-2 mt-2">
                   <button

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { createReservation, getAvailableTimes } from "../../servicios/reservasService";
+import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 
 const Reservas = () => {
   const { register, handleSubmit, watch, setValue, reset, formState: { errors } } = useForm();
@@ -8,7 +9,15 @@ const Reservas = () => {
   const [loadingHours, setLoadingHours] = useState(false);
   const [popup, setPopup] = useState("");
 
+  const { user, loading: loadingUser } = useAuthenticatedUser(); // Obtener usuario autenticado
   const watchDate = watch("date"); // Observa el campo de fecha
+
+  // Establecer el email del usuario autenticado en el formulario
+  useEffect(() => {
+    if (user && user.email) {
+      setValue("email", user.email); // Rellenar el campo de email
+    }
+  }, [user, setValue]);
 
   useEffect(() => {
     const fetchAvailableHours = async () => {

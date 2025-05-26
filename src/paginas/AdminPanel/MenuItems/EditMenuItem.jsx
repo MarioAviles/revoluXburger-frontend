@@ -27,8 +27,8 @@ const EditMenuItem = () => {
   // Hook para cargar imágenes
   const { urls: images, error, loading, fetchImages } = useFetchImages();
 
-  // Memoizar fetchImages para evitar múltiples instancias
-  const memoizedFetchImages = useCallback(fetchImages, []);
+  // Mememorizar fetchImages para evitar múltiples instancias
+  const mememorizedFetchImages = useCallback(fetchImages, []);
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -57,16 +57,16 @@ const EditMenuItem = () => {
         imageUrl: prod?.imageUrl || "",
         price: prod?.price ?? ""
       });
-      setSelectedFolder(categorias.find((cat) => cat.id === prod?.categoryId)?.name || "burgers"); // Seleccionar carpeta basada en la categoría
+      setSelectedFolder(categorias.find((cat) => cat.id === prod?.categoryId)?.name || "burger"); // Seleccionar carpeta basada en la categoría
       setPopup(null);
     }
   }, [menuItemId, productos, categorias]);
 
   useEffect(() => {
     if (selectedFolder) {
-      memoizedFetchImages(selectedFolder); // Cargar imágenes de la carpeta seleccionada
+      mememorizedFetchImages(selectedFolder); // Cargar imágenes de la carpeta seleccionada
     }
-  }, [selectedFolder, memoizedFetchImages]);
+  }, [selectedFolder, mememorizedFetchImages]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
