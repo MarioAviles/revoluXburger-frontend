@@ -12,7 +12,7 @@ const generarGoogleCalendarLink = (reserva) => {
   const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // Duración 1 hora
   const formatDate = (date) => date.toISOString().replace(/[-:]|\.\d{3}/g, "");
 
-  const text = encodeURIComponent(`Reserva a nombre de: ${reserva.name}`);
+  const text = encodeURIComponent(`Reserva ${reserva.name}`);
   const details = encodeURIComponent(reserva.description || "Detalles de la reserva");
   const location = encodeURIComponent(reserva.location || "Revolux Burger");
   const dates = `${formatDate(startDate)}/${formatDate(endDate)}`;
@@ -20,23 +20,23 @@ const generarGoogleCalendarLink = (reserva) => {
   return `https://www.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${dates}&details=${details}&location=${location}&sf=true&output=xml`;
 };
 
-    const generarICS = (reserva) => {
-      const startDate = new Date(reserva.date);
-      const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // Duración 1 hora
+const generarICS = (reserva) => {
+  const startDate = new Date(reserva.date);
+  const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // Duración 1 hora
 
-      const formatDate = (date) => date.toISOString().replace(/[-:]|\.\d{3}/g, "").slice(0, 15) + "Z";
+  const formatDate = (date) => date.toISOString().replace(/[-:]|\.\d{3}/g, "").slice(0, 15) + "Z";
 
-      return `BEGIN:VCALENDAR
-              VERSION:2.0
-              BEGIN:VEVENT
-              SUMMARY:Reserva a nombre de: ${reserva.name}
-              DESCRIPTION:${reserva.description || "Detalles de la reserva"}
-              LOCATION:${reserva.location || "Revolux Burger"}
-              DTSTART:${formatDate(startDate)}
-              DTEND:${formatDate(endDate)}
-              END:VEVENT
-              END:VCALENDAR`;
-      };
+  return `BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:Reserva ${reserva.name}
+DESCRIPTION:${reserva.description || "Detalles de la reserva"}
+LOCATION:${reserva.location || "Revolux Burger"}
+DTSTART:${formatDate(startDate)}
+DTEND:${formatDate(endDate)}
+END:VEVENT
+END:VCALENDAR`;
+};
 
 const ReservasList = ({ reservas, setReservas, popupHandler }) => {
   const [mostrarReservas, setMostrarReservas] = useState(false);
@@ -111,6 +111,7 @@ const ReservasList = ({ reservas, setReservas, popupHandler }) => {
                     <i className="bi bi-trash"></i> Cancelar Reserva
                   </button>
 
+                  {/* 📅 Botón para añadir al calendario */}
                   {!caducada && (
                     <div className="mt-2">
                       <a
@@ -122,10 +123,10 @@ const ReservasList = ({ reservas, setReservas, popupHandler }) => {
                         <i className="bi bi-calendar-plus"></i> Añadir a Google Calendar
                       </a>
                       <button
-                        className="btn btn-outline-primary"
+                        className="btn btn-success me-2"
                         onClick={() => descargarICS(reserva)}
                       >
-                        <i className="bi bi-calendar-plus"></i> Añadir a Calendario
+                        <i className="bi bi-calendar-plus"></i> Añadir a Calendario (Smartphone)
                       </button>
                     </div>
                   )}
