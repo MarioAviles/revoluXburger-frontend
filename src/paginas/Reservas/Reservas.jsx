@@ -54,6 +54,7 @@ const Reservas = () => {
       email: data.email,
       description: data.description,
       date: dateTime,
+      numberOfPersons: data.numberOfPersons,
     };
 
     const token = localStorage.getItem("token");
@@ -178,6 +179,22 @@ const Reservas = () => {
           </select>
           {errors.time && <small className="text-danger">{errors.time.message}</small>}
           {loadingHours && <small>Cargando horas disponibles...</small>}
+        </div>
+
+        <div className="mb-3">
+          <label>Número de personas</label>
+          <input
+            type="number"
+            className="form-control"
+            min={1}
+            max={20}
+            {...register("numberOfPersons", {
+              required: "El número de personas es obligatorio",
+              min: { value: 1, message: "Mínimo 1 persona" },
+              max: { value: 20, message: "Máximo 20 personas" }
+            })}
+          />
+          {errors.numberOfPersons && <small className="text-danger">{errors.numberOfPersons.message}</small>}
         </div>
 
         <button className="btn btn-success w-100" type="submit">

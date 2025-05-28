@@ -10,7 +10,8 @@ const AddReservation = () => {
     email: "", // Añadido
     description: "",
     date: "",
-    time: ""
+    time: "",
+    numberOfPersons: ""
   });
 
   const [availableHours, setAvailableHours] = useState([]);
@@ -78,7 +79,8 @@ const AddReservation = () => {
       phone: form.phone,
       email: form.email, // Añadido
       description: form.description,
-      date: dateTime
+      date: dateTime,
+      numberOfPersons: form.numberOfPersons
     };
 
     const token = localStorage.getItem("token");
@@ -196,6 +198,20 @@ const AddReservation = () => {
             )}
           </select>
           {loadingHours && <small>Cargando horas disponibles...</small>}
+        </div>
+
+        <div className="mb-3">
+          <label>Número de personas</label>
+          <input
+            type="number"
+            className="form-control"
+            name="numberOfPersons"
+            value={form.numberOfPersons || ""}
+            onChange={handleChange}
+            min={1}
+            max={20}
+            required
+          />
         </div>
 
         <button className="btn btn-success w-100" type="submit">
