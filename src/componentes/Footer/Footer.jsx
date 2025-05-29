@@ -21,8 +21,8 @@ const Footer = () => {
                     </div>
 
                     <div className="col-12 col-md-4 mb-3">
-                        <h5 className="footer-title">Ubicación</h5>
-                        <p className="footer-text">
+                        <h2 className="footer-title">Ubicación</h2>
+                        <p className="secciones footer-text">
                             Calle Carlos III<br /> <br />
                             Cartagena, Murcia, España<br /><br />
                             Teléfono: +34 968 53 41 48
@@ -30,7 +30,7 @@ const Footer = () => {
                     </div>
 
                     <div className="col-12 col-md-4 mb-3">
-                        <h5 className="footer-title">Secciones</h5>
+                        <h2 className="footer-title">Secciones</h2>
                         <p className="secciones footer-text ">
                             <Link to="/carta" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Carta</Link><br /> <br />
                             <Link to="/reservas" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Reservas</Link><br /> <br />

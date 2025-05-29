@@ -5,15 +5,16 @@ const HeroSection = () => {
   return (
     <div className="hero-section">
       <video
-        className="hero-burger"
-        autoPlay
-        loop
-        muted
-        playsInline
-      >
-        <source src={burger} type="video/mp4" loading="lazy" />
-        Your browser does not support the video tag.
-      </video>
+  className="hero-burger"
+  autoPlay
+  loop
+  muted
+  playsInline
+  loading="lazy"
+>
+  <source src={burger} type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
       <div className="overlay">
         <h1 className="hero-title">RevoluXBurger</h1>

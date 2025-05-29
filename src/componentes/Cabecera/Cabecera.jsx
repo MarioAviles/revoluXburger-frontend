@@ -42,10 +42,10 @@ const Cabecera = () => {
                     <Link className="nav-link" to="/carta">Carta</Link>
                     {showDropdown && (
                       <ul className="dropdown-menu">
-                        <li><Link className="dropdown-item" to="/carta/entrantes">Entrantes</Link></li>
-                        <li><Link className="dropdown-item" to="/carta/platos-principales">Platos principales</Link></li>
-                        <li><Link className="dropdown-item" to="/carta/postres">Postres</Link></li>
-                        <li><Link className="dropdown-item" to="/carta/bebidas">Bebidas</Link></li>
+                        <li><Link className="dropdown-item" to="/carta/burger">Hamburguesas</Link></li>
+                        <li><Link className="dropdown-item" to="/carta/entrante">Entrantes</Link></li>
+                        <li><Link className="dropdown-item" to="/carta/postre">Postres</Link></li>
+                        <li><Link className="dropdown-item" to="/carta/bebida">Bebidas</Link></li>
                       </ul>
                     )}
                   </li>
