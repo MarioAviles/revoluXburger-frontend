@@ -6,9 +6,12 @@ import CarritoIcono from '../CarritoIcono/CarritoIcono';
 
 const Cabecera = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
-
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Detecta si la pantalla es móvil o tablet
   useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Actualiza el estado al cambiar el tamaño de la pantalla
+    };
+
     const handleScroll = () => {
       setScrolled(prev => {
         if (!prev && window.scrollY > 300) return true;
@@ -16,12 +19,18 @@ const Cabecera = () => {
         return prev;
       });
     };
+
+    window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
-    <header className={`cabecera sticky-top container-fluid${scrolled ? ' cabecera-scrolled' : ''}`}>
+    <header className={`cabecera container-fluid${!isMobile ? ' sticky-top' : ''}${scrolled ? ' cabecera-scrolled' : ''}`}>
       <nav className="navbar navbar-expand-md navbar-dark">
         <div className={`container-fluid d-flex ${scrolled ? 'flex-row justify-content-center align-items-center' : 'flex-column align-items-center'}`}>
           {scrolled ? (
@@ -34,20 +43,8 @@ const Cabecera = () => {
                   <li className="nav-item">
                     <Link className="nav-link" to="/">Inicio</Link>
                   </li>
-                  <li
-                    className="nav-item dropdown"
-                    onMouseEnter={() => setShowDropdown(true)}
-                    onMouseLeave={() => setShowDropdown(false)}
-                  >
+                  <li className="nav-item">
                     <Link className="nav-link" to="/carta">Carta</Link>
-                    {showDropdown && (
-                      <ul className="dropdown-menu">
-                        <li><Link className="dropdown-item" to="/carta/burger">Hamburguesas</Link></li>
-                        <li><Link className="dropdown-item" to="/carta/entrante">Entrantes</Link></li>
-                        <li><Link className="dropdown-item" to="/carta/postre">Postres</Link></li>
-                        <li><Link className="dropdown-item" to="/carta/bebida">Bebidas</Link></li>
-                      </ul>
-                    )}
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/reservas">Reservas</Link>
@@ -82,20 +79,8 @@ const Cabecera = () => {
                   <li className="nav-item">
                     <Link className="nav-link" to="/">Inicio</Link>
                   </li>
-                  <li
-                    className="nav-item dropdown"
-                    onMouseEnter={() => setShowDropdown(true)}
-                    onMouseLeave={() => setShowDropdown(false)}
-                  >
+                  <li className="nav-item">
                     <Link className="nav-link" to="/carta">Carta</Link>
-                    {showDropdown && (
-                      <ul className="dropdown-menu">
-                        <li><Link className="dropdown-item" to="/carta/burger">Hamburguesas</Link></li>
-                        <li><Link className="dropdown-item" to="/carta/entrante">Entrantes</Link></li>
-                        <li><Link className="dropdown-item" to="/carta/postre">Postres</Link></li>
-                        <li><Link className="dropdown-item" to="/carta/bebida">Bebidas</Link></li>
-                      </ul>
-                    )}
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/reservas">Reservas</Link>

@@ -11,7 +11,7 @@ const Carta = () => {
   const { seccion } = useParams();
   const [busqueda, setBusqueda] = useState('');
   const [ordenPrecio, setOrdenPrecio] = useState('');
-  const [tipoSeleccionado, setTipoSeleccionado] = useState(''); // Nuevo estado para el tipo seleccionado
+  const [tipoSeleccionado, setTipoSeleccionado] = useState('');
   const { categorias, loading: loadingCategorias, error: errorCategorias } = useCategorias();
   const { menuItems, loading: loadingMenu, error: errorMenu } = useMenuItems();
   const { tipos, loading: loadingTipos, error: errorTipos } = useTipos();
@@ -24,7 +24,6 @@ const Carta = () => {
   );
   if (errorCategorias || errorMenu || errorTipos) return <div className="text-center py-5 text-danger">{errorCategorias || errorMenu || errorTipos}</div>;
 
-  // Buscar la categoría seleccionada por nombre (de la URL)
   const categoriaSeleccionada = categorias.find(
     cat => cat.name.toLowerCase() === seccion?.toLowerCase()
   );
@@ -33,24 +32,20 @@ const Carta = () => {
     return <CartaSeccion />;
   }
 
-  // Filtrar productos por categoryId
   let productos = menuItems.filter(
     producto => producto.categoryId === categoriaSeleccionada.id
   );
 
-  // Si la categoría es "Burger", filtrar también por tipo seleccionado
   if (categoriaSeleccionada.name.toLowerCase() === 'burger' && tipoSeleccionado) {
     productos = productos.filter(producto => producto.typeId === tipoSeleccionado);
   }
 
-  // Filtrar productos por búsqueda
   const productosFiltradosPorBusqueda = busqueda
     ? productos.filter((producto) =>
       producto.name.toLowerCase().includes(busqueda.toLowerCase())
     )
     : productos;
 
-  // Ordenar productos por precio
   const productosOrdenadosPorPrecio = ordenPrecio
     ? [...productosFiltradosPorBusqueda].sort((a, b) => {
       if (ordenPrecio === 'mayor-menor') return b.price - a.price;
@@ -61,6 +56,18 @@ const Carta = () => {
 
   return (
     <div className="carta container py-5">
+      <div className="categorias-navegacion mb-4">
+        {categorias.map((categoria) => (
+          <Link
+            key={categoria.id}
+            to={`/carta/${categoria.name.toLowerCase()}`}
+            className={`categoria-link ${categoriaSeleccionada.id === categoria.id ? 'activo' : ''}`}
+          >
+            <span>{categoria.name}s</span>
+          </Link>
+        ))}
+      </div>
+
       <h1 className="titulo-carta mb-4">{categoriaSeleccionada.name}</h1>
 
       <div className="filtros-flotantes">
@@ -87,7 +94,6 @@ const Carta = () => {
         </div>
       </div>
 
-      {/* Filtro por tipos de hamburguesa */}
       {categoriaSeleccionada.name.toLowerCase() === 'burger' && (
         <div className="filtro-tipos">
           {tipos.map((tipo) => (
@@ -102,7 +108,6 @@ const Carta = () => {
         </div>
       )}
 
-      {/* Productos */}
       <div className="row mt-5">
         <h2 className='texto-informacion'>¡ Haz click en el producto que te guste para ver su información !</h2>
         {productosOrdenadosPorPrecio.map((producto) => (

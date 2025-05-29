@@ -14,6 +14,34 @@
     margin-bottom: 2rem;
 }
 
+.categorias-navegacion {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.categoria-link {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.2rem;
+  color: #FCB300;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: 2px solid #FCB300;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.categoria-link:hover {
+  background-color: #FCB300;
+  color: #2c2c2c;
+}
+
+.categoria-link.activo {
+  background-color: #FCB300;
+  color: #2c2c2c;
+}
+
 .categoria-item {
     position: relative;
     background-color: #343a40; /* Fondo gris oscuro */

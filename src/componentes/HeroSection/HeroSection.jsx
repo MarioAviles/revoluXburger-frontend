@@ -1,25 +1,34 @@
 import './HeroSection.css';
 import { Link } from 'react-router-dom';
 import burger from '../../assets/video/videoBurgers.mp4';
+
 const HeroSection = () => {
+  const isMobile = window.innerWidth <= 768; // Detecta si la pantalla es móvil
+
   return (
-    <div className="hero-section">
-      <video
-  className="hero-burger"
-  autoPlay
-  loop
-  muted
-  playsInline
-  loading="lazy"
->
-  <source src={burger} type="video/mp4" />
-  Your browser does not support the video tag.
-</video>
+    <div className={`hero-section ${isMobile ? 'mobile-background' : ''}`}>
+      {!isMobile && (
+        <video
+          className="hero-burger"
+          autoPlay
+          loop
+          muted
+          playsInline
+          loading="lazy"
+        >
+          <source src={burger} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      )}
 
       <div className="overlay">
         <h1 className="hero-title">RevoluXBurger</h1>
-        <p className="hero-subtitle">"Más que burger... ¡es <strong className='amarillo'>Revolux</strong>!"</p>
-        <Link to="/carta"><button className='btn-hero'>VER AHORA</button></Link>
+        <p className="hero-subtitle">
+          "Más que burger... ¡es <strong className='amarillo'>Revolux</strong>!"
+        </p>
+        <Link to="/carta">
+          <button className="btn-hero">VER AHORA</button>
+        </Link>
       </div>
     </div>
   );

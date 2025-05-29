@@ -1,40 +1,27 @@
 .hero-section {
-    width: 100%;
-    height: 75vh;
-    /* background-image: url('../../assets/img/hero-section-img.jpg'); */
-    /* background-image: url('../../assets//video/videoBurgerGirando.gif'); */
-    /* background-size: cover; */
-    /* background-position: center;
-    background-repeat: no-repeat; */
-    position: relative;
-    margin: 0;
-    padding: 0;
-    animation: fade-in 1.5s ease-in-out;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #000000;
-    overflow: hidden;
+  width: 100%;
+  height: 75vh;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000000; /* Fondo negro por defecto */
+  overflow: hidden;
+}
+
+.hero-section.mobile-background {
+  background-color: #000000; /* Fondo negro para móviles */
 }
 
 .hero-burger {
   position: absolute;
-  width: 100%; /* Ajusta según lo grande que quieras la hamburguesa */
+  width: 100%;
   max-width: 50em;
   height: auto;
   z-index: 1;
-  opacity: 0.4; /* opcional: para no tapar demasiado el contenido */
-  margin-top: auto;
-}
-
-.hero-overlay-dark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* Oscurece el fondo sin tapar GIF */
-  z-index: 2;
+  opacity: 0.4;
 }
 
 .overlay {
@@ -44,46 +31,46 @@
   color: white;
 }
 
-.btn-hero{
-    font-size: 22px;
-    margin-top: 10px;
-    background-color: #FCB300;
+.btn-hero {
+  font-size: 22px;
+  margin-top: 10px;
+  background-color: #FCB300;
 }
 
-.btn-hero:hover{
-    background-color: #ffe344;
-    color: #343a40;
-    transition: 0.5s;
-    transform: scale(1.1);
+.btn-hero:hover {
+  background-color: #ffe344;
+  color: #343a40;
+  transition: 0.5s;
+  transform: scale(1.1);
 }
 
 .hero-title {
-    font-size: 4rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    font-family: "Bebas Neue", sans-serif;
-    letter-spacing: 8px;
-    color: #FCB300;
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 8px;
+  color: #FCB300;
 }
 
 .hero-subtitle {
-    font-size: 1.5rem;
-    font-weight: 400;
-    font-family: "Poppins", sans-serif;
-    color: #ffffff;
-    padding-bottom: 5px;
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+  padding-bottom: 5px;
 }
 
 @media (max-width: 768px) {
-    .hero-title {
-        font-size: 3rem;
-    }
+  .hero-title {
+    font-size: 3rem;
+  }
 
-    .hero-subtitle {
-        font-size: 1.2rem;
-    }
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
 
-     .btn-hero{
-        color: black !important;
-    }
+  .btn-hero {
+    color: black !important;
+  }
 }
