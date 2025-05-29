@@ -5,13 +5,17 @@
     animation: fade-in 0.8s ease-in-out;
     text-align: center;
     padding: 0.5rem 0;
+    transition: padding 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+
 }
 
 .logo {
-    max-height: 100px; /* Más pequeño */
+    max-height: 100px;
     margin: 0 auto;
     display: block;
     transition: max-height 0.3s;
+    transition: max-height 0.3s ease, transform 0.3s ease;
+
 }
 
 .navbar-nav {
@@ -43,6 +47,59 @@
     text-decoration: none;
 }
 
+.ocultar {
+    display: none;
+}
+
+.cabecera-scrolled {
+    padding: 0.2rem 0;
+    transition: padding 0.3s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+
+}
+
+
+.cabecera-scrolled .navbar-nav {
+    width: auto;
+}
+
+/* Estilo para el menú desplegable */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #343a40;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdown-item {
+    color: #FCB300;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #23272b;
+    color: #ffffff;
+}
+
 @media (max-width: 576px) {
     .logo {
         max-height: 50px;
@@ -50,5 +107,8 @@
     .navbar-nav .nav-link {
         font-size: 1rem;
         padding-top: 0.3rem;
+    }
+     .cabecera-scrolled .logo {
+        max-height: 30px;
     }
 }

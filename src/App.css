@@ -37,7 +37,6 @@ html, body, #root {
     font-family: "Poppins", sans-serif;
     width: 100% !important;
     height: 100% !important; 
-    overflow-x: hidden;
 }
 
 .content-wrapper {
@@ -47,7 +46,8 @@ html, body, #root {
 }
 
 .content-wrapper .flex-fill {
-    flex: 1; 
+    flex: 1;
+    overflow: hidden;
 }
 
 .container-fluid {

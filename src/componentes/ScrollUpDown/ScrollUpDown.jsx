@@ -4,14 +4,17 @@ const ScrollUpDown = () => {
 
       // Función para hacer scroll hacia arriba de forma suave
     function scrollup() {
-        // Usamos scrollIntoView para ir al principio de la página de forma suave
-        document.documentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
     }
 
     // Función para hacer scroll hacia abajo de forma suave
     function scrollDown() {
-        // Usamos scrollIntoView para ir al final de la página de forma suave
-        document.documentElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth'
+        });
     }
 
     return (

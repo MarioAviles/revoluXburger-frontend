@@ -32,9 +32,9 @@ const Footer = () => {
                     <div className="col-12 col-md-4 mb-3">
                         <h5 className="footer-title">Secciones</h5>
                         <p className="secciones footer-text ">
-                            <Link to="/carta">Carta</Link><br /> <br />
-                            <Link to="/reservas">Reservas</Link><br /> <br />
-                            <Link to="/login">Registro</Link>
+                            <Link to="/carta" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Carta</Link><br /> <br />
+                            <Link to="/reservas" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Reservas</Link><br /> <br />
+                            <Link to="/login" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Registro</Link>
                         </p>
                     </div>
 

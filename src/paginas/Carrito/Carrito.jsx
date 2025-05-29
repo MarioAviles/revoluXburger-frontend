@@ -12,7 +12,7 @@ const Carrito = () => {
   const [agradecimiento, setAgradecimiento] = useState("");
   const { user } = useUserData();
 
-  const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  const total = cart.reduce((acc, item) => acc + (item.points * item.quantity), 0);
 
   const finalizarCompra = async () => {
     setShowPopup(false);

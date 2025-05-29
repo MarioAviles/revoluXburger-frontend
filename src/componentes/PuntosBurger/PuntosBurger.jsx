@@ -18,7 +18,7 @@ const PuntosBurger = () => {
               nuestras deliciosas hamburguesas.
             </p>
             <Link to="/registro" >
-              <button className="btn-custom">Regístrate Ahora</button>
+              <button className="btn-custom" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Regístrate Ahora</button>
             </Link>
           </div>
         </div>
