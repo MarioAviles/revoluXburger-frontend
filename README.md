@@ -18,6 +18,10 @@ npm install motion
 
 npm install react-hook-form
 
+npm install --save-dev purgecss
+
+npm install --save-dev @fullhuman/postcss-purgecss postcss
+
 ## 🌐 Importaciones en el HTML
 
 Agrega las líneas "link" dentro de la etiqueta `<head>` y las líneas "script" de la etiqueta `<body>` del archivo `public/index.html`:
