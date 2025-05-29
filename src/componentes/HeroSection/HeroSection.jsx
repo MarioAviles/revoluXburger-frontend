@@ -1,20 +1,35 @@
+import { useEffect, useState } from 'react';
 import './HeroSection.css';
 import { Link } from 'react-router-dom';
 import burger from '../../assets/video/videoBurgers.mp4';
 
 const HeroSection = () => {
-  const isMobile = window.innerWidth <= 768; // Detecta si la pantalla es móvil
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [showVideo, setShowVideo] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+
+    // Diferir carga del video (lazy)
+    const timer = setTimeout(() => setShowVideo(true), 1000); // Carga diferida 1s
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <div className={`hero-section ${isMobile ? 'mobile-background' : ''}`}>
-      {!isMobile && (
+      {!isMobile && showVideo && (
         <video
           className="hero-burger"
           autoPlay
           loop
           muted
           playsInline
-          loading="lazy"
         >
           <source src={burger} type="video/mp4" />
           Your browser does not support the video tag.

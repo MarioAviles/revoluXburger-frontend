@@ -22,6 +22,7 @@
   height: auto;
   z-index: 1;
   opacity: 0.4;
+  object-fit: cover; /* Que el video ocupe bien el contenedor */
 }
 
 .overlay {
@@ -51,6 +52,8 @@
   font-family: "Bebas Neue", sans-serif;
   letter-spacing: 8px;
   color: #FCB300;
+  /* Mejora: Pintar texto inmediatamente */
+  will-change: transform, opacity;
 }
 
 .hero-subtitle {
