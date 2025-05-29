@@ -56,6 +56,7 @@ const Carta = () => {
 
   return (
     <div className="carta container py-5">
+      {/* Menú de categorías */}
       <div className="categorias-navegacion mb-4">
         {categorias.map((categoria) => (
           <Link
@@ -63,7 +64,7 @@ const Carta = () => {
             to={`/carta/${categoria.name.toLowerCase()}`}
             className={`categoria-link ${categoriaSeleccionada.id === categoria.id ? 'activo' : ''}`}
           >
-            <span>{categoria.name}s</span>
+            {categoria.name}
           </Link>
         ))}
       </div>

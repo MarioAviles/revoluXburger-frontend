@@ -238,4 +238,15 @@
     .filtro-precio {
         justify-content: center; /* Centrar los botones */
     }
+      .categorias-navegacion {
+    display: grid; /* Cambiar a cuadrícula */
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+    gap: 10px; /* Espaciado entre las categorías */
+    justify-content: center;
+  }
+
+  .categoria-link {
+    font-size: 1rem; /* Ajustar tamaño de texto */
+    padding: 8px 15px; /* Ajustar padding */
+  }
 }
