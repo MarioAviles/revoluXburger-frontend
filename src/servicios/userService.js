@@ -90,3 +90,23 @@ export const sumarPuntosUsuario = async (id, puntos, token) => {
   if (!res.ok) throw new Error("Error al sumar puntos");
   return res.json();
 };
+
+export const forgotPassword = async (email) => {
+  const res = await fetch(`${BASE_URL}/forgot-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+  if (!res.ok) throw new Error("Error al enviar correo de recuperación");
+  return res.text(); // o json si devuelves algo
+};
+
+export const resetPassword = async (token, newPassword) => {
+  const res = await fetch(`${BASE_URL}/reset-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token, newPassword }),
+  });
+  if (!res.ok) throw new Error("Error al resetear la contraseña");
+  return res.text();
+};
