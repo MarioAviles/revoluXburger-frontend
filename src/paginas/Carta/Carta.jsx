@@ -116,8 +116,8 @@ const Carta = () => {
               to={`/carta/${seccion}/${producto.name.toLowerCase().replace(/\s+/g, '-')}`}
               className="text-decoration-none"
             >
-              <div className="producto-item">
-                <img src={producto.imageUrl} alt={producto.name} className="w-100" />
+              <div className="producto-item" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+                <img src={producto.imageUrl} alt={producto.name} className="w-100"  />
                 <div className="producto-overlay">
                   <span className="producto-nombre">{producto.name}</span>
                   <span className="producto-precio">{producto.price.toFixed(2)} €</span>

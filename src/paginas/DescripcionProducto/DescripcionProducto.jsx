@@ -15,6 +15,8 @@ const DescripcionProducto = () => {
 
   if (cargando || loadingCategorias || loadingTipos) {
     return <h1 className="text-center mt-5"><AjaxLoader /></h1>;
+  } else {
+          <h1 className="text-center mt-5"><AjaxLoader /></h1>;
   }
 
   if (!productoSeleccionado) {
