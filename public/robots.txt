@@ -25,4 +25,4 @@ Allow: /favicon.ico
 Disallow: /*.log$
 Disallow: /logs/
 
-Sitemap: https://revoluxburger-frontend.vercel.app/sitemap-v2.xml
+Sitemap: https://revoluxburger-frontend.vercel.app/sitemap-v2.xml.txt
