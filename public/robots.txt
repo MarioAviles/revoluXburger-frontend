@@ -1,9 +1,5 @@
-# robots.txt for revoluXburger-frontend
-
-# --- GLOBAL SETTINGS: ---
 User-agent: *
 
-# --- BLOCK DEVELOPMENT & SENSITIVE FILES/DIRS ---
 Disallow: /node_modules/
 Disallow: /src/
 Disallow: /scripts/
@@ -21,22 +17,12 @@ Disallow: /yarn.lock
 Disallow: /pnpm-debug.log
 Disallow: /lerna-debug.log
 
-# --- ALLOW PUBLIC STATIC ASSETS (for SPA hosting) ---
 Allow: /assets/
 Allow: /public/
-
-# --- BLOCK COMMON LOGS ---
-Disallow: /*.log$
-Disallow: /logs/
-
-# --- ALLOW MAIN ENTRY POINTS (for SPA) ---
 Allow: /index.html
 Allow: /favicon.ico
 
-# --- SEO SITEMAP (replace with actual URL if you have one) ---
-# Sitemap: https://tusitio.com/sitemap.xml
+Disallow: /*.log$
+Disallow: /logs/
 
-# --- CRAWLER FRIENDLY NOTES ---
-# Este archivo está optimizado para un frontend React de tipo SPA.
-# Permite indexar los recursos necesarios para la aplicación final en producción,
-# pero bloquea todo lo que es código fuente, configuración, dependencias y artefactos de desarrollo.
+Sitemap: https://revoluxburger-frontend.vercel.app/sitemap.xml
