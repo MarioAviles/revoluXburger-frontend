@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://revoluxburger-frontend.vercel.app/</loc>
+    <lastmod>2025-06-03</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://revoluxburger-frontend.vercel.app/carta</loc>
+    <lastmod>2025-06-03</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://revoluxburger-frontend.vercel.app/reservas</loc>
+    <lastmod>2025-06-03</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://revoluxburger-frontend.vercel.app/login</loc>
+    <lastmod>2025-06-03</lastmod>
+    <priority>0.8</priority>
+  </url>
+</urlset>
