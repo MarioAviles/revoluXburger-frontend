@@ -11,6 +11,7 @@ import AjaxLoader from '../AjaxLoader/AjaxLoader';
 import Carrito from '../../paginas/Carrito/Carrito';
 import ResetPassword from '../../componentes/ResetPassword/ResetPassword';
 import ForgotPassword from '../../componentes/ForgotPassword/ForgotPassword';
+import Pagina404 from '../../componentes/Pagina404/Pagina404';
 
 import { menuRoutes } from './MenuRoutes/MenuRoutes';
 import { reservationRoutes } from './ReservationRoutes/ReservationRoutes';
@@ -20,6 +21,8 @@ import { categoriesRoutes } from './CategoriesRoutes/CategoriesRoutes';
 import { typesRoutes } from './TypesRoutes/TypesRoutes';
 const AppRoutes = ({ token, setToken, user, loading }) => (
   <Routes>
+
+    {/* Rutas públicas */}
     <Route path="/" element={<Home />} />
     <Route path="/carta" element={<Carta />} />
     <Route path="/reservas" element={<Reservas />} />
@@ -28,9 +31,12 @@ const AppRoutes = ({ token, setToken, user, loading }) => (
     <Route path="/carta/:seccion" element={<Carta />} />
     <Route path="/carta/:categoria/:producto" element={<DescripcionProducto />} />
     <Route path="/carrito" element={<Carrito />} />
+
+    {/* Rutas de restablecimiento de contraseña */}
     <Route path="/forgot-password" element={<ForgotPassword />} />
-    <Route path="/reset-password/:token" element={<ResetPassword />} />
-    {/* Rutas protegidas */}
+    <Route path="/reset-password" element={<ResetPassword />} />   
+    
+     {/* Rutas protegidas */}
     <Route path="/panel" element={token ? <UserPanel setToken={setToken} /> : <Navigate to="/login" />} />
 
     <Route path="/admin-panel" element={
@@ -47,8 +53,7 @@ const AppRoutes = ({ token, setToken, user, loading }) => (
     {categoriesRoutes(user)}
     {typesRoutes(user)}
 
-    <Route path="*" element={<h1 className='text-center justify-content-center'><br />404 - Página no encontrada</h1>} />
-  </Routes>
+    <Route path="*" element={<Pagina404 />} />  </Routes>
 );
 
 export default AppRoutes;
