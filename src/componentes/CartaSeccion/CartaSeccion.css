@@ -59,22 +59,6 @@
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* Imagen específica para cada caja */
-.menu-item-1 {
-    background-image: url('../../assets/carta/foto_hamburguesas.png');
-}
-
-.menu-item-2 {
-    background-image: url('../../assets/carta/foto_entrantes.png');
-}
-
-.menu-item-3 {
-    background-image: url('../../assets/carta/foto_bebidas.jpg');
-}
-
-.menu-item-4 {
-    background-image: url('../../assets/carta/foto_postres.png');
-}
 
 .subtitulo-carta {
     font-size: 1.5rem;

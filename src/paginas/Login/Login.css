@@ -93,4 +93,24 @@
   transform: translateY(-2px) scale(1.04);
 }
 
+.textoLogin {
+  font-size: 1rem; /* Tamaño de fuente */
+  color: #ffffff; /* Blanco para contraste */
+  text-align: center; /* Centrar el texto */
+  margin-top: 1rem; /* Espaciado superior */
+  font-weight: 500; /* Peso medio */
+}
 
+.enlaceLogin {
+  color: #fcb300; /* Color dorado */
+  text-decoration: none; /* Sin subrayado */
+  font-weight: bold; /* Negrita para destacar */
+  font-size: 1rem; /* Tamaño de fuente */
+  transition: color 0.3s ease, text-shadow 0.3s ease; /* Transición suave */
+}
+
+.enlaceLogin:hover {
+  color: #ffe344; /* Color más claro al pasar el cursor */
+  text-shadow: 0 2px 8px rgba(252, 179, 0, 0.5); /* Efecto de sombra */
+  cursor: pointer; /* Cambia el cursor a pointer */
+}

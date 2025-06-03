@@ -19,7 +19,6 @@ const Carta = () => {
   if (loadingCategorias || loadingMenu || loadingTipos) return (
     <div className="text-center py-5">
       <AjaxLoader />
-      <div className="mt-3">Cargando...</div>
     </div>
   );
   if (errorCategorias || errorMenu || errorTipos) return <div className="text-center py-5 text-danger">{errorCategorias || errorMenu || errorTipos}</div>;

@@ -50,7 +50,8 @@ const Login = ({ setToken }) => {
         </div>
         <button type="submit" className="btn btn-custom">Iniciar sesión</button>
       </form>
-      <p>¿No tienes una cuenta? <br /><br /><Link to="/registro">Haz click y regístrate ahora</Link></p>
+      <p className='textoLogin'>¿No tienes una cuenta? <br /><Link className='enlaceLogin' to="/registro">Haz click y regístrate ahora</Link></p>
+      <br /><p className='textoLogin'>¿Olvidaste tu contraseña?<br /><Link className='enlaceLogin' to="/forgot-password">Haz click y restablecela</Link></p>
       {popup && (
         <div className="custom-popup">
           {popup}

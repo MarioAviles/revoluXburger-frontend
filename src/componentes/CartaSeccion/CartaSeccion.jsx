@@ -9,7 +9,6 @@ const CartaSeccion = () => {
   if (loading) return (
     <div className="text-center py-5">
       <AjaxLoader />
-      <div className="mt-3">Cargando categorías...</div>
     </div>
   );
   if (error) return <div className="text-center py-5 text-danger">{error}</div>;
