@@ -3,6 +3,7 @@ import './ResetPassword.css';
 import { useForm } from 'react-hook-form';
 import { resetPassword } from '../../servicios/userService';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
     const location = useLocation();
@@ -10,12 +11,14 @@ const ResetPassword = () => {
     const token = queryParams.get('token'); // Obtener el token de los parámetros de consulta
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [message, setMessage] = useState(null);
+    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         try {
             const { newPassword } = data;
             const response = await resetPassword(token, newPassword);
             setMessage("Tu contraseña ha sido restablecida exitosamente.");
+            navigate('/login'); // Redirigir al usuario a la página de inicio de sesión
         } catch (error) {
             setMessage(error.message || "Error al restablecer la contraseña.");
         }
