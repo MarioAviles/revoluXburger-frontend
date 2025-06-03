@@ -7,7 +7,7 @@
   "rewrites": [
     {
       "source": "/sitemap-v2.xml",
-      "destination": "/sitemap-v2.xml"
+      "destination": "/sitemap-v2.xml.txt"
     },
     {
       "source": "/robots.txt",
