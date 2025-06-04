@@ -21,7 +21,7 @@ Allow: /assets/
 Allow: /public/
 Allow: /index.html
 Allow: /favicon.ico
-
+Allow: /sitemap-v2.xml
 Disallow: /*.log$
 Disallow: /logs/
 
