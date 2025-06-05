@@ -16,10 +16,6 @@
     {
       "source": "/googleab2388682125bf96.html",
       "destination": "/googleab2388682125bf96.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
     }
   ]
 }
