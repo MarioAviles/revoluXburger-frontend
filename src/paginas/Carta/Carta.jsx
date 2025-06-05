@@ -1,11 +1,14 @@
 import './Carta.css';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import useCategorias from '../../hooks/useCategorias';
 import useMenuItems from '../../hooks/useMenuItems';
 import useTipos from '../../hooks/useTipos';
-import CartaSeccion from '../../componentes/CartaSeccion/CartaSeccion';
 import AjaxLoader from '../../componentes/AjaxLoader/AjaxLoader';
+import CategoriasNavegacion from '../../componentes/CategoriasNavegacion/CategoriasNavegacion';
+import FiltrosFlotantes from '../../componentes/FiltrosFlotantes/FiltrosFlotantes';
+import FiltroTipos from '../../componentes/FiltroTipos/FiltroTipos';
+import ListaProductos from '../../componentes/ListaProductos/ListaProductos';
 
 const Carta = () => {
   const { seccion } = useParams();
@@ -28,7 +31,7 @@ const Carta = () => {
   );
 
   if (!categoriaSeleccionada) {
-    return <CartaSeccion />;
+    return <div>No se encontró la categoría.</div>;
   }
 
   let productos = menuItems.filter(
@@ -55,78 +58,22 @@ const Carta = () => {
 
   return (
     <div className="carta container py-5">
-      {/* Menú de categorías */}
-      <div className="categorias-navegacion mb-4">
-        {categorias.map((categoria) => (
-          <Link
-            key={categoria.id}
-            to={`/carta/${categoria.name.toLowerCase()}`}
-            className={`categoria-link ${categoriaSeleccionada.id === categoria.id ? 'activo' : ''}`}
-          >
-            {categoria.name}
-          </Link>
-        ))}
-      </div>
-
+      <CategoriasNavegacion categorias={categorias} categoriaSeleccionada={categoriaSeleccionada} />
       <h1 className="titulo-carta mb-4">{categoriaSeleccionada.name}</h1>
-
-      <div className="filtros-flotantes">
-        <input
-          type="text"
-          className="buscador"
-          placeholder="Buscar productos..."
-          value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
-        />
-        <div className="filtro-precio">
-          <button
-            className={`btn-precio ${ordenPrecio === 'mayor-menor' ? 'activo' : ''}`}
-            onClick={() => setOrdenPrecio('mayor-menor')}
-          >
-            Mayor a menor
-          </button>
-          <button
-            className={`btn-precio ${ordenPrecio === 'menor-mayor' ? 'activo' : ''}`}
-            onClick={() => setOrdenPrecio('menor-mayor')}
-          >
-            Menor a mayor
-          </button>
-        </div>
-      </div>
-
+      <FiltrosFlotantes
+        busqueda={busqueda}
+        setBusqueda={setBusqueda}
+        ordenPrecio={ordenPrecio}
+        setOrdenPrecio={setOrdenPrecio}
+      />
       {categoriaSeleccionada.name.toLowerCase() === 'burger' && (
-        <div className="filtro-tipos">
-          {tipos.map((tipo) => (
-            <button
-              key={tipo.id}
-              className={`tipo-boton ${tipoSeleccionado === tipo.id ? 'activo' : ''}`}
-              onClick={() => setTipoSeleccionado(tipoSeleccionado === tipo.id ? '' : tipo.id)}
-            >
-              {tipo.name}
-            </button>
-          ))}
-        </div>
+        <FiltroTipos
+          tipos={tipos}
+          tipoSeleccionado={tipoSeleccionado}
+          setTipoSeleccionado={setTipoSeleccionado}
+        />
       )}
-
-      <div className="row mt-5">
-        <h2 className='texto-informacion'>¡ Haz click en el producto que te guste para ver su información !</h2>
-        {productosOrdenadosPorPrecio.map((producto) => (
-          <div key={producto.id} className="col-12 col-md-6 col-lg-4 mb-4">
-            <Link
-              to={`/carta/${seccion}/${producto.name.toLowerCase().replace(/\s+/g, '-')}`}
-              className="text-decoration-none"
-            >
-              <div className="producto-item" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-                <img src={producto.imageUrl} alt={producto.name} className="w-100"  />
-                <div className="producto-overlay">
-                  <span className="producto-nombre">{producto.name}</span>
-                  <span className="producto-precio">{producto.price.toFixed(2)} €</span>
-                </div>
-              </div>
-            </Link>
-          </div>
-        ))}
-      </div>
+      <ListaProductos productos={productosOrdenadosPorPrecio} seccion={seccion} />
     </div>
   );
 };

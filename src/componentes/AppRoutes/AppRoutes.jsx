@@ -19,12 +19,13 @@ import { userRoutes } from './UserRoutes/UserRoutes';
 import { imageRoutes } from './ImageRoutes/ImageRoutes';
 import { categoriesRoutes } from './CategoriesRoutes/CategoriesRoutes';
 import { typesRoutes } from './TypesRoutes/TypesRoutes';
+import CartaSeccion from '../CartaSeccion/CartaSeccion';
 const AppRoutes = ({ token, setToken, user, loading }) => (
   <Routes>
 
     {/* Rutas públicas */}
     <Route path="/" element={<Home />} />
-    <Route path="/carta" element={<Carta />} />
+    <Route path="/carta" element={<CartaSeccion />} />
     <Route path="/reservas" element={<Reservas />} />
     <Route path="/login" element={<Login setToken={setToken} />} />
     <Route path="/registro" element={<Registro />} />
