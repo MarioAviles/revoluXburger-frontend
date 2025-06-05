@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ForgotPassword.css';
 import { forgotPassword } from '../../servicios/userService';
 import { useForm } from 'react-hook-form';
@@ -7,6 +7,7 @@ const ForgotPassword = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [message, setMessage] = useState(null);
   const [showReenvio, setShowReenvio] = useState(false); // Estado para controlar el botón de reenvío
+  const [timer, setTimer] = useState(0); // Estado para el temporizador
 
   const onSubmit = async (data) => {
     try {
@@ -14,7 +15,7 @@ const ForgotPassword = () => {
       const response = await forgotPassword(email);
       setMessage("Se ha enviado un correo para restablecer tu contraseña.");
       setShowReenvio(false); // Ocultar el botón de reenvío inicialmente
-      setTimeout(() => setShowReenvio(true), 30000); // Mostrar el botón después de 30 segundos
+      setTimer(30); // Iniciar el temporizador de 30 segundos
     } catch (error) {
       setMessage(error.message || "Error al enviar el correo de recuperación.");
     }
@@ -23,8 +24,20 @@ const ForgotPassword = () => {
   const handleReenvio = async () => {
     setMessage(null); // Limpiar el mensaje anterior
     setShowReenvio(false); // Ocultar el botón de reenvío
-    setTimeout(() => setShowReenvio(true), 30000); // Reiniciar el temporizador
+    setTimer(30); // Reiniciar el temporizador
   };
+
+  // Reducir el temporizador cada segundo
+  useEffect(() => {
+    if (timer > 0) {
+      const interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+      return () => clearInterval(interval); // Limpiar el intervalo al desmontar
+    } else {
+      setShowReenvio(true); // Mostrar el botón de reenvío cuando el temporizador llegue a 0
+    }
+  }, [timer]);
 
   return (
     <div className="forgot-password-container text-center">
@@ -40,15 +53,17 @@ const ForgotPassword = () => {
           />
           {errors.email && <small className="text-danger">{errors.email.message}</small>}
         </div>
-        <button type="submit" className="btn btn-custom">Enviar</button>
+        {timer === 0 && (
+          <button type="submit" className="btn btn-custom">Enviar</button>
+        )}
       </form>
       {message && <div className="custom-popup">{message}</div>}
-      {showReenvio && (
-        <div className="reenvio-container">
-          <p>¿No has recibido el correo?</p>
-          <button onClick={handleReenvio} className="btn btn-custom">Volver a solicitar</button>
+      {timer > 0 && (
+        <div className="temporizador-container">
+          <p>No has recibido el correo?  <br />Espera {timer} segundos antes de volver a enviar.</p>
         </div>
       )}
+  
     </div>
   );
 };

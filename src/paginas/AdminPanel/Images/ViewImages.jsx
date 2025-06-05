@@ -60,7 +60,7 @@ const ViewImages = () => {
           onChange={(e) => setFolder(e.target.value)}
         >
           <option value="">Selecciona una carpeta</option>
-          <option value="Categorias">Categorias</option>
+          <option value="categorias">Categorias</option>
           {categorias.map((cat) => (
             <option key={cat.id} value={cat.name}>
               {cat.name}
