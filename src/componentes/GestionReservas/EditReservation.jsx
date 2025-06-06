@@ -10,9 +10,11 @@ const EditReservation = () => {
   const [ form, setForm ] = useState({
     name: "",
     phone: "",
+    email: "",
     description: "",
     date: "",
-    time: ""
+    time: "",
+    numberOfPersons: null // Cambiar a null
   });
 
   const [ availableHours, setAvailableHours ] = useState([]);
@@ -78,9 +80,11 @@ const EditReservation = () => {
     setForm({
       name: reserva?.name || "",
       phone: reserva?.phone || "",
+      email: reserva?.email || "", // Asegúrate de cargar este campo
       description: reserva?.description || "",
       date: reserva?.date ? reserva.date.slice(0, 10) : "",
-      time: reserva?.date ? reserva.date.slice(11, 16) : ""
+      time: reserva?.date ? reserva.date.slice(11, 16) : "",
+      numberOfPersons: reserva?.numberOfPersons || null // Asegúrate de cargar este campo
     });
     setPopup(null);
   };
@@ -111,8 +115,10 @@ const EditReservation = () => {
     const updatedReservation = {
       name: form.name,
       phone: form.phone,
+      email: form.email, // Incluye el campo email
       description: form.description,
-      date: dateTime
+      date: dateTime,
+      numberOfPersons: form.numberOfPersons // Asegúrate de incluir este campo
     };
 
     try {
@@ -168,7 +174,17 @@ const EditReservation = () => {
             required
           />
         </div>
-
+        <div className="mb-3">
+          <label>Email</label>
+          <input
+            type="email"
+            className="form-control"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
         <div className="mb-3">
           <label>Teléfono</label>
           <input
