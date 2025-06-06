@@ -1,17 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { getAllMenuItems, updateMenuItem } from "../../../servicios/menuService";
-import useCategorias from "../../../hooks/useCategorias";
-import useTipos from "../../../hooks/useTipos";
-import { useFetchImages } from "../../../hooks/useFetchImages";
-import { useParams, useNavigate } from "react-router-dom";
+import { createMenuItem } from "../../servicios/menuService";
+import { useFetchImages } from "../../hooks/useFetchImages";
+import useCategorias from "../../hooks/useCategorias";
+import useTipos from "../../hooks/useTipos";
+import { useNavigate } from "react-router-dom";
 
-const EditMenuItem = () => {
+const AddMenuItem = () => {
   const navigate = useNavigate();
-  const { menuItemId } = useParams();
   const { categorias, loading: loadingCategorias } = useCategorias();
   const { tipos, loading: loadingTipos } = useTipos();
-  const [productos, setProductos] = useState([]);
-  const [selectedId, setSelectedId] = useState("");
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -22,51 +19,19 @@ const EditMenuItem = () => {
     price: ""
   });
   const [popup, setPopup] = useState(null);
-  const [selectedFolder, setSelectedFolder] = useState("burgers"); // Carpeta seleccionada por defecto
+  const [selectedFolder, setSelectedFolder] = useState(""); // Carpeta seleccionada
 
   // Hook para cargar imágenes
   const { urls: images, error, loading, fetchImages } = useFetchImages();
 
-  // Mememorizar fetchImages para evitar múltiples instancias
-  const mememorizedFetchImages = useCallback(fetchImages, []);
-
-  useEffect(() => {
-    const fetchProductos = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const data = await getAllMenuItems(token);
-        setProductos(data);
-      } catch {
-        setPopup("Error al cargar productos");
-        setTimeout(() => setPopup(null), 3000);
-      }
-    };
-    fetchProductos();
-  }, []);
-
-  useEffect(() => {
-    if (menuItemId && productos.length > 0) {
-      setSelectedId(menuItemId);
-      const prod = productos.find((p) => String(p.id) === String(menuItemId));
-      setForm({
-        name: prod?.name || "",
-        description: prod?.description || "",
-        categoryId: prod?.categoryId || "",
-        typeId: prod?.typeId || "",
-        points: prod?.points ?? "",
-        imageUrl: prod?.imageUrl || "",
-        price: prod?.price ?? ""
-      });
-      setSelectedFolder(categorias.find((cat) => cat.id === prod?.categoryId)?.name || "burger"); // Seleccionar carpeta basada en la categoría
-      setPopup(null);
-    }
-  }, [menuItemId, productos, categorias]);
+  // Memoizar fetchImages para evitar múltiples instancias
+  const memoizedFetchImages = useCallback(fetchImages, []);
 
   useEffect(() => {
     if (selectedFolder) {
-      mememorizedFetchImages(selectedFolder); // Cargar imágenes de la carpeta seleccionada
+      memoizedFetchImages(selectedFolder); // Cargar imágenes de la carpeta seleccionada
     }
-  }, [selectedFolder, mememorizedFetchImages]);
+  }, [selectedFolder, memoizedFetchImages]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -74,16 +39,9 @@ const EditMenuItem = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setPopup(null);
-    if (!selectedId) {
-      setPopup("Selecciona un producto para editar.");
-      setTimeout(() => setPopup(null), 3000);
-      return;
-    }
     try {
       const token = localStorage.getItem("token");
-      await updateMenuItem(
-        selectedId,
+      await createMenuItem(
         {
           name: form.name,
           description: form.description,
@@ -95,24 +53,27 @@ const EditMenuItem = () => {
         },
         token
       );
-      setPopup("Producto editado correctamente");
+
+      setPopup("Producto añadido correctamente");
+      setForm({ name: "", description: "", categoryId: "", typeId: "", points: "", imageUrl: "", price: "" });
       setTimeout(() => setPopup(null), 3000);
       navigate(`/admin-panel`);
     } catch (err) {
-      setPopup("Error al editar producto");
+      setPopup("Error al añadir producto");
       setTimeout(() => setPopup(null), 3000);
     }
   };
 
+  if (loadingCategorias || loadingTipos) return <div>Cargando datos...</div>;
+
+  // Verificar si la categoría seleccionada es "Burger"
   const isBurgerCategory = categorias.find(
     (cat) => cat.id === Number(form.categoryId) && cat.name.toLowerCase() === "burger"
   );
 
-  if (loadingCategorias || loadingTipos) return <div>Cargando datos...</div>;
-
   return (
     <div className="admin-crud-page">
-      <h3>Editar producto</h3>
+      <h3>Añadir producto al menú</h3>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label>Nombre</label>
@@ -143,7 +104,8 @@ const EditMenuItem = () => {
             value={form.categoryId}
             onChange={(e) => {
               handleChange(e);
-              setSelectedFolder(categorias.find((cat) => cat.id === Number(e.target.value))?.name || "burgers");
+              const selectedCategory = categorias.find((cat) => cat.id === Number(e.target.value));
+              setSelectedFolder(selectedCategory?.name || ""); // Actualiza la carpeta seleccionada
             }}
             required
           >
@@ -157,12 +119,13 @@ const EditMenuItem = () => {
         </div>
         {isBurgerCategory && (
           <div className="mb-3">
-            <label>Tipo</label>
+            <label>Tipo de hamburguesa</label>
             <select
               className="form-control"
               name="typeId"
               value={form.typeId}
               onChange={handleChange}
+              required
             >
               <option value="">Selecciona un tipo</option>
               {tipos.map((tipo) => (
@@ -173,6 +136,18 @@ const EditMenuItem = () => {
             </select>
           </div>
         )}
+        <div className="mb-3">
+          <label>Puntos</label>
+          <input
+            type="number"
+            step="0.50"
+            className="form-control"
+            name="points"
+            value={form.points}
+            onChange={handleChange}
+            required
+          />
+        </div>
         <div className="mb-3">
           <label>Carpeta de imágenes</label>
           <select
@@ -193,7 +168,7 @@ const EditMenuItem = () => {
           {loading && <p>Cargando imágenes...</p>}
           {error && <p className="text-danger">{error}</p>}
           {images.length > 0 ? (
-            <div className="image-grid  d-flex flex-wrap justify-content-center">
+            <div className="image-grid d-flex flex-wrap justify-content-center">
               {images.map((image, index) => (
                 <img
                   key={index}
@@ -209,18 +184,6 @@ const EditMenuItem = () => {
           )}
         </div>
         <div className="mb-3">
-          <label>Puntos</label>
-          <input
-            type="number"
-            step="0.50"
-            className="form-control"
-            name="points"
-            value={form.points}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
           <label>Precio</label>
           <input
             type="number"
@@ -232,8 +195,8 @@ const EditMenuItem = () => {
             required
           />
         </div>
-        <button className="btn btn-primary w-100" type="submit" disabled={!selectedId}>
-          Editar
+        <button type="submit" className="btn btn-warning w-100">
+          Añadir al menú
         </button>
       </form>
       {popup && <div className="custom-popup">{popup}</div>}
@@ -241,4 +204,4 @@ const EditMenuItem = () => {
   );
 };
 
-export default EditMenuItem;
+export default AddMenuItem;

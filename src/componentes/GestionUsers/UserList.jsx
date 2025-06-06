@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUsers } from "../../../hooks/useUsers";
-import AjaxLoader from "../../../componentes/AjaxLoader/AjaxLoader";
-import PopupConfirmacion from "../../../componentes/PopUpConfirmacion/PopUpConfirmacion";
+import { useUsers } from "../../hooks/useUsers";
+import AjaxLoader from "../AjaxLoader/AjaxLoader";
+import PopupConfirmacion from "../PopUpConfirmacion/PopUpConfirmacion";
 
 const UserList = () => {
 

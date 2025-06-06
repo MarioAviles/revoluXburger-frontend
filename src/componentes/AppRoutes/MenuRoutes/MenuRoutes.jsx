@@ -1,7 +1,7 @@
 import { Route, Navigate } from 'react-router-dom';
-import AddMenuItem from '../../../paginas/AdminPanel/MenuItems/AddMenuItem';
-import EditMenuItem from '../../../paginas/AdminPanel/MenuItems/EditMenuItem';
-import MenuItemList from '../../../paginas/AdminPanel/MenuItems/MenuItemList';
+import AddMenuItem from '../../GestionMenu/AddMenuItem';
+import EditMenuItem from '../../GestionMenu/EditMenuItem';
+import MenuItemList from '../../GestionMenu/MenuItemList';
 
  export const menuRoutes = (user) => [
   <Route key="add" path="/admin/menu/add" element={user && user.role === "ADMIN" ? <AddMenuItem /> : <Navigate to="/login" />} />,

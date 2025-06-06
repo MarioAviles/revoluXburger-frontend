@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { createCategoria } from "../../../servicios/categoriasService";
+import { createTipo } from "../../servicios/tiposService";
 import { useNavigate } from "react-router-dom";
 
-const AddCategories = () => {
+const AddTipos = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
-    imageCat: "",
   });
   const [popup, setPopup] = useState(null);
 
@@ -20,40 +19,29 @@ const AddCategories = () => {
 
     try {
       const token = localStorage.getItem("token");
-      await createCategoria(form, token);
-      setPopup("Categoría añadida correctamente");
+      await createTipo(form, token);
+      setPopup("Tipo añadido correctamente");
       setTimeout(() => {
         setPopup(null);
         navigate("/admin-panel");
       }, 3000);
     } catch (err) {
-      setPopup(err.message || "Error al añadir categoría");
+      setPopup(err.message || "Error al añadir tipo");
       setTimeout(() => setPopup(null), 3000);
     }
   };
 
   return (
     <div className="admin-crud-page">
-      <h3>Añadir categoría</h3>
+      <h3>Añadir tipo</h3>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label>Nombre de la categoría</label>
+          <label>Nombre del tipo</label>
           <input
             type="text"
             className="form-control"
             name="name"
             value={form.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label>Imagen (URL)</label>
-          <input
-            type="text"
-            className="form-control"
-            name="imageCat"
-            value={form.imageCat}
             onChange={handleChange}
             required
           />
@@ -67,4 +55,4 @@ const AddCategories = () => {
   );
 };
 
-export default AddCategories;
+export default AddTipos;

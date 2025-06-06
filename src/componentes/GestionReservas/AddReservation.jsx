@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { createReservation, getAvailableTimes } from "../../../servicios/reservasService";
+import { createReservation, getAvailableTimes } from "../../servicios/reservasService";
 import { useNavigate } from "react-router-dom";
 
 const AddReservation = () => {

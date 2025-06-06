@@ -1,7 +1,7 @@
 import { Route, Navigate } from 'react-router-dom';
-import AddUser from '../../../paginas/AdminPanel/Users/AddUser';
-import EditUser from '../../../paginas/AdminPanel/Users/EditUser';
-import UserList from '../../../paginas/AdminPanel/Users/UserList';
+import AddUser from '../../GestionUsers/AddUser';
+import EditUser from '../../GestionUsers/EditUser';
+import UserList from '../../GestionUsers/UserList';
 
 // Devuelve un array de <Route> para las rutas de usuarios
  export const userRoutes = (user) => [

@@ -1,10 +1,10 @@
 import './AdminPanel.css';
-import MenuItemsSection from './MenuItems/MenuItemsSection';
-import ReservationsSection from './Reservations/ReservationSection';
-import UsersSection from './Users/UsersSection';
-import ImagesSection from './Images/ImagesSection'; 
-import CategoriesSection from './Categories/CategoriesSection';
-import TiposSection from './Tipos/TiposSection';
+import MenuItemsSection from '../../componentes/GestionMenu/MenuItemsSection';
+import ReservationsSection from '../../componentes/GestionReservas/ReservationSection';
+import UsersSection from '../../componentes/GestionUsers/UsersSection';
+import ImagesSection from '../../componentes/GestionImagenes/ImagesSection'; 
+import CategoriesSection from '../../componentes/GestionCategorias/CategoriesSection';
+import TiposSection from '../../componentes/GestionTipos/TiposSection';
 
 const AdminPanel = () => {
   return (

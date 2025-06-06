@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useUsers } from "../../../hooks/useUsers";
+import { useUsers } from "../../hooks/useUsers";
 import { useParams, useNavigate } from "react-router-dom";
 
 const EditUser = () => {

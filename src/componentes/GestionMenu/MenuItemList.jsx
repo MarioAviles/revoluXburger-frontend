@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllMenuItems, deleteMenuItem } from "../../../servicios/menuService";
+import { getAllMenuItems, deleteMenuItem } from "../../servicios/menuService";
 import "./MenuItemList.css";
-import PopUpConfirmacion from "../../../componentes/PopUpConfirmacion/PopUpConfirmacion";
+import PopUpConfirmacion from "../PopUpConfirmacion/PopUpConfirmacion";
 import MenuItemCard from "./MenuItemCard";
-import useCategorias from "../../../hooks/useCategorias";
-import useTipos from "../../../hooks/useTipos";
+import useCategorias from "../../hooks/useCategorias";
+import useTipos from "../../hooks/useTipos";
 
 const MenuItemList = () => {
   const [productos, setProductos] = useState([]);

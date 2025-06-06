@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { getAllReservations, updateReservation, getAvailableTimes } from "../../../servicios/reservasService";
+import { getAllReservations, updateReservation, getAvailableTimes } from "../../servicios/reservasService";
 import { useParams, useNavigate } from "react-router-dom";
 
 const EditReservation = () => {
   const navigate = useNavigate();
   const { reservationId } = useParams();
-  const [reservas, setReservas] = useState([]);
-  const [selectedId, setSelectedId] = useState("");
-  const [form, setForm] = useState({
+  const [ reservas, setReservas ] = useState([]);
+  const [ selectedId, setSelectedId ] = useState("");
+  const [ form, setForm ] = useState({
     name: "",
     phone: "",
     description: "",
@@ -15,9 +15,9 @@ const EditReservation = () => {
     time: ""
   });
 
-  const [availableHours, setAvailableHours] = useState([]);
-  const [loadingHours, setLoadingHours] = useState(false);
-  const [popup, setPopup] = useState(null);
+  const [ availableHours, setAvailableHours ] = useState([]);
+  const [ loadingHours, setLoadingHours ] = useState(false);
+  const [ popup, setPopup ] = useState(null);
 
   const token = localStorage.getItem("token");
 
@@ -33,7 +33,7 @@ const EditReservation = () => {
 
   useEffect(() => {
     fetchData();
-  }, [token]);
+  }, [ token ]);
 
   useEffect(() => {
     const fetchAvailableHours = async () => {
@@ -49,10 +49,10 @@ const EditReservation = () => {
 
         // Filtrar horas para mostrar solo las futuras si la fecha es hoy
         const filteredHours = hours.filter(hour => {
-          if (form.date === new Date().toISOString().split("T")[0]) {
+          if (form.date === new Date().toISOString().split("T")[ 0 ]) {
             const currentHour = new Date().getHours();
             const currentMinute = new Date().getMinutes();
-            const [hourPart, minutePart] = hour.split(":").map(Number);
+            const [ hourPart, minutePart ] = hour.split(":").map(Number);
             return hourPart > currentHour || (hourPart === currentHour && minutePart > currentMinute);
           }
           return true; // Si no es hoy, mostrar todas las horas
@@ -69,7 +69,7 @@ const EditReservation = () => {
     };
 
     fetchAvailableHours();
-  }, [form.date, token]);
+  }, [ form.date, token ]);
 
   const handleSelect = (e) => {
     const id = e.target.value;
@@ -86,7 +86,7 @@ const EditReservation = () => {
   };
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({ ...form, [ e.target.name ]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -139,7 +139,7 @@ const EditReservation = () => {
       });
       setPopup(null);
     }
-  }, [reservationId, reservas]);
+  }, [ reservationId, reservas ]);
 
   return (
     <div className="admin-crud-page">
@@ -203,7 +203,7 @@ const EditReservation = () => {
             value={form.date}
             onChange={handleChange}
             required
-            min={new Date().toISOString().split("T")[0]} // Bloquea días anteriores
+            min={new Date().toISOString().split("T")[ 0 ]} // Bloquea días anteriores
           />
         </div>
 
@@ -239,6 +239,19 @@ const EditReservation = () => {
             )}
           </select>
           {loadingHours && <small>Cargando horas disponibles...</small>}
+        </div>
+        <div className="mb-3">
+          <label>Número de personas</label>
+          <input
+            type="number"
+            className="form-control"
+            name="numberOfPersons"
+            value={form.numberOfPersons || ""}
+            onChange={(e) => setForm({ ...form, numberOfPersons: Number(e.target.value) })}
+            min={1}
+            max={20}
+            required
+          />
         </div>
 
         <button className="btn btn-primary w-100" type="submit" disabled={!selectedId}>

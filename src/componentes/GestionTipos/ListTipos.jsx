@@ -1,37 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { getAllCategorias, deleteCategoria } from "../../../servicios/categoriasService";
-import PopupConfirmacion from "../../../componentes/PopUpConfirmacion/PopUpConfirmacion";
+import { getAllTipos, deleteTipo } from "../../servicios/tiposService";
+import PopupConfirmacion from "../PopUpConfirmacion/PopUpConfirmacion";
 
-const ListCategories = () => {
-  const [categorias, setCategorias] = useState([]);
+const ListTipos = () => {
+  const [tipos, setTipos] = useState([]);
   const [deletingId, setDeletingId] = useState(null);
   const [confirmId, setConfirmId] = useState(null);
   const [popup, setPopup] = useState(null);
 
   useEffect(() => {
-    const fetchCategorias = async () => {
+    const fetchTipos = async () => {
       try {
         const token = localStorage.getItem("token");
-        const data = await getAllCategorias(token);
-        setCategorias(data);
+        const data = await getAllTipos(token);
+        setTipos(data);
       } catch (err) {
-        setPopup("Error al cargar categorías");
+        setPopup("Error al cargar tipos");
         setTimeout(() => setPopup(null), 3000);
       }
     };
-    fetchCategorias();
+    fetchTipos();
   }, []);
 
   const handleDelete = async (id) => {
     setDeletingId(id);
     try {
       const token = localStorage.getItem("token");
-      await deleteCategoria(id, token);
-      setCategorias(categorias.filter(cat => cat.id !== id));
-      setPopup("Categoría eliminada correctamente");
+      await deleteTipo(id, token);
+      setTipos(tipos.filter((tipo) => tipo.id !== id));
+      setPopup("Tipo eliminado correctamente");
       setTimeout(() => setPopup(null), 3000);
     } catch (err) {
-      setPopup("Error al eliminar categoría");
+      setPopup("Error al eliminar tipo");
       setTimeout(() => setPopup(null), 3000);
     } finally {
       setDeletingId(null);
@@ -41,18 +41,18 @@ const ListCategories = () => {
 
   return (
     <div className="admin-crud-page">
-      <h3>Lista de categorías</h3>
+      <h3>Lista de tipos</h3>
       <ul className="list-group">
-        {categorias.map(cat => (
-          <li key={cat.id} className="list-group-item d-flex justify-content-between align-items-center">
-            <span>{cat.name}</span>
+        {tipos.map((tipo) => (
+          <li key={tipo.id} className="list-group-item d-flex justify-content-between align-items-center">
+            <span>{tipo.name}</span>
             <div>
               <button
                 className="btn btn-danger btn-sm"
-                onClick={() => setConfirmId(cat.id)}
-                disabled={deletingId === cat.id}
+                onClick={() => setConfirmId(tipo.id)}
+                disabled={deletingId === tipo.id}
               >
-                {deletingId === cat.id ? "Eliminando..." : "Eliminar"}
+                {deletingId === tipo.id ? "Eliminando..." : "Eliminar"}
               </button>
             </div>
           </li>
@@ -60,7 +60,7 @@ const ListCategories = () => {
       </ul>
       {confirmId && (
         <PopupConfirmacion
-          mensaje="¿Seguro que quieres eliminar esta categoría?"
+          mensaje="¿Seguro que quieres eliminar este tipo?"
           onCancel={() => setConfirmId(null)}
           onConfirm={() => handleDelete(confirmId)}
         />
@@ -70,4 +70,4 @@ const ListCategories = () => {
   );
 };
 
-export default ListCategories;
+export default ListTipos;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useUploadImage } from "../../../hooks/useUploadImage";
-import { getAllCategorias } from "../../../servicios/categoriasService"; // Importar el servicio de categorías
+import { useUploadImage } from "../../hooks/useUploadImage";
+import { getAllCategorias } from "../../servicios/categoriasService"; // Importar el servicio de categorías
 import "./ImagesSection.css";
 
 const AddImage = ({ onUpload }) => {

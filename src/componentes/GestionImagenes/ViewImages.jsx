@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useFetchImages } from "../../../hooks/useFetchImages";
-import useCategorias from "../../../hooks/useCategorias";
-import { uploadService } from "../../../servicios/imageService"; // Importar el servicio
-import PopUpConfirmacion from "../../../componentes/PopUpConfirmacion/PopUpConfirmacion"; // Importar el popup
+import { useFetchImages } from "../../hooks/useFetchImages";
+import useCategorias from "../../hooks/useCategorias";
+import { uploadService } from "../../servicios/imageService"; // Importar el servicio
+import PopUpConfirmacion from "../PopUpConfirmacion/PopUpConfirmacion"; // Importar el popup
 import "./ImagesSection.css";
-import AjaxLoader from "../../../componentes/AjaxLoader/AjaxLoader";
+import AjaxLoader from "../AjaxLoader/AjaxLoader";
 const ViewImages = () => {
   const [folder, setFolder] = useState(""); // Carpeta seleccionada
   const { urls: images, error, loading, fetchImages } = useFetchImages();

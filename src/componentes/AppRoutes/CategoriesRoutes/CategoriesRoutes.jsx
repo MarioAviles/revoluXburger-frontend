@@ -1,6 +1,6 @@
 import { Route, Navigate } from 'react-router-dom';
-import AddCategories from '../../../paginas/AdminPanel/Categories/AddCategories';
-import ListCategories from '../../../paginas/AdminPanel/Categories/ListCategories';
+import AddCategories from '../../GestionCategorias/AddCategories';
+import ListCategories from '../../GestionCategorias/ListCategories';
 
 export const categoriesRoutes = (user) => [
   <Route key="add" path="/admin/categories/add" element={user && user.role === "ADMIN" ? <AddCategories /> : <Navigate to="/login" />} />,

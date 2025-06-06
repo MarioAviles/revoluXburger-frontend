@@ -1,7 +1,7 @@
 import { Route, Navigate } from 'react-router-dom';
-import AddReservation from '../../../paginas/AdminPanel/Reservations/AddReservation';
-import EditReservation from '../../../paginas/AdminPanel/Reservations/EditReservation';
-import ListReservation from '../../../paginas/AdminPanel/Reservations/ListReservation';
+import AddReservation from '../../GestionReservas/AddReservation';
+import EditReservation from '../../GestionReservas/EditReservation';
+import ListReservation from '../../GestionReservas/ListReservation';
 
 // Devuelve un array de <Route> para las rutas de reservas
   export const reservationRoutes = (user) => [

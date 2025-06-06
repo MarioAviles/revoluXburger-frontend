@@ -1,7 +1,6 @@
 import { Route, Navigate } from 'react-router-dom';
-import AddImage from '../../../paginas/AdminPanel/Images/AddImage';
-import DeleteImage from '../../../paginas/AdminPanel/Images/DeleteImage';
-import ViewImages from '../../../paginas/AdminPanel/Images/ViewImages';
+import AddImage from '../../GestionImagenes/AddImage';
+import ViewImages from '../../GestionImagenes/ViewImages';
 
 // Devuelve un array de <Route> para las rutas de imágenes
  export const imageRoutes = (user) => [
