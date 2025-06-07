@@ -41,7 +41,30 @@ const Footer = () => {
                 </div>
 
                 <div className="text-center mt-3 ">
-                    <p className="footer-copy">&copy; 2025 RevoluXBurger. Todos los derechos reservados.</p>
+                    <a href="https://revoluxburger-frontend.vercel.app/" target="_blank" rel="noopener noreferrer">
+                        RevoluXburger
+                    </a> © 2025 by{' '}
+                    <a href="https://github.com/MarioAviles" target="_blank" rel="noopener noreferrer">
+                        Mario Avilés García
+                    </a>{' '}is licensed under{' '}
+                    <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">
+                        CC BY-SA 4.0
+                    </a>
+                    <img
+                        src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
+                        alt="Creative Commons"
+                        style={{ maxWidth: '1em', maxHeight: '1em', marginLeft: '.2em' }}
+                    />
+                    <img
+                        src="https://mirrors.creativecommons.org/presskit/icons/by.svg"
+                        alt="Attribution"
+                        style={{ maxWidth: '1em', maxHeight: '1em', marginLeft: '.2em' }}
+                    />
+                    <img
+                        src="https://mirrors.creativecommons.org/presskit/icons/sa.svg"
+                        alt="ShareAlike"
+                        style={{ maxWidth: '1em', maxHeight: '1em', marginLeft: '.2em' }}
+                    />
                 </div>
 
             </div>
