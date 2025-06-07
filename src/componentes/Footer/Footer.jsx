@@ -40,7 +40,7 @@ const Footer = () => {
 
                 </div>
 
-                <div className="text-center mt-3 ">
+                <div className="text-center mt-3 footer-copy">
                     <a href="https://revoluxburger-frontend.vercel.app/" target="_blank" rel="noopener noreferrer">
                         RevoluXburger
                     </a> © 2025 by{' '}
