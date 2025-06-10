@@ -121,7 +121,7 @@ const Reservas = () => {
           <label>Descripción</label>
           <textarea
             className="form-control"
-            {...register("description", { required: "La descripción es obligatoria" })}
+            {...register("description")}
           />
           {errors.description && <small className="text-danger">{errors.description.message}</small>}
         </div>

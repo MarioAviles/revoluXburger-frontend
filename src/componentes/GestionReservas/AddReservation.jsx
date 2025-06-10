@@ -149,7 +149,6 @@ const AddReservation = () => {
             name="description"
             value={form.description}
             onChange={handleChange}
-            required
           />
         </div>
 
