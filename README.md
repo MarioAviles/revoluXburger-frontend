@@ -10,7 +10,7 @@ Ejecuta los siguientes comandos en tu terminal:
 
 npm install react-router-dom
 
-npm install react-lazy-load --force
+npm install react-lazy-load
 
 npm install ldrs
 
@@ -21,6 +21,8 @@ npm install react-hook-form
 npm install --save-dev purgecss
 
 npm install --save-dev @fullhuman/postcss-purgecss postcss
+
+Si hay algun tipo de problema al instalar lo necesario, usar "--force" para hacerlo sin problema.
 
 ## 🌐 Importaciones en el HTML
 
