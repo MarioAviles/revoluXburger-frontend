@@ -99,7 +99,7 @@ const AddImage = ({ onUpload }) => {
             }}
           >
             <option value="">Selecciona una carpeta</option>
-            <option value="categorias">Categorias</option>
+            <option value="Categorias">Categorias</option>
 
             {categorias.map((categoria) => (
               <option key={categoria.id} value={categoria.name}>
