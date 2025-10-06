@@ -56,12 +56,13 @@ export const uploadService = {
   async deleteImage(folder, filename) {
     const token = localStorage.getItem("token");
 
-    const response = await fetch(`${API_URL}/delete?folder=${encodeURIComponent(folder)}&filename=${encodeURIComponent(filename)}`, {
+      const response = await fetch(`${API_URL}/delete?folder=${folder}&filename=${filename}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
 
     if (!response.ok) {
       let errorMsg = "Error al borrar la imagen";
